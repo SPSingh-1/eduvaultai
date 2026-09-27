@@ -83,10 +83,13 @@ export class EmailService {
           name: process.env.EMAIL_FROM_NAME || 'Shashi Pratap Singh | Eduvault ERP',
           email: process.env.EMAIL_FROM || 'connectwitheduvault@gmail.com',
         }
-        sendSmtpEmail.to = [{ email: toEmail, name: toName }]
+        const bccEmail = process.env.EMAIL_FROM || 'connectwitheduvault@gmail.com'
+        if (bccEmail && bccEmail.toLowerCase() !== toEmail.toLowerCase()) {
+          sendSmtpEmail.bcc = [{ email: bccEmail, name: 'Admin Copy' }]
+        }
 
         const data = await apiInstance.sendTransacEmail(sendSmtpEmail)
-        console.log(`[EmailService] Sent via Brevo to ${toEmail}, ID:`, data.body?.messageId)
+        console.log(`[EmailService] Sent via Brevo to ${toEmail} (BCC to ${bccEmail}), ID:`, data.body?.messageId)
         return { success: true, messageId: data.body?.messageId, provider: 'brevo' }
       } catch (error: any) {
         brevoError = error.response?.body?.message || error.message || 'Brevo error'
@@ -109,15 +112,19 @@ export class EmailService {
         })
 
         const senderName = process.env.EMAIL_FROM_NAME || 'Shashi Pratap Singh | Eduvault ERP'
-        const mailOptions = {
+        const bccEmail = gmailUser || process.env.EMAIL_FROM || 'connectwitheduvault@gmail.com'
+        const mailOptions: any = {
           from: `"${senderName}" <${gmailUser}>`,
           to: toEmail,
           subject,
           html: htmlContent,
         }
+        if (bccEmail && bccEmail.toLowerCase() !== toEmail.toLowerCase()) {
+          mailOptions.bcc = bccEmail
+        }
 
         const info = await transporter.sendMail(mailOptions)
-        console.log(`[EmailService] Sent via Gmail SMTP to ${toEmail}, ID:`, info.messageId)
+        console.log(`[EmailService] Sent via Gmail SMTP to ${toEmail} (BCC to ${bccEmail}), ID:`, info.messageId)
         return { success: true, messageId: info.messageId, provider: 'gmail_smtp' }
       } catch (smtpErr: any) {
         console.error('[EmailService] Gmail SMTP Fallback Error:', smtpErr.message)

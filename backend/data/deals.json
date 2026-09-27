@@ -3,7 +3,7 @@
     "id": "deal_init_1",
     "schoolName": "St. Xavier's Senior Secondary School",
     "contactName": "Principal",
-    "stage": "outreach_sent",
+    "stage": "ai_strong",
     "value": 210000,
     "pricing": {
       "ratePerStudentMonth": 5,
@@ -18,7 +18,7 @@
       "freeStaffTraining": true
     },
     "currency": "INR",
-    "probability": 50,
+    "probability": 60,
     "expectedClose": "2026-10-17",
     "studentCount": 3500,
     "modules": [
@@ -37,10 +37,10 @@
       "qualified": true
     },
     "emailStatus": {
-      "sent": true,
-      "sentCount": 3,
-      "lastSentAt": "2026-09-13T17:05:19.171Z",
-      "lastSubject": "Eduvault ERP for St. Xavier's Senior Secondary School Jaipur: 2 Months Free Trial (No Bond) + Live WhatsApp Automation",
+      "sent": false,
+      "sentCount": 0,
+      "lastSentAt": null,
+      "lastSubject": null,
       "hasReplied": false,
       "replyCategory": null,
       "replyCategoryLabel": null,
@@ -48,13 +48,13 @@
       "replySnippet": null,
       "replyReceivedAt": null
     },
-    "updatedAt": "2026-09-27T12:49:38.571Z"
+    "updatedAt": "2026-09-27T16:58:51.864Z"
   },
   {
     "id": "deal_init_2",
     "schoolName": "Cambridge Court High School",
     "contactName": "Principal",
-    "stage": "outreach_sent",
+    "stage": "ai_strong",
     "value": 132000,
     "pricing": {
       "ratePerStudentMonth": 5,
@@ -69,7 +69,7 @@
       "freeStaffTraining": true
     },
     "currency": "INR",
-    "probability": 50,
+    "probability": 60,
     "expectedClose": "2026-10-19",
     "studentCount": 2200,
     "modules": [
@@ -88,10 +88,10 @@
       "qualified": true
     },
     "emailStatus": {
-      "sent": true,
-      "sentCount": 3,
-      "lastSentAt": "2026-09-13T17:05:17.562Z",
-      "lastSubject": "Eduvault ERP for Cambridge Court High School Jaipur: 2 Months Free Trial (No Bond) + Live WhatsApp Automation",
+      "sent": false,
+      "sentCount": 0,
+      "lastSentAt": null,
+      "lastSubject": null,
       "hasReplied": false,
       "replyCategory": null,
       "replyCategoryLabel": null,
@@ -99,13 +99,13 @@
       "replySnippet": null,
       "replyReceivedAt": null
     },
-    "updatedAt": "2026-09-27T12:49:38.571Z"
+    "updatedAt": "2026-09-27T16:58:51.865Z"
   },
   {
     "id": "deal_init_3",
     "schoolName": "Neerja Modi International School",
     "contactName": "Principal",
-    "stage": "outreach_sent",
+    "stage": "ai_strong",
     "value": 270000,
     "pricing": {
       "ratePerStudentMonth": 5,
@@ -120,7 +120,7 @@
       "freeStaffTraining": true
     },
     "currency": "INR",
-    "probability": 50,
+    "probability": 60,
     "expectedClose": "2026-10-21",
     "studentCount": 4500,
     "modules": [
@@ -139,10 +139,10 @@
       "qualified": true
     },
     "emailStatus": {
-      "sent": true,
-      "sentCount": 3,
-      "lastSentAt": "2026-09-13T17:05:19.998Z",
-      "lastSubject": "Eduvault ERP for Neerja Modi International School Jaipur: 2 Months Free Trial (No Bond) + Live WhatsApp Automation",
+      "sent": false,
+      "sentCount": 0,
+      "lastSentAt": null,
+      "lastSubject": null,
       "hasReplied": false,
       "replyCategory": null,
       "replyCategoryLabel": null,
@@ -150,13 +150,13 @@
       "replySnippet": null,
       "replyReceivedAt": null
     },
-    "updatedAt": "2026-09-27T12:49:38.571Z"
+    "updatedAt": "2026-09-27T16:58:51.865Z"
   },
   {
     "id": "deal_init_4",
     "schoolName": "Bharatiya Vidya Bhavan Vidyashram",
     "contactName": "Principal",
-    "stage": "outreach_sent",
+    "stage": "ai_strong",
     "value": 186000,
     "pricing": {
       "ratePerStudentMonth": 5,
@@ -171,7 +171,7 @@
       "freeStaffTraining": true
     },
     "currency": "INR",
-    "probability": 50,
+    "probability": 60,
     "expectedClose": "2026-10-23",
     "studentCount": 3100,
     "modules": [
@@ -190,10 +190,10 @@
       "qualified": true
     },
     "emailStatus": {
-      "sent": true,
-      "sentCount": 3,
-      "lastSentAt": "2026-09-13T17:05:18.889Z",
-      "lastSubject": "Eduvault ERP for Bharatiya Vidya Bhavan Vidyashram Jaipur: 2 Months Free Trial (No Bond) + Live WhatsApp Automation",
+      "sent": false,
+      "sentCount": 0,
+      "lastSentAt": null,
+      "lastSubject": null,
       "hasReplied": false,
       "replyCategory": null,
       "replyCategoryLabel": null,
@@ -201,13 +201,13 @@
       "replySnippet": null,
       "replyReceivedAt": null
     },
-    "updatedAt": "2026-09-27T12:49:38.571Z"
+    "updatedAt": "2026-09-27T16:58:51.865Z"
   },
   {
     "id": "deal_init_5",
     "schoolName": "Jayshree Periwal High School",
     "contactName": "Principal",
-    "stage": "demo_scheduled",
+    "stage": "ai_strong",
     "value": 168000,
     "pricing": {
       "ratePerStudentMonth": 5,
@@ -222,7 +222,7 @@
       "freeStaffTraining": true
     },
     "currency": "INR",
-    "probability": 80,
+    "probability": 60,
     "expectedClose": "2026-10-25",
     "studentCount": 2800,
     "modules": [
@@ -241,24 +241,24 @@
       "qualified": true
     },
     "emailStatus": {
-      "sent": true,
-      "sentCount": 3,
-      "lastSentAt": "2026-09-13T17:05:18.355Z",
-      "lastSubject": "Eduvault ERP for Jayshree Periwal High School Jaipur: 2 Months Free Trial (No Bond) + Live WhatsApp Automation",
-      "hasReplied": true,
-      "replyCategory": "demo_requested",
-      "replyCategoryLabel": "Demo Requested",
-      "replySentiment": "positive",
-      "replySnippet": "Yes, please arrange a 15-min screen walkthrough this Thursday at 11 AM.",
-      "replyReceivedAt": "2026-09-27T10:49:38.571Z"
+      "sent": false,
+      "sentCount": 0,
+      "lastSentAt": null,
+      "lastSubject": null,
+      "hasReplied": false,
+      "replyCategory": null,
+      "replyCategoryLabel": null,
+      "replySentiment": null,
+      "replySnippet": null,
+      "replyReceivedAt": null
     },
-    "updatedAt": "2026-09-27T12:49:38.571Z"
+    "updatedAt": "2026-09-27T16:58:51.865Z"
   },
   {
     "id": "deal_init_6",
     "schoolName": "Subodh Public School",
     "contactName": "Principal",
-    "stage": "outreach_sent",
+    "stage": "ai_strong",
     "value": 114000,
     "pricing": {
       "ratePerStudentMonth": 5,
@@ -273,7 +273,7 @@
       "freeStaffTraining": true
     },
     "currency": "INR",
-    "probability": 50,
+    "probability": 60,
     "expectedClose": "2026-10-27",
     "studentCount": 1900,
     "modules": [
@@ -292,10 +292,10 @@
       "qualified": true
     },
     "emailStatus": {
-      "sent": true,
-      "sentCount": 3,
-      "lastSentAt": "2026-09-13T17:05:17.028Z",
-      "lastSubject": "Eduvault ERP for Subodh Public School Jaipur: 2 Months Free Trial (No Bond) + Live WhatsApp Automation",
+      "sent": false,
+      "sentCount": 0,
+      "lastSentAt": null,
+      "lastSubject": null,
       "hasReplied": false,
       "replyCategory": null,
       "replyCategoryLabel": null,
@@ -303,13 +303,13 @@
       "replySnippet": null,
       "replyReceivedAt": null
     },
-    "updatedAt": "2026-09-27T12:49:38.571Z"
+    "updatedAt": "2026-09-27T16:58:51.865Z"
   },
   {
     "id": "deal_init_7",
     "schoolName": "Seedling Public School",
     "contactName": "Principal",
-    "stage": "outreach_sent",
+    "stage": "ai_strong",
     "value": 84000,
     "pricing": {
       "ratePerStudentMonth": 5,
@@ -324,7 +324,7 @@
       "freeStaffTraining": true
     },
     "currency": "INR",
-    "probability": 50,
+    "probability": 60,
     "expectedClose": "2026-10-29",
     "studentCount": 1400,
     "modules": [
@@ -343,10 +343,10 @@
       "qualified": true
     },
     "emailStatus": {
-      "sent": true,
-      "sentCount": 3,
-      "lastSentAt": "2026-09-13T17:05:15.689Z",
-      "lastSubject": "Eduvault ERP for Seedling Public School Jaipur: 2 Months Free Trial (No Bond) + Live WhatsApp Automation",
+      "sent": false,
+      "sentCount": 0,
+      "lastSentAt": null,
+      "lastSubject": null,
       "hasReplied": false,
       "replyCategory": null,
       "replyCategoryLabel": null,
@@ -354,13 +354,13 @@
       "replySnippet": null,
       "replyReceivedAt": null
     },
-    "updatedAt": "2026-09-27T12:49:38.571Z"
+    "updatedAt": "2026-09-27T16:58:51.865Z"
   },
   {
     "id": "deal_init_8",
     "schoolName": "Tagore International School",
     "contactName": "Principal",
-    "stage": "outreach_sent",
+    "stage": "ai_strong",
     "value": 105000,
     "pricing": {
       "ratePerStudentMonth": 5,
@@ -375,7 +375,7 @@
       "freeStaffTraining": true
     },
     "currency": "INR",
-    "probability": 50,
+    "probability": 60,
     "expectedClose": "2026-10-31",
     "studentCount": 1750,
     "modules": [
@@ -394,10 +394,10 @@
       "qualified": true
     },
     "emailStatus": {
-      "sent": true,
-      "sentCount": 3,
-      "lastSentAt": "2026-09-13T17:05:16.471Z",
-      "lastSubject": "Eduvault ERP for Tagore International School Jaipur: 2 Months Free Trial (No Bond) + Live WhatsApp Automation",
+      "sent": false,
+      "sentCount": 0,
+      "lastSentAt": null,
+      "lastSubject": null,
       "hasReplied": false,
       "replyCategory": null,
       "replyCategoryLabel": null,
@@ -405,13 +405,13 @@
       "replySnippet": null,
       "replyReceivedAt": null
     },
-    "updatedAt": "2026-09-27T12:49:38.571Z"
+    "updatedAt": "2026-09-27T16:58:51.865Z"
   },
   {
     "id": "deal_init_9",
     "schoolName": "Adarsh Vidya Mandir Secondary School",
     "contactName": "Principal",
-    "stage": "outreach_sent",
+    "stage": "discovery",
     "value": 29400,
     "pricing": {
       "ratePerStudentMonth": 7,
@@ -426,7 +426,7 @@
       "freeStaffTraining": true
     },
     "currency": "INR",
-    "probability": 50,
+    "probability": 60,
     "expectedClose": "2026-11-02",
     "studentCount": 350,
     "modules": [
@@ -445,10 +445,10 @@
       "qualified": true
     },
     "emailStatus": {
-      "sent": true,
-      "sentCount": 3,
-      "lastSentAt": "2026-09-13T17:05:13.237Z",
-      "lastSubject": "Eduvault ERP for Adarsh Vidya Mandir Secondary School Jaipur: 2 Months Free Trial (No Bond) + Live WhatsApp Automation",
+      "sent": false,
+      "sentCount": 0,
+      "lastSentAt": null,
+      "lastSubject": null,
       "hasReplied": false,
       "replyCategory": null,
       "replyCategoryLabel": null,
@@ -456,13 +456,13 @@
       "replySnippet": null,
       "replyReceivedAt": null
     },
-    "updatedAt": "2026-09-27T12:49:38.571Z"
+    "updatedAt": "2026-09-27T16:58:51.865Z"
   },
   {
     "id": "deal_init_10",
     "schoolName": "Shishu Niketan Middle School",
     "contactName": "Principal",
-    "stage": "outreach_sent",
+    "stage": "discovery",
     "value": 11520,
     "pricing": {
       "ratePerStudentMonth": 8,
@@ -477,7 +477,7 @@
       "freeStaffTraining": true
     },
     "currency": "INR",
-    "probability": 50,
+    "probability": 60,
     "expectedClose": "2026-11-04",
     "studentCount": 120,
     "modules": [
@@ -496,10 +496,10 @@
       "qualified": true
     },
     "emailStatus": {
-      "sent": true,
-      "sentCount": 3,
-      "lastSentAt": "2026-09-13T17:05:12.098Z",
-      "lastSubject": "Eduvault ERP for Shishu Niketan Middle School (Class 1-8) Jaipur: 2 Months Free Trial (No Bond) + Live WhatsApp Automation",
+      "sent": false,
+      "sentCount": 0,
+      "lastSentAt": null,
+      "lastSubject": null,
       "hasReplied": false,
       "replyCategory": null,
       "replyCategoryLabel": null,
@@ -507,6 +507,6 @@
       "replySnippet": null,
       "replyReceivedAt": null
     },
-    "updatedAt": "2026-09-27T12:49:38.571Z"
+    "updatedAt": "2026-09-27T16:58:51.865Z"
   }
 ]

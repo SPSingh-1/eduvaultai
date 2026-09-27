@@ -115,19 +115,28 @@ function syncDealEmailStatus(deal: Deal, allMessages: any[]): Deal {
     return false
   }
 
-  const outboundMsgs = allMessages.filter((m: any) => m.direction === 'outbound' && matchMessage(m))
+  const outboundMsgs = allMessages.filter((m: any) => m.direction === 'outbound' && m.status === 'sent' && matchMessage(m))
   const inboundMsgs = allMessages.filter((m: any) => m.direction === 'inbound' && matchMessage(m))
 
-  const isContacted = outboundMsgs.length > 0 || deal.stage === 'outreach_sent' || deal.stage === 'demo_scheduled' || deal.stage === 'proposal_sent' || deal.stage === 'closed_won'
+  const isContacted = outboundMsgs.length > 0
   const lastOutbound = outboundMsgs[0] || null
   const lastInbound = inboundMsgs[0] || null
 
-  // If incoming reply was detected and deal is earlier, advance stage
+  // Only advance stages based on actual sent and inbound messages
   let stage = deal.stage
-  if (inboundMsgs.length > 0 && ['discovery', 'ai_strong', 'outreach_sent'].includes(stage)) {
-    stage = 'demo_scheduled'
-  } else if (outboundMsgs.length > 0 && ['discovery', 'ai_strong'].includes(stage)) {
-    stage = 'outreach_sent'
+  if (inboundMsgs.length > 0) {
+    if (['discovery', 'ai_strong', 'outreach_sent'].includes(stage)) {
+      stage = 'demo_scheduled'
+    }
+  } else if (outboundMsgs.length > 0) {
+    if (['discovery', 'ai_strong'].includes(stage)) {
+      stage = 'outreach_sent'
+    }
+  } else {
+    // If no real outbound or inbound messages exist, revert mock stages back to AI High Intent
+    if (stage === 'outreach_sent' || stage === 'demo_scheduled') {
+      stage = (deal.studentCount || 1000) >= 500 ? 'ai_strong' : 'discovery'
+    }
   }
 
   return {
@@ -136,15 +145,15 @@ function syncDealEmailStatus(deal: Deal, allMessages: any[]): Deal {
     probability: STAGE_PROBABILITY[stage] || deal.probability || 60,
     emailStatus: {
       sent: isContacted,
-      sentCount: outboundMsgs.length > 0 ? outboundMsgs.length : (deal.emailStatus?.sent ? (deal.emailStatus.sentCount || 1) : 0),
-      lastSentAt: lastOutbound?.sentAt || deal.emailStatus?.lastSentAt || null,
-      lastSubject: lastOutbound?.subject || deal.emailStatus?.lastSubject || null,
-      hasReplied: inboundMsgs.length > 0 || !!deal.emailStatus?.hasReplied,
-      replyCategory: lastInbound?.category || deal.emailStatus?.replyCategory || null,
-      replyCategoryLabel: lastInbound?.categoryLabel || deal.emailStatus?.replyCategoryLabel || null,
-      replySentiment: lastInbound?.sentiment || deal.emailStatus?.replySentiment || null,
-      replySnippet: lastInbound?.body ? (lastInbound.body.length > 100 ? lastInbound.body.substring(0, 100) + '...' : lastInbound.body) : deal.emailStatus?.replySnippet || null,
-      replyReceivedAt: lastInbound?.receivedAt || deal.emailStatus?.replyReceivedAt || null,
+      sentCount: outboundMsgs.length,
+      lastSentAt: lastOutbound?.sentAt || null,
+      lastSubject: lastOutbound?.subject || null,
+      hasReplied: inboundMsgs.length > 0,
+      replyCategory: lastInbound?.category || null,
+      replyCategoryLabel: lastInbound?.categoryLabel || null,
+      replySentiment: lastInbound?.sentiment || null,
+      replySnippet: lastInbound?.body ? (lastInbound.body.length > 100 ? lastInbound.body.substring(0, 100) + '...' : lastInbound.body) : null,
+      replyReceivedAt: lastInbound?.receivedAt || null,
     },
   }
 }
@@ -345,25 +354,11 @@ export class DealsService {
    */
   private static generateInitialDeals(): Deal[] {
     const initialCandidates = FULL_SCHOOL_REGISTRY.slice(0, 10)
-    const stageDistribution = [
-      'ai_strong',
-      'ai_strong',
-      'outreach_sent',
-      'ai_strong',
-      'demo_scheduled',
-      'outreach_sent',
-      'ai_strong',
-      'discovery',
-      'discovery',
-      'outreach_sent',
-    ]
 
     return initialCandidates.map((sch, i) => {
       const studentCount = sch.students || 1000
       const pricing = calculateSchoolPricing(studentCount)
-      const stage = stageDistribution[i] || 'ai_strong'
-      const isOutreach = ['outreach_sent', 'demo_scheduled'].includes(stage)
-      const isDemo = stage === 'demo_scheduled'
+      const stage: Deal['stage'] = studentCount >= 500 ? 'ai_strong' : 'discovery'
 
       return {
         id: `deal_init_${i + 1}`,
@@ -388,16 +383,16 @@ export class DealsService {
           qualified: true,
         },
         emailStatus: {
-          sent: isOutreach,
-          sentCount: isOutreach ? 1 : 0,
-          lastSentAt: isOutreach ? new Date(Date.now() - 1000 * 60 * 60 * 12).toISOString() : null,
-          lastSubject: isOutreach ? `Eduvault ERP for ${sch.name}: 2 Months Free Trial + WhatsApp Automation` : null,
-          hasReplied: isDemo,
-          replyCategory: isDemo ? 'demo_requested' : null,
-          replyCategoryLabel: isDemo ? 'Demo Requested' : null,
-          replySentiment: isDemo ? 'positive' : null,
-          replySnippet: isDemo ? 'Yes, please arrange a 15-min screen walkthrough this Thursday at 11 AM.' : null,
-          replyReceivedAt: isDemo ? new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString() : null,
+          sent: false,
+          sentCount: 0,
+          lastSentAt: null,
+          lastSubject: null,
+          hasReplied: false,
+          replyCategory: null,
+          replyCategoryLabel: null,
+          replySentiment: null,
+          replySnippet: null,
+          replyReceivedAt: null,
         },
         updatedAt: new Date().toISOString(),
       }
