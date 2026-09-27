@@ -48,7 +48,9 @@
       "replySnippet": null,
       "replyReceivedAt": null
     },
-    "updatedAt": "2026-09-27T16:58:51.864Z"
+    "updatedAt": "2026-09-27T16:58:51.864Z",
+    "stageEnteredAt": "2026-09-27T16:58:51.864Z",
+    "createdAt": "2026-09-27T16:58:51.864Z"
   },
   {
     "id": "deal_init_2",
@@ -99,7 +101,9 @@
       "replySnippet": null,
       "replyReceivedAt": null
     },
-    "updatedAt": "2026-09-27T16:58:51.865Z"
+    "updatedAt": "2026-09-27T16:58:51.865Z",
+    "stageEnteredAt": "2026-09-27T16:58:51.865Z",
+    "createdAt": "2026-09-27T16:58:51.865Z"
   },
   {
     "id": "deal_init_3",
@@ -150,7 +154,9 @@
       "replySnippet": null,
       "replyReceivedAt": null
     },
-    "updatedAt": "2026-09-27T16:58:51.865Z"
+    "updatedAt": "2026-09-27T16:58:51.865Z",
+    "stageEnteredAt": "2026-09-27T16:58:51.865Z",
+    "createdAt": "2026-09-27T16:58:51.865Z"
   },
   {
     "id": "deal_init_4",
@@ -201,7 +207,9 @@
       "replySnippet": null,
       "replyReceivedAt": null
     },
-    "updatedAt": "2026-09-27T16:58:51.865Z"
+    "updatedAt": "2026-09-27T16:58:51.865Z",
+    "stageEnteredAt": "2026-09-27T16:58:51.865Z",
+    "createdAt": "2026-09-27T16:58:51.865Z"
   },
   {
     "id": "deal_init_5",
@@ -252,7 +260,9 @@
       "replySnippet": null,
       "replyReceivedAt": null
     },
-    "updatedAt": "2026-09-27T16:58:51.865Z"
+    "updatedAt": "2026-09-27T16:58:51.865Z",
+    "stageEnteredAt": "2026-09-27T16:58:51.865Z",
+    "createdAt": "2026-09-27T16:58:51.865Z"
   },
   {
     "id": "deal_init_6",
@@ -303,7 +313,9 @@
       "replySnippet": null,
       "replyReceivedAt": null
     },
-    "updatedAt": "2026-09-27T16:58:51.865Z"
+    "updatedAt": "2026-09-27T16:58:51.865Z",
+    "stageEnteredAt": "2026-09-27T16:58:51.865Z",
+    "createdAt": "2026-09-27T16:58:51.865Z"
   },
   {
     "id": "deal_init_7",
@@ -354,7 +366,9 @@
       "replySnippet": null,
       "replyReceivedAt": null
     },
-    "updatedAt": "2026-09-27T16:58:51.865Z"
+    "updatedAt": "2026-09-27T16:58:51.865Z",
+    "stageEnteredAt": "2026-09-27T16:58:51.865Z",
+    "createdAt": "2026-09-27T16:58:51.865Z"
   },
   {
     "id": "deal_init_8",
@@ -405,7 +419,9 @@
       "replySnippet": null,
       "replyReceivedAt": null
     },
-    "updatedAt": "2026-09-27T16:58:51.865Z"
+    "updatedAt": "2026-09-27T16:58:51.865Z",
+    "stageEnteredAt": "2026-09-27T16:58:51.865Z",
+    "createdAt": "2026-09-27T16:58:51.865Z"
   },
   {
     "id": "deal_init_9",
@@ -456,7 +472,9 @@
       "replySnippet": null,
       "replyReceivedAt": null
     },
-    "updatedAt": "2026-09-27T16:58:51.865Z"
+    "updatedAt": "2026-09-27T16:58:51.865Z",
+    "stageEnteredAt": "2026-09-27T16:58:51.865Z",
+    "createdAt": "2026-09-27T16:58:51.865Z"
   },
   {
     "id": "deal_init_10",
@@ -507,6 +525,8 @@
       "replySnippet": null,
       "replyReceivedAt": null
     },
-    "updatedAt": "2026-09-27T16:58:51.865Z"
+    "updatedAt": "2026-09-27T16:58:51.865Z",
+    "stageEnteredAt": "2026-09-27T16:58:51.865Z",
+    "createdAt": "2026-09-27T16:58:51.865Z"
   }
 ]

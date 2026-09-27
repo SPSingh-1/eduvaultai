@@ -100,6 +100,8 @@ export interface Deal {
     replySnippet: string | null
     replyReceivedAt: string | null
   }
+  stageEnteredAt?: string | null
+  createdAt?: string | null
   updatedAt?: string
 }
 
@@ -124,24 +126,30 @@ function syncDealEmailStatus(deal: Deal, allMessages: any[]): Deal {
 
   // Only advance stages based on actual sent and inbound messages
   let stage = deal.stage
+  let stageEnteredAt = deal.stageEnteredAt || deal.updatedAt || deal.createdAt || null
+
   if (inboundMsgs.length > 0) {
     if (['discovery', 'ai_strong', 'outreach_sent'].includes(stage)) {
       stage = 'demo_scheduled'
+      stageEnteredAt = lastInbound?.receivedAt || new Date().toISOString()
     }
   } else if (outboundMsgs.length > 0) {
     if (['discovery', 'ai_strong'].includes(stage)) {
       stage = 'outreach_sent'
+      stageEnteredAt = lastOutbound?.sentAt || new Date().toISOString()
     }
   } else {
     // If no real outbound or inbound messages exist, revert mock stages back to AI High Intent
     if (stage === 'outreach_sent' || stage === 'demo_scheduled') {
       stage = (deal.studentCount || 1000) >= 500 ? 'ai_strong' : 'discovery'
+      stageEnteredAt = deal.createdAt || deal.updatedAt || new Date().toISOString()
     }
   }
 
   return {
     ...deal,
     stage,
+    stageEnteredAt,
     probability: STAGE_PROBABILITY[stage] || deal.probability || 60,
     emailStatus: {
       sent: isContacted,
@@ -229,6 +237,7 @@ export class DealsService {
 
     if (existingIdx !== -1) {
       const existing = deals[existingIdx]
+      const stageChanged = dealInput.stage && dealInput.stage !== existing.stage
       finalDeal = {
         ...existing,
         ...dealInput,
@@ -237,16 +246,22 @@ export class DealsService {
         studentCount,
         stage: dealInput.stage || existing.stage,
         probability: STAGE_PROBABILITY[dealInput.stage || existing.stage] || existing.probability,
+        stageEnteredAt: stageChanged
+          ? new Date().toISOString()
+          : existing.stageEnteredAt || existing.updatedAt || new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       }
       deals[existingIdx] = finalDeal
     } else {
       const dealId = dealInput.id || `deal_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`
+      const now = new Date().toISOString()
       finalDeal = {
         id: dealId,
         schoolName: dealInput.schoolName,
         contactName: dealInput.contactName || 'Principal',
         stage,
+        stageEnteredAt: now,
+        createdAt: now,
         value: dealInput.value || pricing.annualSaaS,
         pricing,
         currency: 'INR',
@@ -275,7 +290,7 @@ export class DealsService {
           replySnippet: null,
           replyReceivedAt: null,
         },
-        updatedAt: new Date().toISOString(),
+        updatedAt: now,
       }
       deals.unshift(finalDeal)
     }
@@ -330,7 +345,10 @@ export class DealsService {
     const deal = deals.find((d) => d.id === id)
     if (!deal) return null
 
-    deal.stage = stage
+    if (deal.stage !== stage) {
+      deal.stage = stage
+      deal.stageEnteredAt = new Date().toISOString()
+    }
     deal.probability = STAGE_PROBABILITY[stage] || 50
     deal.updatedAt = new Date().toISOString()
     this.saveDeals(deals)
@@ -355,6 +373,7 @@ export class DealsService {
   private static generateInitialDeals(): Deal[] {
     const initialCandidates = FULL_SCHOOL_REGISTRY.slice(0, 10)
 
+    const now = new Date().toISOString()
     return initialCandidates.map((sch, i) => {
       const studentCount = sch.students || 1000
       const pricing = calculateSchoolPricing(studentCount)
@@ -365,6 +384,8 @@ export class DealsService {
         schoolName: sch.name,
         contactName: 'Principal',
         stage,
+        stageEnteredAt: now,
+        createdAt: now,
         value: pricing.annualSaaS,
         pricing,
         currency: 'INR',
@@ -394,7 +415,7 @@ export class DealsService {
           replySnippet: null,
           replyReceivedAt: null,
         },
-        updatedAt: new Date().toISOString(),
+        updatedAt: now,
       }
     })
   }

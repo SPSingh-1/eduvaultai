@@ -28,6 +28,48 @@ const STAGE_COLORS: Record<string, { bg: string; text: string; border: string; b
   ai_won: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/30', bar: 'bg-emerald-500' },
 }
 
+function formatStageTiming(dateStr?: string | null): { text: string; full: string } {
+  if (!dateStr) return { text: 'Just now', full: 'Recently updated' }
+  try {
+    const date = new Date(dateStr)
+    if (isNaN(date.getTime())) return { text: 'Just now', full: 'Recently updated' }
+
+    const now = Date.now()
+    const diffMs = Math.max(0, now - date.getTime())
+    const full = date.toLocaleString('en-IN', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    })
+
+    if (diffMs < 60 * 1000) return { text: 'Just now', full }
+
+    const diffMins = Math.floor(diffMs / (60 * 1000))
+    if (diffMins < 60) return { text: `${diffMins}m ago`, full }
+
+    const diffHours = Math.floor(diffMs / (60 * 60 * 1000))
+    if (diffHours < 24) return { text: `${diffHours}h ago`, full }
+
+    const diffDays = Math.floor(diffMs / (24 * 60 * 60 * 1000))
+    if (diffDays === 1) {
+      const timeStr = date.toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit', hour12: true })
+      return { text: `Yesterday, ${timeStr}`, full }
+    }
+    if (diffDays < 7) {
+      return { text: `${diffDays}d ago`, full }
+    }
+
+    const shortDate = date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })
+    const shortTime = date.toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit', hour12: true })
+    return { text: `${shortDate}, ${shortTime}`, full }
+  } catch {
+    return { text: 'Recently', full: 'Recently' }
+  }
+}
+
 export function SalesPipelinePage() {
   const [pipeline, setPipeline] = useState<PipelineStage[]>([])
   const [aiIntentPipeline, setAiIntentPipeline] = useState<PipelineStage[]>([])
@@ -502,6 +544,31 @@ export function SalesPipelinePage() {
                               )}
                             </div>
                           </div>
+
+                          {/* Stage Timing Tracker */}
+                          {(() => {
+                            const timing = formatStageTiming(deal.stageEnteredAt || deal.updatedAt)
+                            return (
+                              <div
+                                className="flex items-center justify-between text-[10px] font-mono px-2 py-1 rounded-md bg-surface-container-high/60 border border-outline-variant/30 text-on-surface-variant"
+                                title={`Entered this stage: ${timing.full}`}
+                              >
+                                <span className="flex items-center gap-1.5 truncate">
+                                  <span className="icon text-xs text-primary">schedule</span>
+                                  <span className="truncate">Stage since: <strong className="text-on-surface font-semibold">{timing.text}</strong></span>
+                                </span>
+                                {deal.emailStatus?.lastSentAt && (
+                                  <span
+                                    className="flex items-center gap-1 text-[10px] text-emerald-400 font-semibold shrink-0 ml-1.5"
+                                    title={`Outreach sent: ${formatStageTiming(deal.emailStatus.lastSentAt).full}`}
+                                  >
+                                    <span className="icon text-[11px]">mark_email_read</span>
+                                    <span>Sent {formatStageTiming(deal.emailStatus.lastSentAt).text}</span>
+                                  </span>
+                                )}
+                              </div>
+                            )
+                          })()}
 
                           {/* Email Outreach & Reply Status Telemetry Badges */}
                           <div className="space-y-1.5 pt-0.5">

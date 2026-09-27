@@ -46,6 +46,9 @@ export interface Deal {
   website?: string
   leadScore?: number
   emailStatus?: DealEmailStatus
+  stageEnteredAt?: string | null
+  createdAt?: string | null
+  updatedAt?: string | null
 }
 
 export interface PipelineStage {
