@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { PrismaClient } from '@prisma/client'
 import { GeminiService } from '../../ai/gemini.service'
+import { DealsService } from '../../services/deals.service'
 
 const router = Router()
 const prisma = new PrismaClient()
@@ -37,29 +38,54 @@ router.get('/', async (req, res) => {
         prisma.school.count({ where }),
       ])
 
-      res.json({
-        success: true,
-        data: schools,
-        meta: {
-          page: parseInt(page),
-          limit: parseInt(limit),
-          total,
-          totalPages: Math.ceil(total / parseInt(limit)),
-        },
-      })
+      if (schools && schools.length > 0) {
+        return res.json({
+          success: true,
+          data: schools,
+          meta: {
+            page: parseInt(page),
+            limit: parseInt(limit),
+            total,
+            totalPages: Math.ceil(total / parseInt(limit)),
+          },
+        })
+      }
     } catch (dbErr) {
       console.warn('Prisma DB query fallback in GET /schools:', (dbErr as Error).message)
-      res.json({
-        success: true,
-        data: [],
-        meta: {
-          page: 1,
-          limit: parseInt(limit),
-          total: 0,
-          totalPages: 0,
-        },
-      })
     }
+
+    // Fallback: Populate schools list from DealsService deals store
+    const deals = DealsService.loadDeals()
+    let mapped = deals.map((d) => ({
+      id: `sch_${d.id}`,
+      name: d.schoolName,
+      city: d.city,
+      address: `${d.city}, India`,
+      website: d.website,
+      phone: d.phone,
+      email: d.email,
+      studentCount: d.studentCount,
+      type: 'cbse',
+      principalName: d.contactName,
+      contacts: [{ firstName: d.contactName, phone: d.phone, email: d.email }],
+      leads: [{ id: d.id, leadScore: d.leadScore, status: d.stage === 'ai_strong' ? 'qualified' : 'new' }],
+    }))
+
+    if (search) {
+      const q = search.toLowerCase()
+      mapped = mapped.filter((s) => s.name.toLowerCase().includes(q) || s.city.toLowerCase().includes(q))
+    }
+
+    res.json({
+      success: true,
+      data: mapped,
+      meta: {
+        page: 1,
+        limit: parseInt(limit),
+        total: mapped.length,
+        totalPages: Math.ceil(mapped.length / parseInt(limit)) || 1,
+      },
+    })
   } catch (e) {
     res.status(500).json({ success: false, error: (e as Error).message })
   }

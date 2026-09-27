@@ -110,7 +110,7 @@ function isValidSchoolName(rawTitle: string): boolean {
 const SERPER_API_KEY = process.env.SERPER_API_KEY || '12b9cfcd8932d6c02dffef7507ca8c38a3d97f2e'
 
 // Comprehensive real school registry with authentic, verified emails & websites
-const FULL_SCHOOL_REGISTRY = [
+export const FULL_SCHOOL_REGISTRY = [
   { name: `St. Xavier's Senior Secondary School`, area: 'Gandhi Nagar', phone: '+91 141 270 2800', students: 3500, type: 'cbse', email: 'xavier41jaipur@gmail.com', website: 'https://stxaviersjaipur.org' },
   { name: `Cambridge Court High School`, area: 'Mansarovar', phone: '+91 141 278 1234', students: 2200, type: 'cbse', email: 'info@cambridgecourt.edu.in', website: 'https://cambridgecourt.edu.in' },
   { name: `Neerja Modi International School`, area: 'Mansarovar', phone: '+91 141 278 5400', students: 4500, type: 'international', email: 'admission@neerjamodi.com', website: 'https://neerjamodi.com' },

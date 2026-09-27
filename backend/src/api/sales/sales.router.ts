@@ -2,6 +2,13 @@ import { Router } from 'express'
 import { PrismaClient } from '@prisma/client'
 import { GeminiService } from '../../ai/gemini.service'
 import { EmailService } from '../../services/email.service'
+import {
+  DealsService,
+  STAGE_LABEL,
+  STAGE_PROBABILITY,
+  calculateSchoolPricing,
+  Deal,
+} from '../../services/deals.service'
 import fs from 'fs'
 import path from 'path'
 
@@ -21,8 +28,7 @@ function loadMessages(): any[] {
 }
 
 // Stage mapping: Kanban stage <-> Lead status in DB
-// Notice: 'qualified' (AI score >= 70) maps to 'ai_strong', NOT 'demo_scheduled'!
-// 'demo_scheduled' is strictly reserved for 'meeting_scheduled' (demo requested/booked)!
+// 'qualified' (AI score >= 70) maps to 'ai_strong'
 const STAGE_TO_STATUS: Record<string, string[]> = {
   discovery: ['new'],
   ai_strong: ['qualified'],
@@ -45,71 +51,10 @@ const STATUS_TO_STAGE: Record<string, string> = {
   disqualified: 'closed_won',
 }
 
-const STAGE_PROBABILITY: Record<string, number> = {
-  discovery: 30,
-  ai_strong: 60,
-  outreach_sent: 50,
-  demo_scheduled: 80,
-  proposal_sent: 90,
-  closed_won: 100,
-}
-
-const STAGE_LABEL: Record<string, string> = {
-  discovery: 'Discovery (30%)',
-  ai_strong: 'AI High Intent (60%)',
-  outreach_sent: 'Outreach Sent (50%)',
-  demo_scheduled: 'Demo Scheduled (80%)',
-  proposal_sent: 'Proposal Sent (90%)',
-  closed_won: 'Closed Won 🎉 (100%)',
-}
-
-/**
- * EduVault AI Commercial Tiered Pricing Model:
- * 100 - 200 students: ₹8 / student / month
- * 200 - 500 students: ₹7 / student / month
- * 500 - 1000 students: ₹6 / student / month
- * 1000+ students: ₹5 / student / month
- * Launch Offer: 2 Months Free Trial, Free Data Migration, Free Staff Training, Implementation up to ₹5,000
- */
-export function calculateSchoolPricing(studentCount: number = 1000) {
-  let ratePerStudentMonth = 5
-  let tierLabel = '1000+ Students (Enterprise Tier)'
-
-  if (studentCount <= 200) {
-    ratePerStudentMonth = 8
-    tierLabel = '100–200 Students (Starter Tier)'
-  } else if (studentCount <= 500) {
-    ratePerStudentMonth = 7
-    tierLabel = '200–500 Students (Growth Tier)'
-  } else if (studentCount <= 1000) {
-    ratePerStudentMonth = 6
-    tierLabel = '500–1000 Students (Standard Tier)'
-  } else {
-    ratePerStudentMonth = 5
-    tierLabel = '1000+ Students (Enterprise Tier)'
-  }
-
-  const monthlySaaS = studentCount * ratePerStudentMonth
-  const annualSaaS = monthlySaaS * 12
-  const implementationFee = 5000
-  const totalFirstYearContract = annualSaaS + implementationFee
-
-  return {
-    ratePerStudentMonth,
-    tierLabel,
-    studentCount,
-    monthlySaaS,
-    annualSaaS,
-    implementationFee,
-    totalFirstYearContract,
-    freeTrialMonths: 2,
-    freeDataMigration: true,
-    freeStaffTraining: true,
-  }
-}
+export { calculateSchoolPricing }
 
 // Convert Lead DB record to Deal UI format
-function leadToDeal(lead: any, allMessages?: any[]) {
+function leadToDeal(lead: any, allMessages?: any[]): Deal {
   const stage = STATUS_TO_STAGE[lead.status] || 'discovery'
   const probability = STAGE_PROBABILITY[stage] || 30
   const studentCount = lead.school?.studentCount || 1000
@@ -176,53 +121,10 @@ function leadToDeal(lead: any, allMessages?: any[]) {
   }
 }
 
-// Resilient in-memory deals store (Fresh CRM: starts empty, only user's real deals)
-let memoryDealsStore: any[] = []
-
-// Helper to format fallback stages
-function getFallbackStages() {
-  const stageOrder = ['discovery', 'ai_strong', 'outreach_sent', 'demo_scheduled', 'proposal_sent', 'closed_won']
-  return stageOrder.map((stageId) => ({
-    id: stageId,
-    name: STAGE_LABEL[stageId],
-    deals: memoryDealsStore.filter((d) => d.stage === stageId),
-  }))
-}
-
-// Helper to generate AI High-Intent Pipeline from deals
-function buildAiIntentPipeline(deals: any[]) {
-  const highIntentDeals = deals.filter((d) => (d.leadScore || 0) >= 70 || d.stage === 'ai_strong')
-
-  return [
-    {
-      id: 'ai_ready',
-      name: 'Ready for Outreach (AI 70%+)',
-      description: 'High purchase propensity, pending cold outreach pitch',
-      deals: highIntentDeals.filter((d) => !d.emailStatus?.sent && d.stage !== 'closed_won'),
-    },
-    {
-      id: 'ai_dispatched',
-      name: 'Outreach Sent (Awaiting Reply)',
-      description: 'AI-personalized pitch sent, follow-up automation active',
-      deals: highIntentDeals.filter((d) => d.emailStatus?.sent && !d.emailStatus?.hasReplied && d.stage !== 'closed_won'),
-    },
-    {
-      id: 'ai_replied',
-      name: 'Inbound Replied / Demo Booked 🎯',
-      description: 'School principal engaged or requested demo session',
-      deals: highIntentDeals.filter((d) => (d.emailStatus?.hasReplied || d.stage === 'demo_scheduled') && d.stage !== 'closed_won'),
-    },
-    {
-      id: 'ai_won',
-      name: 'Converted / Won 🎉',
-      description: 'Successfully onboarded high-intent school deals',
-      deals: highIntentDeals.filter((d) => d.stage === 'closed_won'),
-    },
-  ]
-}
-
-// GET /api/v1/sales/pipeline — Kanban Pipeline from DB (with resilient fallback)
+// GET /api/v1/sales/pipeline — Kanban Pipeline (Dual: Prisma DB + Persistent Deals File Store)
 router.get('/pipeline', async (req, res) => {
+  let allDeals: Deal[] = []
+
   try {
     const leads = await prisma.lead.findMany({
       where: {
@@ -236,54 +138,51 @@ router.get('/pipeline', async (req, res) => {
       },
     })
 
-    if (leads) {
+    if (leads && leads.length > 0) {
       const allMessages = loadMessages()
-      const allDeals = leads.map((l) => leadToDeal(l, allMessages))
-
-      const stageOrder = ['discovery', 'ai_strong', 'outreach_sent', 'demo_scheduled', 'proposal_sent', 'closed_won']
-      const stages = stageOrder.map((stageId) => {
-        const stageStatuses = STAGE_TO_STATUS[stageId] || []
-        const stageDeals = leads
-          .filter((l) => stageStatuses.includes(l.status))
-          .map((l) => leadToDeal(l, allMessages))
-
-        return {
-          id: stageId,
-          name: STAGE_LABEL[stageId],
-          deals: stageDeals,
-        }
-      })
-
-      const aiIntentStages = buildAiIntentPipeline(allDeals)
-      const totalValue = leads.reduce((acc, lead) => acc + (lead.leadScore || 50) * 5000, 0)
-
-      return res.json({
-        success: true,
-        totalValue,
-        dealCount: leads.length,
-        data: stages,
-        aiIntentStages,
-      })
+      allDeals = leads.map((l) => leadToDeal(l, allMessages))
     }
   } catch (e) {
-    console.warn('Prisma pipeline query warning (using live memory pipeline):', (e as Error).message)
+    console.warn('Prisma pipeline query warning (falling back to persistent deals store):', (e as Error).message)
   }
 
-  // Fallback to active memory pipeline
-  const stages = getFallbackStages()
-  const aiIntentStages = buildAiIntentPipeline(memoryDealsStore)
-  const totalValue = memoryDealsStore.reduce((acc, d) => acc + (d.value || 0), 0)
+  // Always blend with or fallback to persistent deals.json file store
+  const fileDeals = DealsService.loadDeals()
+
+  if (allDeals.length === 0) {
+    allDeals = fileDeals
+  } else {
+    // Merge any file deals not already in allDeals
+    const existingNames = new Set(allDeals.map((d) => (d.schoolName || '').toLowerCase().trim()))
+    for (const fd of fileDeals) {
+      const fdName = (fd.schoolName || '').toLowerCase().trim()
+      if (fdName && !existingNames.has(fdName)) {
+        allDeals.push(fd)
+        existingNames.add(fdName)
+      }
+    }
+  }
+
+  const stageOrder = ['discovery', 'ai_strong', 'outreach_sent', 'demo_scheduled', 'proposal_sent', 'closed_won']
+  const stages = stageOrder.map((stageId) => ({
+    id: stageId,
+    name: STAGE_LABEL[stageId] || stageId,
+    deals: allDeals.filter((d) => d.stage === stageId),
+  }))
+
+  const aiIntentStages = DealsService.buildAiIntentPipeline(allDeals)
+  const totalValue = allDeals.reduce((acc, d) => acc + (d.value || 0), 0)
 
   res.json({
     success: true,
     totalValue,
-    dealCount: memoryDealsStore.length,
+    dealCount: allDeals.length,
     data: stages,
     aiIntentStages,
   })
 })
 
-// GET /api/v1/sales/deals/:id — Get deal workspace from DB
+// GET /api/v1/sales/deals/:id — Get deal workspace (Prisma DB or DealsService file store)
 router.get('/deals/:id', async (req, res) => {
   try {
     const lead = await prisma.lead.findUnique({
@@ -295,37 +194,34 @@ router.get('/deals/:id', async (req, res) => {
     console.warn('Prisma deal query warning:', (e as Error).message)
   }
 
-  const memoryDeal = memoryDealsStore.find((d) => d.id === req.params.id)
-  if (memoryDeal) return res.json({ success: true, data: memoryDeal })
+  const deals = DealsService.loadDeals()
+  const deal = deals.find((d) => d.id === req.params.id)
+  if (deal) return res.json({ success: true, data: deal })
 
   res.status(404).json({ success: false, error: 'Deal not found' })
 })
 
-// POST /api/v1/sales/deals — Create new deal (creates Lead + School if needed)
+// POST /api/v1/sales/deals — Create new deal (Persisted to DealsService + DB if active)
 router.post('/deals', async (req, res) => {
   const { schoolName, contactName, stage = 'discovery', value, studentCount, modules, city, phone, email } = req.body
-  const count = studentCount ? parseInt(studentCount) : 1000
+  const count = studentCount ? parseInt(String(studentCount)) : 1000
   const pricing = calculateSchoolPricing(count)
-  const dealValue = value ? parseInt(value) : pricing.annualSaaS
+  const dealValue = value ? parseInt(String(value)) : pricing.annualSaaS
 
-  const memoryDeal = {
-    id: `deal_${Date.now()}`,
+  const savedDeal = DealsService.upsertDeal({
     schoolName: schoolName || 'New Target School',
     contactName: contactName || 'Principal',
     stage: stage || 'discovery',
     studentCount: count,
     value: dealValue,
-    pricing,
-    currency: 'INR',
-    probability: STAGE_PROBABILITY[stage] || 30,
-    expectedClose: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30).toISOString().split('T')[0],
     modules: modules || ['School ERP', 'WhatsApp Fees'],
     leadScore: 85,
-    city: city || '',
+    city: city || 'Jaipur',
     phone: phone || '',
     email: email || '',
-  }
+  })
 
+  // Also sync to Prisma DB in background if available
   try {
     let org = await prisma.organization.findFirst()
     if (!org) {
@@ -334,7 +230,6 @@ router.post('/deals', async (req, res) => {
       })
     }
 
-    // Upsert school record
     let school = await prisma.school.findFirst({ where: { name: schoolName, organizationId: org.id } })
     if (!school) {
       school = await prisma.school.create({
@@ -363,7 +258,7 @@ router.post('/deals', async (req, res) => {
       closed_won: 'won',
     }
 
-    const lead = await prisma.lead.create({
+    await prisma.lead.create({
       data: {
         organizationId: org.id,
         schoolId: school.id,
@@ -375,18 +270,12 @@ router.post('/deals', async (req, res) => {
           contactName,
         },
       },
-      include: { school: true, contact: true },
     })
-
-    const createdDeal = leadToDeal(lead)
-    memoryDealsStore.unshift(createdDeal)
-    return res.status(201).json({ success: true, data: createdDeal })
   } catch (e) {
-    console.warn('Prisma create deal warning (persisted to live memory store):', (e as Error).message)
+    console.warn('Prisma create deal warning (persisted to deals.json):', (e as Error).message)
   }
 
-  memoryDealsStore.unshift(memoryDeal)
-  res.status(201).json({ success: true, data: memoryDeal })
+  res.status(201).json({ success: true, data: savedDeal })
 })
 
 // DELETE /api/v1/sales/deals/:id — Remove deal
@@ -396,8 +285,7 @@ router.delete('/deals/:id', async (req, res) => {
   } catch (e) {
     // ignore prisma error
   }
-  const idx = memoryDealsStore.findIndex((d) => d.id === req.params.id)
-  if (idx !== -1) memoryDealsStore.splice(idx, 1)
+  DealsService.deleteDeal(req.params.id)
   res.json({ success: true, message: 'Deal deleted' })
 })
 
@@ -420,21 +308,17 @@ router.patch('/deals/:id/stage', async (req, res) => {
     const newStatus = statusMap[stage] || 'new'
 
     try {
-      const lead = await prisma.lead.update({
+      await prisma.lead.update({
         where: { id: req.params.id },
         data: { status: newStatus as any },
-        include: { school: true, contact: true },
       })
-      return res.json({ success: true, data: leadToDeal(lead) })
     } catch (e) {
       console.warn('Prisma deal stage update warning:', (e as Error).message)
     }
 
-    const memoryDeal = memoryDealsStore.find((d) => d.id === req.params.id)
-    if (memoryDeal) {
-      memoryDeal.stage = stage
-      memoryDeal.probability = STAGE_PROBABILITY[stage] || 30
-      return res.json({ success: true, data: memoryDeal })
+    const updated = DealsService.updateDealStage(req.params.id, stage)
+    if (updated) {
+      return res.json({ success: true, data: updated })
     }
 
     res.status(404).json({ success: false, error: 'Deal not found' })
@@ -457,7 +341,8 @@ router.post('/deals/:id/send-cold-email', async (req, res) => {
     } catch (e) {}
 
     if (!lead) {
-      lead = memoryDealsStore.find((d) => d.id === req.params.id)
+      const deals = DealsService.loadDeals()
+      lead = deals.find((d) => d.id === req.params.id)
     }
 
     if (!lead) {
@@ -578,10 +463,14 @@ ${process.env.EMAIL_FROM || 'connectwitheduvault@gmail.com'}`
     } catch {}
 
     const dealData = leadToDeal(updatedLead || lead, messages)
-    const memIdx = memoryDealsStore.findIndex((d) => d.id === req.params.id)
-    if (memIdx !== -1) {
-      memoryDealsStore[memIdx] = dealData
+    dealData.stage = 'outreach_sent'
+    if (dealData.emailStatus) {
+      dealData.emailStatus.sent = true
+      dealData.emailStatus.sentCount = (dealData.emailStatus.sentCount || 0) + 1
+      dealData.emailStatus.lastSentAt = msgRecord.sentAt
+      dealData.emailStatus.lastSubject = subject
     }
+    DealsService.upsertDeal(dealData)
 
     return res.json({
       success: true,
@@ -608,7 +497,8 @@ router.post('/deals/:id/strategist', async (req, res) => {
     }
 
     if (!deal) {
-      deal = memoryDealsStore.find((d) => d.id === req.params.id)
+      const deals = DealsService.loadDeals()
+      deal = deals.find((d) => d.id === req.params.id)
     }
 
     if (!deal) return res.status(404).json({ success: false, error: 'Deal not found' })

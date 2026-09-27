@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import { EmailService } from '../../services/email.service'
 import { GeminiService } from '../../ai/gemini.service'
+import { DealsService } from '../../services/deals.service'
 
 import fs from 'fs'
 import path from 'path'
@@ -504,7 +505,7 @@ ${cfg.senderTitle} | ${cfg.linkedinUrl}
 
       messagesStore.unshift(msgRecord)
 
-      // Advance lead status to contacted in CRM
+      // Advance lead status to contacted in CRM & DealsService
       if (sentStatus === 'sent') {
         try {
           await prisma.lead.updateMany({
@@ -520,6 +521,24 @@ ${cfg.senderTitle} | ${cfg.linkedinUrl}
             data: { status: 'contacted' },
           })
         } catch {}
+
+        DealsService.upsertDeal({
+          schoolName: school.name,
+          email: recipientEmail,
+          stage: 'outreach_sent',
+          emailStatus: {
+            sent: true,
+            sentCount: 1,
+            lastSentAt: msgRecord.sentAt,
+            lastSubject: subject,
+            hasReplied: false,
+            replyCategory: null,
+            replyCategoryLabel: null,
+            replySentiment: null,
+            replySnippet: null,
+            replyReceivedAt: null,
+          },
+        })
       }
 
       results.push({

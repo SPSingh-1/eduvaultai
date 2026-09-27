@@ -3,6 +3,7 @@ import { PrismaClient, SchoolType } from '@prisma/client'
 import { DiscoveryService } from '../../services/discovery.service'
 import { GeminiService } from '../../ai/gemini.service'
 import { EmailService } from '../../services/email.service'
+import { DealsService } from '../../services/deals.service'
 import fs from 'fs'
 import path from 'path'
 
@@ -217,88 +218,116 @@ router.post('/search', async (req, res) => {
   }
 })
 
-// POST /api/v1/discovery/save — Save discovered school to DB + create contact + qualified lead
+// POST /api/v1/discovery/save — Save discovered school to persistent deals store + DB
 router.post('/save', async (req, res) => {
   try {
     const { name, city, area, website, phone, email, type = 'cbse', studentCount = 500, address, principalName } = req.body
 
-    let org = await prisma.organization.findFirst()
-    if (!org) {
-      org = await prisma.organization.create({
-        data: { name: 'EduVault Enterprise', slug: 'eduvault-enterprise' },
-      })
-    }
-
     const fullAddress = address || (area ? `${area}, ${city}` : `${city}, India`)
     const finalEmail = email || extractDomainEmail(website)
+    const count = studentCount ? parseInt(String(studentCount)) : 500
 
-    // Check duplicate
-    const existing = await prisma.school.findFirst({
-      where: { name, organizationId: org.id },
-    })
-    if (existing) {
-      return res.status(200).json({ success: true, school: existing, duplicate: true })
-    }
+    let score = 84
+    if (count >= 1000) score = 94
+    else if (count >= 500) score = 86
+    else if (count >= 200) score = 78
 
-    // 1. Create school record
-    const school = await prisma.school.create({
-      data: {
-        organizationId: org.id,
-        name,
-        city,
-        state: 'India',
-        address: fullAddress,
-        website: website || null,
-        phone: phone || null,
-        email: finalEmail,
-        principalName: principalName || null,
-        type: parseSchoolType(type),
-        studentCount: studentCount ? parseInt(String(studentCount)) : 500,
-        source: 'google_places_api',
-        confidence: 0.96,
-      },
+    // Direct save to DealsService ensures pipeline has this deal immediately!
+    const deal = DealsService.saveSchoolAsDeal({
+      name,
+      city: city || 'Jaipur',
+      area: fullAddress,
+      website: website || '',
+      phone: phone || '',
+      email: finalEmail || '',
+      type,
+      studentCount: count,
+      principalName: principalName || 'Principal',
+      leadScore: score,
+      stage: 'ai_strong', // AI High Intent (since user chose to Qualify & Save)
     })
 
-    // 2. Create contact if we have phone or email
+    // Also persist to Prisma if database is connected
+    let school: any = { id: deal.id, name, city: city || 'Jaipur', address: fullAddress, website, phone, email: finalEmail, type, studentCount: count }
     let contact: any = null
-    if (phone || finalEmail || principalName) {
-      const nameParts = (principalName || 'School Principal').split(' ')
-      contact = await prisma.contact.create({
-        data: {
-          organizationId: org.id,
-          schoolId: school.id,
-          firstName: nameParts[0] || 'School',
-          lastName: nameParts.slice(1).join(' ') || 'Principal',
-          email: finalEmail || null,
-          phone: phone || null,
-          whatsapp: phone || null,
-          designation: principalName ? 'Principal' : 'Admin Contact',
-        },
-      })
+    let lead: any = { id: deal.id, leadScore: score, status: 'qualified' }
+
+    try {
+      let org = await prisma.organization.findFirst()
+      if (!org) {
+        org = await prisma.organization.create({
+          data: { name: 'EduVault Enterprise', slug: 'eduvault-enterprise' },
+        })
+      }
+
+      if (org) {
+        const existingSchool = await prisma.school.findFirst({
+          where: { name, organizationId: org.id },
+          include: { contacts: true, leads: true },
+        })
+
+        if (!existingSchool) {
+          school = await prisma.school.create({
+            data: {
+              organizationId: org.id,
+              name,
+              city: city || 'Jaipur',
+              state: 'India',
+              address: fullAddress,
+              website: website || null,
+              phone: phone || null,
+              email: finalEmail || null,
+              principalName: principalName || null,
+              type: parseSchoolType(type),
+              studentCount: count,
+              source: 'google_places_api',
+              confidence: 0.96,
+            },
+          })
+
+          if (phone || finalEmail || principalName) {
+            const nameParts = (principalName || 'School Principal').split(' ')
+            contact = await prisma.contact.create({
+              data: {
+                organizationId: org.id,
+                schoolId: school.id,
+                firstName: nameParts[0] || 'School',
+                lastName: nameParts.slice(1).join(' ') || 'Principal',
+                email: finalEmail || null,
+                phone: phone || null,
+                whatsapp: phone || null,
+                designation: principalName ? 'Principal' : 'Admin Contact',
+              },
+            }).catch(() => null)
+          }
+
+          lead = await prisma.lead.create({
+            data: {
+              organizationId: org.id,
+              schoolId: school.id,
+              contactId: contact?.id || null,
+              status: 'qualified', // AI Qualified lead -> maps to 'ai_strong'
+              leadScore: score,
+              scoreBreakdown: {
+                reasoning: `High ICP Fit: ${count} students, ${type} curriculum`,
+                locality: area || city,
+                phone: phone || null,
+                email: finalEmail || null,
+                autoGenerated: true,
+              },
+            },
+          }).catch(() => null)
+        } else {
+          school = existingSchool
+          contact = existingSchool.contacts?.[0] || null
+          lead = existingSchool.leads?.[0] || lead
+        }
+      }
+    } catch (dbErr) {
+      console.warn('Prisma DB save warning (fallback to persistent deals store):', (dbErr as Error).message)
     }
 
-    // 3. Score lead using Gemini
-    const scoreResult = await GeminiService.scoreLead(school.name, school.studentCount || 500, website || '')
-
-    // 4. Create Lead in Pipeline
-    const lead = await prisma.lead.create({
-      data: {
-        organizationId: org.id,
-        schoolId: school.id,
-        contactId: contact?.id || null,
-        status: 'new', // Initial stage is Discovery ('new'). Never pre-qualify before engagement!
-        leadScore: scoreResult.score,
-        scoreBreakdown: {
-          reasoning: scoreResult.reasoning,
-          locality: area || city,
-          phone: phone || null,
-          email: finalEmail || null,
-          autoGenerated: true,
-        },
-      },
-    })
-
-    res.status(201).json({ success: true, school, contact, lead })
+    res.status(201).json({ success: true, school, contact, lead, deal })
   } catch (e) {
     res.status(500).json({ success: false, error: (e as Error).message })
   }
@@ -484,6 +513,24 @@ router.post('/auto-pilot', async (req, res) => {
       savedLeads.push({ school: schoolObj, contact: contactObj, lead: leadObj })
     }
 
+    // Ensure all discovered & qualified schools are synchronized into DealsService
+    for (const item of savedLeads) {
+      const sch = item.school
+      const score = item.lead?.leadScore || 85
+      DealsService.saveSchoolAsDeal({
+        name: sch.name,
+        city: sch.city || city,
+        area: sch.address || area,
+        website: sch.website,
+        phone: sch.phone,
+        email: sch.email,
+        type: sch.type,
+        studentCount: sch.studentCount,
+        leadScore: score,
+        stage: score >= 70 ? 'ai_strong' : 'discovery',
+      })
+    }
+
     agentLogs.push(
       `🧠 Agent 3 (AI ICP Intelligence): Hermes 3 evaluated student strength & ERP propensity for all ${savedLeads.length} schools`
     )
@@ -535,7 +582,7 @@ router.post('/auto-pilot', async (req, res) => {
           else slabRate = 5
 
           const subject = `Eduvault ERP for ${schoolName}: 2 Months Free Trial (No Bond) + Live WhatsApp Automation`
-          const emailBody = `Respected Principal,\n\nGreetings from Ruviq!\n\nWe are pleased to introduce Eduvault ERP (Education with Security) for ${schoolName}.\n\n🌟 Risk-Free Trial & Transparent Pricing:\n• 2 Months Free Trial: "2 महीने चलाकर देखें — पसंद न आए तो ₹0 चार्ज, कोई बॉन्ड नहीं!"\n• Affordable Pricing: Just ₹${slabRate}/month per student.\n• 100% Free Data Migration: Complete transfer within 48 hours by our engineering team at ₹0 cost.\n• ₹5,000 Setup Fee: 100% Waived for schools onboarding this month.\n\nKey Features:\n1. Automated fee receipts & attendance sent directly to parents' WhatsApp.\n2. Clean, clutter-free UI with zero staff training needed.\n3. CBSE/ICSE report cards & multi-mode fee tracking.\n\nWould you be open for a brief 15-minute screen walkthrough this week?\n\nBest regards,\nShashi Pratap Singh\nEduvault ERP | ${process.env.EMAIL_FROM || 'connectwitheduvault@gmail.com'}`
+          const emailBody = `Respected Principal,\n\nGreetings from Ruviq!\n\nWe are pleased to introduce Eduvault ERP (Education with Security) for ${schoolName}.\n\n🌟 Risk-Free Trial & Transparent Pricing:\n• 2 Months Free Trial: "2 महीने चलाकर देखें — पसंद न आए तो ₹0 charge, कोई बॉन्ड नहीं!"\n• Affordable Pricing: Just ₹${slabRate}/month per student.\n• 100% Free Data Migration: Complete transfer within 48 hours by our engineering team at ₹0 cost.\n• ₹5,000 Setup Fee: 100% Waived for schools onboarding this month.\n\nKey Features:\n1. Automated fee receipts & attendance sent directly to parents' WhatsApp.\n2. Clean, clutter-free UI with zero staff training needed.\n3. CBSE/ICSE report cards & multi-mode fee tracking.\n\nWould you be open for a brief 15-minute screen walkthrough this week?\n\nBest regards,\nShashi Pratap Singh\nEduvault ERP | ${process.env.EMAIL_FROM || 'connectwitheduvault@gmail.com'}`
 
           try {
             const brevoRes = await EmailService.sendOutreachEmail(email, 'Principal', subject, emailBody.replace(/\n/g, '<br/>'))
@@ -557,6 +604,22 @@ router.post('/auto-pilot', async (req, res) => {
                 data: { status: 'contacted' },
               }).catch(() => {})
             }
+            DealsService.upsertDeal({
+              schoolName,
+              stage: 'outreach_sent',
+              emailStatus: {
+                sent: true,
+                sentCount: 1,
+                lastSentAt: new Date().toISOString(),
+                lastSubject: subject,
+                hasReplied: false,
+                replyCategory: null,
+                replyCategoryLabel: null,
+                replySentiment: null,
+                replySnippet: null,
+                replyReceivedAt: null,
+              },
+            })
           } catch (err) {
             console.warn(`Background email dispatch warning for ${email}:`, (err as Error).message)
           }

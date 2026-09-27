@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { PrismaClient } from '@prisma/client'
 import { GeminiService } from '../../ai/gemini.service'
 import { EmailService } from '../../services/email.service'
+import { DealsService } from '../../services/deals.service'
 import fs from 'fs'
 import path from 'path'
 
@@ -66,7 +67,7 @@ router.get('/', async (req, res) => {
         prisma.lead.count({ where }),
       ])
 
-      if (leads) {
+      if (leads && leads.length > 0) {
         return res.json({
           success: true,
           data: leads,
@@ -79,12 +80,48 @@ router.get('/', async (req, res) => {
         })
       }
     } catch (dbErr) {
-      console.warn('Prisma leads query warning (using memory leads):', (dbErr as Error).message)
+      console.warn('Prisma leads query warning (using persistent deals store):', (dbErr as Error).message)
     }
 
+    // Fallback: Use DealsService persistent deals store mapped to Lead structure
+    const deals = DealsService.loadDeals()
+    const mappedDeals = deals.map((d) => ({
+      id: d.id,
+      status:
+        d.stage === 'ai_strong'
+          ? 'qualified'
+          : d.stage === 'outreach_sent'
+          ? 'contacted'
+          : d.stage === 'demo_scheduled'
+          ? 'meeting_scheduled'
+          : d.stage === 'proposal_sent'
+          ? 'proposal_sent'
+          : d.stage === 'closed_won'
+          ? 'won'
+          : 'new',
+      leadScore: d.leadScore || 85,
+      scoreBreakdown: d.scoreBreakdown || { reasoning: 'AI ICP fit verified' },
+      school: {
+        id: `sch_${d.id}`,
+        name: d.schoolName,
+        city: d.city,
+        phone: d.phone,
+        email: d.email,
+        website: d.website,
+        studentCount: d.studentCount,
+      },
+      contact: {
+        id: `cnt_${d.id}`,
+        firstName: d.contactName,
+        lastName: '',
+        designation: 'Principal',
+        phone: d.phone,
+        email: d.email,
+      },
+      createdAt: d.updatedAt || new Date().toISOString(),
+    }))
 
-    // Filter memory store
-    let filtered = [...memoryLeadsStore]
+    let filtered = [...mappedDeals, ...memoryLeadsStore]
     if (status) filtered = filtered.filter((l) => l.status === status)
     if (minScore) filtered = filtered.filter((l) => l.leadScore >= parseInt(minScore))
     if (search) {
@@ -101,7 +138,7 @@ router.get('/', async (req, res) => {
         page: 1,
         limit: 20,
         total: filtered.length,
-        totalPages: 1,
+        totalPages: Math.ceil(filtered.length / 20) || 1,
       },
     })
   } catch (e) {
