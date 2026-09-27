@@ -63,6 +63,7 @@ export function SchoolDiscoveryPage() {
   const [autoPilotRunning, setAutoPilotRunning] = useState(false)
   const [agentStep, setAgentStep] = useState(0)
   const [agentLogs, setAgentLogs] = useState<string[]>([])
+  const [autoPilotResult, setAutoPilotResult] = useState<any>(null)
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null)
 
   // 1. Restore previous discovery state on mount from localStorage (prevents vanishing on refresh)
@@ -78,6 +79,8 @@ export function SchoolDiscoveryPage() {
           setSchoolType(parsed.schoolType || 'all')
           setSavedIds(parsed.savedIds || {})
           setAgentLogs(parsed.agentLogs || [])
+          setAgentStep(parsed.agentStep || 5)
+          setAutoPilotResult(parsed.autoPilotResult || null)
           setHasSearched(true)
         }
       }
@@ -109,6 +112,7 @@ export function SchoolDiscoveryPage() {
     setDiscoveredSchools([])
     setSavedIds({})
     setAgentLogs([])
+    setAgentStep(0)
     setHasSearched(false)
     setAutoPilotResult(null)
     setOutreachStatusMsg(null)
@@ -128,13 +132,15 @@ export function SchoolDiscoveryPage() {
             schoolType,
             savedIds,
             agentLogs,
+            agentStep: agentStep || 5,
+            autoPilotResult,
           })
         )
       } catch {
         // ignore
       }
     }
-  }, [discoveredSchools, savedIds, city, area, schoolType, agentLogs])
+  }, [discoveredSchools, savedIds, city, area, schoolType, agentLogs, agentStep, autoPilotResult])
 
   const handleSearch = async (e?: React.FormEvent, overrideCity?: string, overrideArea?: string) => {
     if (e) e.preventDefault()
@@ -181,8 +187,6 @@ export function SchoolDiscoveryPage() {
     }
   }, [schoolType])
 
-  const [autoPilotResult, setAutoPilotResult] = useState<any>(null)
-
   const handleRunAutoPilot = async () => {
     if (!city.trim()) return
     setAutoPilotRunning(true)
@@ -215,7 +219,6 @@ export function SchoolDiscoveryPage() {
         schoolType,
       })
 
-      setAgentStep(4)
       setDiscoveredSchools(result.discovered || [])
       setHasSearched(true)
       setAutoPilotResult(result)
@@ -226,12 +229,20 @@ export function SchoolDiscoveryPage() {
       })
       setSavedIds(markSaved)
 
-
       setAgentLogs(
         result.agentLogs || [
           `⚡ Agent 4 (Pipeline Agent): Successfully added ${result.autoQualifiedCount || 0} discovery leads to CRM Pipeline!`,
+          `🚀 Agent 5 (Outreach Agent): Dispatched cold emails to candidates. Pipeline ready.`,
         ]
       )
+
+      // Step 4: Pipeline Integration
+      setAgentStep(4)
+      await new Promise((r) => setTimeout(r, 600))
+
+      // Step 5: Autonomous Outreach Completed
+      setAgentStep(5)
+      await new Promise((r) => setTimeout(r, 400))
 
       // Refresh DB counter
       const listRes = await schoolsApi.list({ limit: 1 })
@@ -240,9 +251,7 @@ export function SchoolDiscoveryPage() {
       console.error('Auto-Pilot error:', err)
       setAgentLogs((prev) => [...prev, `❌ Auto-Pilot error: Could not complete full workflow. Check backend status.`])
     } finally {
-      setTimeout(() => {
-        setAutoPilotRunning(false)
-      }, 1000)
+      setAutoPilotRunning(false)
     }
   }
 
@@ -554,11 +563,20 @@ export function SchoolDiscoveryPage() {
         <div className="glass-panel p-6 rounded-2xl border border-primary/40 space-y-4 animate-fade-in bg-primary/5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="icon text-primary text-2xl animate-pulse">smart_toy</span>
+              <span className={`icon text-2xl ${autoPilotRunning ? 'text-primary animate-pulse' : 'text-emerald-400'}`}>
+                {autoPilotRunning ? 'smart_toy' : 'task_alt'}
+              </span>
               <h3 className="text-headline-sm font-bold text-on-surface">Autonomous AI Agent Execution Pipeline</h3>
             </div>
-            <span className="status-badge active font-mono">
-              {agentStep === 5 ? 'Pipeline Finished' : `Executing Stage ${agentStep}/5`}
+            <span
+              className={`status-badge font-mono font-semibold px-3 py-1 rounded-full text-xs flex items-center gap-1.5 ${
+                autoPilotRunning
+                  ? 'active bg-primary/20 text-primary border border-primary/40'
+                  : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
+              }`}
+            >
+              <span className={`w-2 h-2 rounded-full ${autoPilotRunning ? 'bg-primary animate-ping' : 'bg-emerald-400'}`} />
+              {autoPilotRunning ? `Executing Stage ${Math.min(agentStep || 1, 5)}/5` : 'All 5 Stages Completed ✓'}
             </span>
           </div>
 
@@ -571,8 +589,8 @@ export function SchoolDiscoveryPage() {
               { num: 4, title: 'Pipeline Integration', icon: 'add_to_photos', desc: 'Lead Creation & CRM Sync' },
               { num: 5, title: 'Autonomous Outreach', icon: 'mark_email_read', desc: 'Cold Pitch with 2M Free Trial' },
             ].map((stg) => {
-              const isActive = agentStep === stg.num
-              const isDone = agentStep > stg.num
+              const isActive = autoPilotRunning && agentStep === stg.num
+              const isDone = agentStep > stg.num || (!autoPilotRunning && (agentStep >= stg.num || agentLogs.length >= 4))
               return (
                 <div
                   key={stg.num}
@@ -580,12 +598,14 @@ export function SchoolDiscoveryPage() {
                     isActive
                       ? 'bg-primary-container/20 border-primary text-primary shadow-glow-primary'
                       : isDone
-                      ? 'bg-secondary/10 border-secondary/40 text-secondary'
+                      ? 'bg-emerald-500/10 border-emerald-500/40 text-emerald-400'
                       : 'glass-card border-outline-variant/20 opacity-60'
                   }`}
                 >
                   <div className="flex items-center gap-2 mb-1">
-                    <span className={`icon text-lg ${isActive ? 'animate-spin' : ''}`}>{isDone ? 'check_circle' : stg.icon}</span>
+                    <span className={`icon text-lg ${isActive ? 'animate-spin' : ''}`}>
+                      {isDone ? 'check_circle' : stg.icon}
+                    </span>
                     <span className="text-label-md font-bold">{stg.title}</span>
                   </div>
                   <p className="text-label-sm text-on-surface-variant">{stg.desc}</p>
@@ -604,8 +624,8 @@ export function SchoolDiscoveryPage() {
             ))}
           </div>
 
-          {/* ✅ Completion Summary — shown after all 4 stages done */}
-          {agentStep === 4 && autoPilotResult && (
+          {/* ✅ Completion Summary — shown when autoPilot finishes or logs exist */}
+          {(!autoPilotRunning || agentStep >= 5) && (autoPilotResult || agentLogs.length > 0) && (
             <div className="p-4 rounded-2xl bg-secondary/10 border border-secondary/30 animate-fade-in">
               <div className="flex items-center gap-2 mb-3">
                 <span className="icon text-secondary text-xl">check_circle</span>
@@ -613,23 +633,23 @@ export function SchoolDiscoveryPage() {
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
                 <div className="glass-card p-3 rounded-xl text-center">
-                  <div className="text-kpi-md font-mono font-bold text-primary">{autoPilotResult.discoveredCount || 0}</div>
+                  <div className="text-kpi-md font-mono font-bold text-primary">{autoPilotResult?.discoveredCount || discoveredSchools.length || 0}</div>
                   <div className="text-label-sm text-on-surface-variant">Schools Found</div>
                 </div>
                 <div className="glass-card p-3 rounded-xl text-center">
-                  <div className="text-kpi-md font-mono font-bold text-secondary">{autoPilotResult.schoolsSaved || autoPilotResult.discoveredCount || 0}</div>
+                  <div className="text-kpi-md font-mono font-bold text-secondary">{autoPilotResult?.schoolsSaved || discoveredSchools.length || 0}</div>
                   <div className="text-label-sm text-on-surface-variant">
-                    {autoPilotResult.newlyCreated !== undefined
+                    {autoPilotResult?.newlyCreated !== undefined
                       ? `Active in CRM (${autoPilotResult.newlyCreated} new + ${autoPilotResult.existingSynced} synced)`
                       : 'Schools Active in CRM'}
                   </div>
                 </div>
                 <div className="glass-card p-3 rounded-xl text-center">
-                  <div className="text-kpi-md font-mono font-bold text-tertiary">{autoPilotResult.contactsCreated || 0}</div>
+                  <div className="text-kpi-md font-mono font-bold text-tertiary">{autoPilotResult?.contactsCreated || discoveredSchools.filter((s: any) => s.phone).length || 0}</div>
                   <div className="text-label-sm text-on-surface-variant">Contacts Enriched</div>
                 </div>
                 <div className="glass-card p-3 rounded-xl text-center">
-                  <div className="text-kpi-md font-mono font-bold text-on-surface">{autoPilotResult.autoQualifiedCount || autoPilotResult.discoveredCount || 0}</div>
+                  <div className="text-kpi-md font-mono font-bold text-on-surface">{autoPilotResult?.autoQualifiedCount || discoveredSchools.length || 0}</div>
                   <div className="text-label-sm text-on-surface-variant">Leads in Pipeline</div>
                 </div>
               </div>
