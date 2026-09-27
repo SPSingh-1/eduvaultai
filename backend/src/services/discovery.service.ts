@@ -24,43 +24,32 @@ export interface DiscoveredSchool {
   source: string
 }
 
-function extractDomainEmail(website?: string, schoolName?: string, city?: string): string | undefined {
-  if (website) {
-    try {
-      const cleanUrl = website.startsWith('http') ? website : `https://${website}`
-      const url = new URL(cleanUrl)
-      const host = url.hostname.replace(/^www\./, '').trim()
-      if (
-        host &&
-        host.includes('.') &&
-        !host.includes('google') &&
-        !host.includes('facebook') &&
-        !host.includes('instagram') &&
-        !host.includes('wikipedia') &&
-        !host.includes('youtube') &&
-        !host.includes('nic.in') &&
-        !host.includes('gov.in')
-      ) {
-        return `info@${host}`
-      }
-    } catch {
-      // Ignore invalid URLs
+function extractDomainEmail(website?: string): string | undefined {
+  if (!website) return undefined
+  try {
+    const cleanUrl = website.startsWith('http') ? website : `https://${website}`
+    const url = new URL(cleanUrl)
+    const host = url.hostname.replace(/^www\./, '').trim()
+    if (
+      host &&
+      host.includes('.') &&
+      !host.includes('google') &&
+      !host.includes('facebook') &&
+      !host.includes('instagram') &&
+      !host.includes('wikipedia') &&
+      !host.includes('youtube') &&
+      !host.includes('nic.in') &&
+      !host.includes('gov.in') &&
+      !host.includes('shaladarpan') &&
+      !host.includes('education.')
+    ) {
+      return `info@${host}`
     }
+  } catch {
+    // Ignore invalid URLs
   }
 
-  // Realistic official school email for Indian schools
-  if (schoolName) {
-    const clean = schoolName
-      .toLowerCase()
-      .replace(/\(.*?\)/g, '')
-      .replace(/[^a-z0-9]/g, '')
-      .slice(0, 14)
-    const cityCode = (city || 'jpr').toLowerCase().slice(0, 3)
-    if (clean.length >= 3) {
-      return `${clean}.${cityCode}@gmail.com`
-    }
-  }
-
+  // Strictly return undefined if no official website exists (no guessing)
   return undefined
 }
 
@@ -130,23 +119,23 @@ const FULL_SCHOOL_REGISTRY = [
   { name: `Subodh Public School`, area: 'Rambagh Circle', phone: '+91 141 256 0142', students: 1900, type: 'cbse', email: 'subodhpublicschool@yahoo.com', website: 'https://subodhpublicschool.com' },
   { name: `Seedling Public School`, area: 'Jawahar Nagar', phone: '+91 141 265 4321', students: 1400, type: 'cbse', email: 'seedlingjaipur@gmail.com', website: 'https://seedlingschools.com' },
   { name: `Tagore International School`, area: 'Mansarovar', phone: '+91 141 278 0900', students: 1750, type: 'cbse', email: 'tisjaipur@yahoo.co.in', website: 'https://tisjaipur.com' },
-  { name: `Adarsh Vidya Mandir Secondary School`, area: 'Adarsh Nagar', phone: '+91 141 260 1122', students: 350, type: 'state_board', email: 'avmjaipur@gmail.com', website: 'https://adarshvidyamandir.org' },
-  { name: `Shishu Niketan Middle School`, area: 'Bani Park', phone: '+91 141 220 3344', students: 120, type: 'private', email: 'shishuniketan.jpr@gmail.com', website: 'https://shishuniketanjaipur.in' },
+  { name: `Adarsh Vidya Mandir Secondary School`, area: 'Adarsh Nagar', phone: '+91 141 260 1122', students: 350, type: 'state_board' },
+  { name: `Shishu Niketan Middle School`, area: 'Bani Park', phone: '+91 141 220 3344', students: 120, type: 'private' },
   { name: `St. Anselm's Pink City Senior Secondary School`, area: 'Malviya Nagar', phone: '+91 141 252 0340', students: 2900, type: 'icse', email: 'stanselmspinkcity@gmail.com', website: 'https://stanselmschool.org' },
   { name: `Maheshwari Public School`, area: 'Jawahar Nagar', phone: '+91 141 265 1853', students: 3800, type: 'cbse', email: 'mpsjaipur@gmail.com', website: 'https://mpsjaipur.com' },
   { name: `Maharani Gayatri Devi Girls' School (MGD)`, area: 'C-Scheme', phone: '+91 141 237 4086', students: 2600, type: 'cbse', email: 'principal@mgdschooljaipur.com', website: 'https://mgdschooljaipur.com' },
-  { name: `Sanskriti Academy`, area: 'Nirman Nagar', phone: '+91 141 281 5566', students: 85, type: 'private', email: 'sanskritiacademy.jaipur@gmail.com', website: 'https://sanskritiacademy.in' },
-  { name: `Bal Vidya Mandir Primary School`, area: 'Sodala', phone: '+91 141 229 4488', students: 60, type: 'state_board', email: 'balvidyamandir.jpr@gmail.com', website: 'https://balvidyamandir.in' },
+  { name: `Sanskriti Academy`, area: 'Nirman Nagar', phone: '+91 141 281 5566', students: 85, type: 'private' },
+  { name: `Bal Vidya Mandir Primary School`, area: 'Sodala', phone: '+91 141 229 4488', students: 60, type: 'state_board' },
   { name: `Delhi Public School (DPS)`, area: 'Ajmer Road', phone: '+91 141 286 4100', students: 4200, type: 'cbse', email: 'dpsjaipur@gmail.com', website: 'https://dpsjaipur.com' },
   { name: `Step by Step International School`, area: 'Chitrakoot', phone: '+91 141 244 0911', students: 1600, type: 'international', email: 'admissions@sbsj.in', website: 'https://sbsj.in' },
   { name: `St. Soldier Senior Secondary School`, area: 'Bhagwan Das Road', phone: '+91 141 237 1920', students: 1250, type: 'cbse', email: 'stsoldierjaipur@gmail.com', website: 'https://stsoldierschool.org' },
   { name: `Gyan Vihar World School`, area: 'Jagatpura', phone: '+91 141 275 9900', students: 950, type: 'cbse', email: 'gvwsjaipur@gmail.com', website: 'https://gyanvihar.org' },
-  { name: `Saraswati Shishu Mandir`, area: 'Tonk Road', phone: '+91 141 272 0011', students: 180, type: 'state_board', email: 'ssm.jaipur@gmail.com', website: 'https://saraswatishishumandir.org' },
+  { name: `Saraswati Shishu Mandir`, area: 'Tonk Road', phone: '+91 141 272 0011', students: 180, type: 'state_board' },
   { name: `Rawat Senior Secondary School`, area: 'Vivek Vihar', phone: '+91 141 229 1199', students: 2100, type: 'state_board', email: 'rawatschooljaipur@gmail.com', website: 'https://rawatschool.com' },
   { name: `Warren Academy School`, area: 'Tilak Nagar', phone: '+91 141 262 0505', students: 780, type: 'cbse', email: 'warrenacademy@gmail.com', website: 'https://warrenacademy.edu.in' },
   { name: `St. Edmund's School`, area: 'Jawahar Nagar', phone: '+91 141 265 1084', students: 1450, type: 'cbse', email: 'help@edmunds.ac.in', website: 'https://edmunds.ac.in' },
-  { name: `Bright Future Primary School`, area: 'Durgapura', phone: '+91 141 276 3399', students: 50, type: 'private', email: 'brightfuture.jaipur@gmail.com', website: 'https://brightfutureschool.in' },
-  { name: `Modern Public Secondary School`, area: 'Vaishali Nagar', phone: '+91 141 235 8822', students: 480, type: 'cbse', email: 'modernpublicschooljpr@gmail.com', website: 'https://modernpublicschool.co.in' },
+  { name: `Bright Future Primary School`, area: 'Durgapura', phone: '+91 141 276 3399', students: 50, type: 'private' },
+  { name: `Modern Public Secondary School`, area: 'Vaishali Nagar', phone: '+91 141 235 8822', students: 480, type: 'cbse' },
 ]
 
 export class DiscoveryService {
@@ -220,7 +209,7 @@ export class DiscoveryService {
 
             const realPhone = item.phoneNumber ? String(item.phoneNumber).trim() : undefined
             const phoneStatus: 'verified' | 'unlisted' = realPhone ? 'verified' : 'unlisted'
-            const realEmail = extractDomainEmail(item.website, rawName, rawCity)
+            const realEmail = extractDomainEmail(item.website)
             const emailStatus: 'verified' | 'unlisted' = realEmail ? 'verified' : 'unlisted'
 
             fetchedResults.push({

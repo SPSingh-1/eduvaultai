@@ -855,7 +855,7 @@ export function SchoolDiscoveryPage() {
                           </div>
                         )}
 
-                        {school.email && (
+                        {school.email ? (
                           <div className="flex items-center justify-between bg-primary/10 border border-primary/20 p-2 rounded-xl text-label-sm">
                             <a href={`mailto:${school.email}`} className="flex items-center gap-1.5 text-primary font-mono font-medium hover:underline text-xs truncate">
                               <span className="icon text-sm">mail</span>
@@ -864,6 +864,11 @@ export function SchoolDiscoveryPage() {
                             <span className="text-label-xs text-primary/80 font-mono shrink-0 ml-1">
                               {school.email.includes('@gmail.com') ? 'Official Gmail' : 'Verified Mail'}
                             </span>
+                          </div>
+                        ) : (
+                          <div className="flex items-center gap-1.5 text-on-surface-variant/50 bg-surface-dark/40 px-2.5 py-1.5 rounded-xl text-label-xs font-mono">
+                            <span className="icon text-xs">mail_lock</span>
+                            <span>No Email Listed (Direct Call Only)</span>
                           </div>
                         )}
                       </div>
