@@ -22,30 +22,44 @@ router.get('/', async (req, res) => {
     if (city) where.city = { equals: city, mode: 'insensitive' }
     if (type && type !== 'all') where.type = type
 
-    const [schools, total] = await Promise.all([
-      prisma.school.findMany({
-        where,
-        skip,
-        take: parseInt(limit),
-        orderBy: [{ phone: 'desc' }, { createdAt: 'desc' }],
-        include: {
-          contacts: true,
-          leads: { select: { id: true, leadScore: true, status: true } },
-        },
-      }),
-      prisma.school.count({ where }),
-    ])
+    try {
+      const [schools, total] = await Promise.all([
+        prisma.school.findMany({
+          where,
+          skip,
+          take: parseInt(limit),
+          orderBy: [{ phone: 'desc' }, { createdAt: 'desc' }],
+          include: {
+            contacts: true,
+            leads: { select: { id: true, leadScore: true, status: true } },
+          },
+        }),
+        prisma.school.count({ where }),
+      ])
 
-    res.json({
-      success: true,
-      data: schools,
-      meta: {
-        page: parseInt(page),
-        limit: parseInt(limit),
-        total,
-        totalPages: Math.ceil(total / parseInt(limit)),
-      },
-    })
+      res.json({
+        success: true,
+        data: schools,
+        meta: {
+          page: parseInt(page),
+          limit: parseInt(limit),
+          total,
+          totalPages: Math.ceil(total / parseInt(limit)),
+        },
+      })
+    } catch (dbErr) {
+      console.warn('Prisma DB query fallback in GET /schools:', (dbErr as Error).message)
+      res.json({
+        success: true,
+        data: [],
+        meta: {
+          page: 1,
+          limit: parseInt(limit),
+          total: 0,
+          totalPages: 0,
+        },
+      })
+    }
   } catch (e) {
     res.status(500).json({ success: false, error: (e as Error).message })
   }

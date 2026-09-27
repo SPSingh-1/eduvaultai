@@ -23,9 +23,11 @@ export function TopNav() {
     }
   }
 
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001/api/v1'
+
   const fetchAlerts = async () => {
     try {
-      const res = await fetch('http://localhost:3001/api/v1/communication/alerts')
+      const res = await fetch(`${API_BASE}/communication/alerts`)
       const data = await res.json()
       if (data.success) {
         setAlerts(data.data || [])
@@ -66,7 +68,7 @@ export function TopNav() {
   const handleMarkAsRead = async (id: string, e: React.MouseEvent) => {
     e.stopPropagation()
     try {
-      await fetch(`http://localhost:3001/api/v1/communication/alerts/${id}/read`, { method: 'PATCH' })
+      await fetch(`${API_BASE}/communication/alerts/${id}/read`, { method: 'PATCH' })
       fetchAlerts()
     } catch {
       // ignore
