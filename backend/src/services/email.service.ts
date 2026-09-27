@@ -7,15 +7,19 @@ dotenv.config()
 
 export class EmailService {
   /**
-   * Cold Email Deduplication Guard:
-   * Returns true if an outreach email has already been dispatched to this recipient email or school name.
-   * Prevents repeated cold emails to the same school when re-discovering or searching across different areas.
+   * Cold Email Deduplication Guard (48 Hours / 2 Days Cooldown):
+   * Returns true ONLY if an outreach email has already been dispatched to this recipient or school
+   * within the last 2 days (48 hours).
+   * After 2 days, schools become eligible for new outreach/follow-up emails.
    */
-  static hasOutreachBeenSent(toEmail?: string | null, schoolName?: string | null): boolean {
+  static hasOutreachBeenSent(toEmail?: string | null, schoolName?: string | null, cooldownDays: number = 2): boolean {
     const cleanEmail = (toEmail || '').toLowerCase().trim()
     const cleanSchool = (schoolName || '').toLowerCase().replace(/[^a-z0-9]/g, '').trim()
 
     if (!cleanEmail && !cleanSchool) return false
+
+    const cooldownMs = cooldownDays * 24 * 60 * 60 * 1000
+    const now = Date.now()
 
     try {
       const msgsFile = path.resolve(__dirname, '../../data/messages.json')
@@ -26,14 +30,22 @@ export class EmailService {
             if (m.direction === 'outbound' && m.status !== 'failed') {
               const mEmail = (m.contactEmail || '').toLowerCase().trim()
               const mSchool = (m.schoolName || '').toLowerCase().replace(/[^a-z0-9]/g, '').trim()
-              if (cleanEmail && mEmail && cleanEmail === mEmail) return true
-              if (
-                cleanSchool &&
-                mSchool &&
-                (cleanSchool === mSchool ||
-                  (cleanSchool.length > 5 && mSchool.length > 5 && (cleanSchool.includes(mSchool) || mSchool.includes(cleanSchool))))
-              ) {
-                return true
+
+              const isMatch =
+                (cleanEmail && mEmail && cleanEmail === mEmail) ||
+                (cleanSchool &&
+                  mSchool &&
+                  (cleanSchool === mSchool ||
+                    (cleanSchool.length > 5 &&
+                      mSchool.length > 5 &&
+                      (cleanSchool.includes(mSchool) || mSchool.includes(cleanSchool)))))
+
+              if (isMatch) {
+                const sentTimestamp = new Date(m.sentAt || m.createdAt || 0).getTime()
+                // Only consider it already sent if within the 2-day (48 hr) cooldown period
+                if (sentTimestamp && (now - sentTimestamp) < cooldownMs) {
+                  return true
+                }
               }
             }
           }

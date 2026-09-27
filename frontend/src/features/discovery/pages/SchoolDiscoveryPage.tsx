@@ -254,13 +254,13 @@ export function SchoolDiscoveryPage() {
       const res = await schoolsApi.autoOutreach({ schools: discoveredSchools })
       if (res.sentCount && res.sentCount > 0) {
         setOutreachStatusMsg(
-          `🚀 Dispatched personalized cold emails to ${res.sentCount} new school(s)!${
-            res.skippedCount ? ` (🛡️ ${res.skippedCount} already-contacted school(s) were protected from duplicate cold emails)` : ''
+          `🚀 Dispatched personalized cold emails to ${res.sentCount} school(s)!${
+            res.skippedCount ? ` (🛡️ ${res.skippedCount} school(s) contacted within the last 48 hours were protected)` : ''
           } Pitch includes 2-Month Free Trial, No-Bond guarantee & ₹5-₹8 pricing.`
         )
       } else if (res.skippedCount && res.skippedCount > 0) {
         setOutreachStatusMsg(
-          `🛡️ Duplicate Protection Active: All ${res.skippedCount} school(s) have already received their initial cold outreach email. No repeated cold emails sent!`
+          `🛡️ 48-Hour Cooldown Active: All ${res.skippedCount} school(s) received an outreach email within the last 2 days. Duplicate protection stops spamming — 2 din ke baad aap inhein dobara cold outreach / follow-up bhej sakte hain!`
         )
       } else {
         setOutreachStatusMsg(`⚠️ ${res.message || 'No schools with verified email IDs found for automated dispatch.'}`)
@@ -861,7 +861,9 @@ export function SchoolDiscoveryPage() {
                               <span className="icon text-sm">mail</span>
                               <span className="truncate">{school.email}</span>
                             </a>
-                            <span className="text-label-xs text-primary/80 font-mono shrink-0 ml-1">Domain Mail</span>
+                            <span className="text-label-xs text-primary/80 font-mono shrink-0 ml-1">
+                              {school.email.includes('@gmail.com') ? 'Official Gmail' : 'Verified Mail'}
+                            </span>
                           </div>
                         )}
                       </div>

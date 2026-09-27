@@ -412,7 +412,7 @@ router.post('/auto-outreach', async (req, res) => {
       const email = school.email
       const schoolName = school.name
 
-      const alreadySent = EmailService.hasOutreachBeenSent(email, schoolName)
+      const alreadySent = EmailService.hasOutreachBeenSent(email, schoolName, 2)
       if (alreadySent) {
         skippedCount++
         continue
@@ -426,7 +426,7 @@ router.post('/auto-outreach', async (req, res) => {
         sentCount: 0,
         skippedCount,
         message: skippedCount > 0
-          ? `All ${skippedCount} school(s) have already received their initial cold outreach. Skipped repeated cold emails!`
+          ? `All ${skippedCount} school(s) received an email within the last 48 hours (2-Day Cooldown Active). You can re-send outreach after 2 days!`
           : 'No schools with verified email IDs found for automated dispatch.',
         results: [],
       })
