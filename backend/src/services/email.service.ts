@@ -1,4 +1,5 @@
 import * as Brevo from '@getbrevo/brevo'
+import nodemailer from 'nodemailer'
 import dotenv from 'dotenv'
 import fs from 'fs'
 import path from 'path'
@@ -58,29 +59,73 @@ export class EmailService {
     return false
   }
 
+  /**
+   * Dual Provider Email Dispatcher:
+   * 1. Attempts Brevo Transactional API.
+   * 2. If Brevo fails (e.g., Unrecognised IP Address / Whitelist restriction),
+   *    automatically falls back to Gmail SMTP (Nodemailer), which has ZERO IP restrictions
+   *    and works universally across any cloud server / dynamic IP.
+   */
   static async sendOutreachEmail(toEmail: string, toName: string, subject: string, htmlContent: string) {
-    const apiInstance = new Brevo.TransactionalEmailsApi()
-    const apiKey = process.env.BREVO_API_KEY || ''
-    apiInstance.setApiKey(Brevo.TransactionalEmailsApiApiKeys.apiKey, apiKey)
+    let brevoError = ''
 
-    const sendSmtpEmail = new Brevo.SendSmtpEmail()
-    sendSmtpEmail.subject = subject
-    sendSmtpEmail.htmlContent = htmlContent
-    sendSmtpEmail.sender = {
-      name: process.env.EMAIL_FROM_NAME || 'Shashi Pratap Singh | Eduvault ERP',
-      email: process.env.EMAIL_FROM || 'connectwitheduvault@gmail.com'
-    }
-    sendSmtpEmail.to = [{ email: toEmail, name: toName }]
+    // 1. Try Brevo First
+    const brevoKey = process.env.BREVO_API_KEY
+    if (brevoKey) {
+      try {
+        const apiInstance = new Brevo.TransactionalEmailsApi()
+        apiInstance.setApiKey(Brevo.TransactionalEmailsApiApiKeys.apiKey, brevoKey)
 
-    try {
-      const data = await apiInstance.sendTransacEmail(sendSmtpEmail)
-      console.log(`[EmailService] Sent to ${toEmail} successfully, ID:`, data.body?.messageId)
-      return { success: true, messageId: data.body?.messageId }
-    } catch (error: any) {
-      const errorMsg = error.response?.body?.message || error.message || 'Unknown Brevo error'
-      console.error('[EmailService] Brevo Email Error:', errorMsg)
-      return { success: false, error: errorMsg }
+        const sendSmtpEmail = new Brevo.SendSmtpEmail()
+        sendSmtpEmail.subject = subject
+        sendSmtpEmail.htmlContent = htmlContent
+        sendSmtpEmail.sender = {
+          name: process.env.EMAIL_FROM_NAME || 'Shashi Pratap Singh | Eduvault ERP',
+          email: process.env.EMAIL_FROM || 'connectwitheduvault@gmail.com',
+        }
+        sendSmtpEmail.to = [{ email: toEmail, name: toName }]
+
+        const data = await apiInstance.sendTransacEmail(sendSmtpEmail)
+        console.log(`[EmailService] Sent via Brevo to ${toEmail}, ID:`, data.body?.messageId)
+        return { success: true, messageId: data.body?.messageId, provider: 'brevo' }
+      } catch (error: any) {
+        brevoError = error.response?.body?.message || error.message || 'Brevo error'
+        console.warn(`[EmailService] Brevo blocked IP or failed (${brevoError}). Switching to Gmail SMTP fallback...`)
+      }
     }
+
+    // 2. Seamless Auto-Fallback: Gmail SMTP (No IP restrictions, cloud dynamic IP friendly)
+    const gmailUser = process.env.GMAIL_USER || 'connectwitheduvault@gmail.com'
+    const gmailPass = process.env.GMAIL_APP_PASSWORD || 'loqmhoerjgvsjzpq'
+
+    if (gmailUser && gmailPass) {
+      try {
+        const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: gmailUser,
+            pass: gmailPass,
+          },
+        })
+
+        const senderName = process.env.EMAIL_FROM_NAME || 'Shashi Pratap Singh | Eduvault ERP'
+        const mailOptions = {
+          from: `"${senderName}" <${gmailUser}>`,
+          to: toEmail,
+          subject,
+          html: htmlContent,
+        }
+
+        const info = await transporter.sendMail(mailOptions)
+        console.log(`[EmailService] Sent via Gmail SMTP to ${toEmail}, ID:`, info.messageId)
+        return { success: true, messageId: info.messageId, provider: 'gmail_smtp' }
+      } catch (smtpErr: any) {
+        console.error('[EmailService] Gmail SMTP Fallback Error:', smtpErr.message)
+        return { success: false, error: smtpErr.message || brevoError }
+      }
+    }
+
+    return { success: false, error: brevoError || 'No email transport configured' }
   }
 }
 
