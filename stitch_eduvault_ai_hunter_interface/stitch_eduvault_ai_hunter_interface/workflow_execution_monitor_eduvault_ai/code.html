@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Workflow Execution Monitor - Mission Control</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#bdffdb",
+                        "outline-variant": "#434655",
+                        "tertiary-fixed": "#6ffbbe",
+                        "on-tertiary-fixed": "#002113",
+                        "on-surface": "#dbe2fd",
+                        "outline": "#8d90a0",
+                        "surface-tint": "#b4c5ff",
+                        "surface-container-lowest": "#060d20",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-primary-container": "#eeefff",
+                        "on-error": "#690005",
+                        "on-secondary": "#00344d",
+                        "error": "#ffb4ab",
+                        "on-secondary-fixed": "#001e2f",
+                        "surface": "#0b1326",
+                        "on-surface-variant": "#c3c6d7",
+                        "surface-dim": "#0b1326",
+                        "surface-container": "#171f33",
+                        "inverse-surface": "#dbe2fd",
+                        "tertiary": "#4edea3",
+                        "primary": "#b4c5ff",
+                        "secondary": "#89ceff",
+                        "inverse-primary": "#0053db",
+                        "on-secondary-container": "#00344e",
+                        "surface-container-high": "#222a3e",
+                        "secondary-fixed": "#c9e6ff",
+                        "primary-fixed": "#dbe1ff",
+                        "on-tertiary": "#003824",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "on-background": "#dbe2fd",
+                        "on-primary": "#002a78",
+                        "on-secondary-fixed-variant": "#004c6e",
+                        "primary-container": "#2563eb",
+                        "error-container": "#93000a",
+                        "secondary-fixed-dim": "#89ceff",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-fixed": "#00174b",
+                        "surface-bright": "#31394e",
+                        "surface-variant": "#2d3449",
+                        "tertiary-container": "#007d55",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "background": "#0b1326",
+                        "inverse-on-surface": "#283044",
+                        "surface-container-low": "#131b2e",
+                        "secondary-container": "#00a2e6",
+                        "surface-container-highest": "#2d3449",
+                        "on-primary-fixed-variant": "#003ea8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-md": "24px",
+                        "panel-gap": "12px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "margin-sm": "16px",
+                        "margin-lg": "40px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "data-mono": ["JetBrains Mono"],
+                        "headline-sm": ["Inter"],
+                        "label-caps": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "data-mono": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        .glass-panel {
+            background-color: theme('colors.surface-container-lowest/10');
+            backdrop-filter: blur(12px);
+            border: 1px solid theme('colors.outline-variant/20');
+        }
+        .glass-panel-high {
+            background-color: theme('colors.surface-container-lowest/20');
+            backdrop-filter: blur(20px);
+            border: 1px solid theme('colors.outline-variant/30');
+            box-shadow: inset 0 1px 0 0 theme('colors.outline-variant/20');
+        }
+        .glow-primary { box-shadow: 0 0 10px 0 theme('colors.primary-container'); }
+        .glow-success { box-shadow: 0 0 10px 0 theme('colors.tertiary'); }
+        .glow-error { box-shadow: 0 0 10px 0 theme('colors.error'); }
+        
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            left: 11px;
+            top: 24px;
+            bottom: -8px;
+            width: 2px;
+            background: theme('colors.outline-variant/30');
+            z-index: 0;
+        }
+        .timeline-item:last-child .timeline-line::before { display: none; }
+        
+        /* Custom scrollbar for high-density areas */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: theme('colors.outline-variant/50'); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: theme('colors.outline-variant'); }
+    </style>
+</head>
+<body class="antialiased min-h-screen overflow-x-hidden flex">
+<!-- SideNavBar -->
+<nav class="w-[280px] h-full fixed left-0 top-0 border-r border-outline-variant/20 backdrop-blur-xl bg-surface dark:bg-surface flex flex-col py-6 z-50">
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-primary-container flex items-center justify-center glow-primary">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">dataset</span>
+</div>
+<div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">EduVault AI</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Sales Hunter Suite</p>
+</div>
+</div>
+<div class="px-4 mb-6">
+<button class="w-full bg-primary-container hover:bg-primary-container/90 text-on-primary-container font-body-sm text-body-sm font-semibold py-2.5 rounded glow-primary transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">rocket_launch</span>
+                Deploy Agent
+            </button>
+</div>
+<div class="flex-1 overflow-y-auto px-4 flex flex-col gap-1">
+<!-- Tabs. Logic: "Automation" is active since this is a Workflow Execution monitor. -->
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined font-body-sm text-body-sm group-hover:text-primary transition-colors">dashboard</span>
+<span class="font-body-sm text-body-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined font-body-sm text-body-sm group-hover:text-primary transition-colors">explore</span>
+<span class="font-body-sm text-body-sm">Discovery</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined font-body-sm text-body-sm group-hover:text-primary transition-colors">radar</span>
+<span class="font-body-sm text-body-sm">Lead Intel</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined font-body-sm text-body-sm group-hover:text-primary transition-colors">campaign</span>
+<span class="font-body-sm text-body-sm">Campaigns</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined font-body-sm text-body-sm group-hover:text-primary transition-colors">smart_toy</span>
+<span class="font-body-sm text-body-sm">AI Workforce</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined font-body-sm text-body-sm group-hover:text-primary transition-colors">forum</span>
+<span class="font-body-sm text-body-sm">Communication</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined font-body-sm text-body-sm group-hover:text-primary transition-colors">monetization_on</span>
+<span class="font-body-sm text-body-sm">Sales</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined font-body-sm text-body-sm group-hover:text-primary transition-colors">groups</span>
+<span class="font-body-sm text-body-sm">CRM</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined font-body-sm text-body-sm group-hover:text-primary transition-colors">payments</span>
+<span class="font-body-sm text-body-sm">Revenue</span>
+</a>
+<!-- ACTIVE TAB -->
+<a class="flex items-center gap-3 px-3 py-2 rounded text-primary bg-primary/10 border-r-2 border-primary scale-[0.98] duration-150 transition-all" href="#">
+<span class="material-symbols-outlined font-body-sm text-body-sm" style="font-variation-settings: 'FILL' 1;">settings_input_component</span>
+<span class="font-body-sm text-body-sm font-semibold">Automation</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined font-body-sm text-body-sm group-hover:text-primary transition-colors">analytics</span>
+<span class="font-body-sm text-body-sm">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined font-body-sm text-body-sm group-hover:text-primary transition-colors">storefront</span>
+<span class="font-body-sm text-body-sm">Marketplace</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined font-body-sm text-body-sm group-hover:text-primary transition-colors">extension</span>
+<span class="font-body-sm text-body-sm">Integrations</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined font-body-sm text-body-sm group-hover:text-primary transition-colors">settings</span>
+<span class="font-body-sm text-body-sm">Settings</span>
+</a>
+</div>
+<div class="px-4 mt-auto border-t border-outline-variant/20 pt-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined font-body-sm text-body-sm group-hover:text-primary transition-colors">help</span>
+<span class="font-body-sm text-body-sm">Support</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined font-body-sm text-body-sm group-hover:text-primary transition-colors">account_circle</span>
+<span class="font-body-sm text-body-sm">Account</span>
+</a>
+</div>
+</nav>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-280px)] h-16 bg-surface/80 dark:bg-surface/80 border-b border-outline-variant/20 backdrop-blur-md flex justify-between items-center px-margin-md ml-[280px] z-40">
+<div class="flex items-center gap-6">
+<h2 class="font-headline-sm text-headline-sm font-bold text-primary">Mission Control</h2>
+<div class="h-6 w-px bg-outline-variant/30"></div>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">search</span>
+<input class="bg-transparent border-none focus:ring-0 font-body-sm text-body-sm text-on-surface placeholder-on-surface-variant/50 w-64" placeholder="Search operations..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="font-label-caps text-label-caps text-primary font-bold">AI Command Center</span>
+<div class="h-4 w-px bg-outline-variant/30"></div>
+<button class="font-label-caps text-label-caps text-on-surface hover:text-primary transition-all">Tasks</button>
+<button class="font-label-caps text-label-caps bg-primary-container/20 text-primary border border-primary/30 px-3 py-1 rounded hover:bg-primary-container/30 transition-all">Upgrade Credits</button>
+<div class="flex items-center gap-2 ml-2">
+<button class="text-on-surface-variant hover:text-primary transition-all relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 rounded-full bg-tertiary glow-success"></span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-all"><span class="material-symbols-outlined">bolt</span></button>
+<button class="text-on-surface-variant hover:text-primary transition-all"><span class="material-symbols-outlined">account_circle</span></button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-[280px] mt-16 p-margin-md w-[calc(100%-280px)] min-h-[calc(100vh-64px)] flex flex-col gap-margin-md">
+<!-- Page Header -->
+<div class="flex justify-between items-end">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-1">Execution Monitor</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-2">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary"></span>
+</span>
+                    Live streaming operational data
+                </p>
+</div>
+<div class="flex gap-2">
+<button class="glass-panel px-3 py-1.5 rounded flex items-center gap-2 hover:bg-surface-container-high transition-colors font-label-caps text-label-caps text-on-surface">
+<span class="material-symbols-outlined text-[16px]">filter_list</span> Filter
+                </button>
+</div>
+</div>
+<!-- KPIs Bento Row -->
+<div class="grid grid-cols-4 gap-panel-gap">
+<div class="glass-panel p-4 rounded-lg flex flex-col gap-2 relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 w-16 h-16 bg-primary/10 rounded-full blur-xl group-hover:bg-primary/20 transition-all"></div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Active Workflows</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-md text-headline-md text-primary" id="kpi-active">142</span>
+<span class="font-data-mono text-data-mono text-tertiary flex items-center"><span class="material-symbols-outlined text-[14px]">trending_up</span> 12%</span>
+</div>
+</div>
+<div class="glass-panel p-4 rounded-lg flex flex-col gap-2 relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 w-16 h-16 bg-tertiary/10 rounded-full blur-xl group-hover:bg-tertiary/20 transition-all"></div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Success Rate</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-md text-headline-md text-tertiary">98.4%</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Avg.</span>
+</div>
+</div>
+<div class="glass-panel p-4 rounded-lg flex flex-col gap-2 relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 w-16 h-16 bg-outline-variant/10 rounded-full blur-xl group-hover:bg-outline-variant/20 transition-all"></div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">AI Compute Cost (Live)</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-md text-headline-md text-on-surface" id="kpi-cost">$42.50</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">/ hr</span>
+</div>
+</div>
+<div class="glass-panel p-4 rounded-lg flex flex-col gap-2 relative overflow-hidden group border-error/30 bg-error/5">
+<div class="absolute -right-4 -top-4 w-16 h-16 bg-error/10 rounded-full blur-xl group-hover:bg-error/20 transition-all"></div>
+<span class="font-label-caps text-label-caps text-error">Failure Rate</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-md text-headline-md text-error">1.6%</span>
+<span class="font-data-mono text-data-mono text-error flex items-center"><span class="material-symbols-outlined text-[14px]">warning</span> Alert</span>
+</div>
+</div>
+</div>
+<!-- Main Dashboard Split -->
+<div class="grid grid-cols-12 gap-margin-md flex-1">
+<!-- Left Panel: Execution Table (8 cols) -->
+<div class="col-span-8 glass-panel rounded-xl flex flex-col overflow-hidden">
+<div class="p-4 border-b border-outline-variant/20 bg-surface-container-low/50 flex justify-between items-center">
+<h3 class="font-label-caps text-label-caps text-on-surface tracking-wider">Live Execution Matrix</h3>
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse glow-primary"></span>
+<span class="font-data-mono text-data-mono text-primary text-[10px]">SYNC ACTIVE</span>
+</div>
+</div>
+<div class="flex-1 overflow-auto">
+<table class="w-full text-left border-collapse">
+<thead class="sticky top-0 bg-surface-container-highest/80 backdrop-blur-md z-10">
+<tr>
+<th class="p-3 font-label-caps text-label-caps text-on-surface-variant border-b border-outline-variant/20">Workflow</th>
+<th class="p-3 font-label-caps text-label-caps text-on-surface-variant border-b border-outline-variant/20">Target School</th>
+<th class="p-3 font-label-caps text-label-caps text-on-surface-variant border-b border-outline-variant/20">Started</th>
+<th class="p-3 font-label-caps text-label-caps text-on-surface-variant border-b border-outline-variant/20">Current Step</th>
+<th class="p-3 font-label-caps text-label-caps text-on-surface-variant border-b border-outline-variant/20">Status</th>
+<th class="p-3 font-label-caps text-label-caps text-on-surface-variant border-b border-outline-variant/20 text-right">Cost (C)</th>
+</tr>
+</thead>
+<tbody class="font-data-mono text-data-mono text-on-surface divide-y divide-outline-variant/10">
+<!-- Row 1: Running -->
+<tr class="hover:bg-surface-container-high/50 transition-colors group">
+<td class="p-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary">smart_toy</span>
+<span>Initial Outreach Alpha</span>
+</td>
+<td class="p-3 text-on-surface-variant">Stanford GSB</td>
+<td class="p-3 text-on-surface-variant">10:42:01</td>
+<td class="p-3">Vision AI Extraction</td>
+<td class="p-3">
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-primary/10 border border-primary/30 text-primary text-[11px] font-label-caps">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse glow-primary"></span>
+                                        RUNNING
+                                    </div>
+</td>
+<td class="p-3 text-right text-on-surface-variant">0.04</td>
+</tr>
+<!-- Row 2: Completed -->
+<tr class="hover:bg-surface-container-high/50 transition-colors group">
+<td class="p-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">campaign</span>
+<span>Follow-up Sequence B</span>
+</td>
+<td class="p-3 text-on-surface-variant">MIT Sloan</td>
+<td class="p-3 text-on-surface-variant">10:38:14</td>
+<td class="p-3 text-on-surface-variant">Pipeline Update</td>
+<td class="p-3">
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-tertiary/10 border border-tertiary/30 text-tertiary text-[11px] font-label-caps">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                                        COMPLETED
+                                    </div>
+</td>
+<td class="p-3 text-right text-on-surface-variant">0.12</td>
+</tr>
+<!-- Row 3: Failed -->
+<tr class="hover:bg-surface-container-high/50 transition-colors group bg-error/5">
+<td class="p-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-error">warning</span>
+<span class="text-error">WhatsApp Engagement</span>
+</td>
+<td class="p-3 text-on-surface-variant">Wharton</td>
+<td class="p-3 text-on-surface-variant">10:35:59</td>
+<td class="p-3 text-error">Payload Delivery</td>
+<td class="p-3">
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-error/10 border border-error/30 text-error text-[11px] font-label-caps">
+<span class="w-1.5 h-1.5 rounded-full bg-error glow-error"></span>
+                                        FAILED
+                                    </div>
+</td>
+<td class="p-3 text-right text-on-surface-variant">0.01</td>
+</tr>
+<!-- Row 4: Running -->
+<tr class="hover:bg-surface-container-high/50 transition-colors group">
+<td class="p-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary">radar</span>
+<span>Deep Intel Scrape</span>
+</td>
+<td class="p-3 text-on-surface-variant">Harvard HBS</td>
+<td class="p-3 text-on-surface-variant">10:44:22</td>
+<td class="p-3">Data Synthesizer</td>
+<td class="p-3">
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-primary/10 border border-primary/30 text-primary text-[11px] font-label-caps">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse glow-primary"></span>
+                                        RUNNING
+                                    </div>
+</td>
+<td class="p-3 text-right text-on-surface-variant">0.45</td>
+</tr>
+<!-- Row 5: Completed -->
+<tr class="hover:bg-surface-container-high/50 transition-colors group">
+<td class="p-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">groups</span>
+<span>CRM Enrichment</span>
+</td>
+<td class="p-3 text-on-surface-variant">Columbia CBS</td>
+<td class="p-3 text-on-surface-variant">10:15:00</td>
+<td class="p-3 text-on-surface-variant">Final Validation</td>
+<td class="p-3">
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-tertiary/10 border border-tertiary/30 text-tertiary text-[11px] font-label-caps">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                                        COMPLETED
+                                    </div>
+</td>
+<td class="p-3 text-right text-on-surface-variant">0.08</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Right Panel: Stack (4 cols) -->
+<div class="col-span-4 flex flex-col gap-margin-md">
+<!-- Error Center -->
+<div class="glass-panel-high rounded-xl border-error/40 p-4 relative overflow-hidden flex-shrink-0">
+<div class="absolute inset-0 bg-gradient-to-br from-error/10 to-transparent pointer-events-none"></div>
+<div class="flex items-center gap-2 mb-3 relative z-10">
+<span class="material-symbols-outlined text-error">crisis_alert</span>
+<h3 class="font-label-caps text-label-caps text-error">AI Error Analysis</h3>
+</div>
+<div class="relative z-10">
+<p class="font-body-sm text-body-sm text-on-surface mb-2">
+<span class="font-data-mono text-primary mr-2">[Wharton_Seq]</span> 
+                            WhatsApp payload rejected by carrier.
+                        </p>
+<div class="bg-surface-container-lowest/50 border border-outline-variant/20 rounded p-3 mt-3">
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-1">Suggested Auto-Fix:</p>
+<p class="font-data-mono text-data-mono text-tertiary">&gt;&gt; Reroute via Email Fallback Template C</p>
+</div>
+<div class="flex gap-2 mt-4">
+<button class="bg-primary/20 hover:bg-primary/30 text-primary border border-primary/50 px-3 py-1.5 rounded font-label-caps text-label-caps transition-colors flex-1">Apply Fix</button>
+<button class="bg-surface-container hover:bg-surface-container-high border border-outline-variant/30 px-3 py-1.5 rounded font-label-caps text-label-caps text-on-surface-variant transition-colors">Dismiss</button>
+</div>
+</div>
+</div>
+<!-- Live Execution Stream -->
+<div class="glass-panel rounded-xl p-4 flex-1 flex flex-col min-h-0">
+<h3 class="font-label-caps text-label-caps text-on-surface tracking-wider mb-4 border-b border-outline-variant/20 pb-2">Execution Stream</h3>
+<div class="flex-1 overflow-y-auto pr-2 flex flex-col relative font-body-sm text-body-sm">
+<!-- Timeline Item -->
+<div class="timeline-item relative pl-8 pb-4">
+<div class="timeline-line"></div>
+<div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-surface-container-highest border border-outline-variant/50 flex items-center justify-center z-10">
+<span class="material-symbols-outlined text-[12px] text-tertiary">check</span>
+</div>
+<div class="flex flex-col">
+<span class="text-on-surface-variant text-[11px] font-data-mono mb-0.5">10:45:12 | Deep Scrape</span>
+<span class="text-on-surface">Vision AI Node Completed</span>
+</div>
+</div>
+<!-- Timeline Item (Running) -->
+<div class="timeline-item relative pl-8 pb-4">
+<div class="timeline-line"></div>
+<div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-primary/20 border border-primary/50 flex items-center justify-center z-10 shadow-[0_0_8px_theme(colors.primary-container)]">
+<span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
+</div>
+<div class="flex flex-col">
+<span class="text-primary text-[11px] font-data-mono mb-0.5 animate-pulse">10:45:14 | Next Step Active</span>
+<span class="text-on-surface font-semibold">Contact Intel Gathering</span>
+</div>
+</div>
+<!-- Timeline Item (Pending) -->
+<div class="timeline-item relative pl-8 pb-4 opacity-50">
+<div class="timeline-line"></div>
+<div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-surface-container border border-outline-variant/30 flex items-center justify-center z-10">
+<div class="w-1.5 h-1.5 rounded-full bg-outline-variant"></div>
+</div>
+<div class="flex flex-col">
+<span class="text-on-surface-variant text-[11px] font-data-mono mb-0.5">Pending</span>
+<span class="text-on-surface-variant">CRM Validation</span>
+</div>
+</div>
+<!-- Timeline Item (Pending) -->
+<div class="timeline-item relative pl-8 pb-0 opacity-30">
+<div class="timeline-line"></div>
+<div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-surface-container border border-outline-variant/30 flex items-center justify-center z-10">
+<div class="w-1.5 h-1.5 rounded-full bg-outline-variant"></div>
+</div>
+<div class="flex flex-col">
+<span class="text-on-surface-variant text-[11px] font-data-mono mb-0.5">Pending</span>
+<span class="text-on-surface-variant">Final Output Generation</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Simple script to simulate live data updates for the "Streaming data feel"
+        setInterval(() => {
+            const costEl = document.getElementById('kpi-cost');
+            const activeEl = document.getElementById('kpi-active');
+            
+            // Fluctuate cost slightly
+            let currentCost = parseFloat(costEl.innerText.replace('$', ''));
+            let newCost = currentCost + (Math.random() * 0.05);
+            costEl.innerText = '$' + newCost.toFixed(2);
+
+            // Occasionally tick up active workflows
+            if(Math.random() > 0.8) {
+                let currentActive = parseInt(activeEl.innerText);
+                activeEl.innerText = currentActive + 1;
+                // Add a brief glow effect
+                activeEl.parentElement.parentElement.classList.add('glow-primary');
+                setTimeout(() => activeEl.parentElement.parentElement.classList.remove('glow-primary'), 300);
+            }
+        }, 2000);
+    </script>
+</body></html>

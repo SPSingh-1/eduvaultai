@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EduVault AI - Sales Training &amp; Coaching Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "outline-variant": "#434656",
+                      "on-surface-variant": "#c3c5d8",
+                      "on-primary": "#002780",
+                      "on-secondary-fixed": "#23005c",
+                      "secondary-fixed-dim": "#d0bcff",
+                      "on-tertiary-fixed-variant": "#005236",
+                      "inverse-surface": "#dfe2f0",
+                      "primary-fixed": "#dce1ff",
+                      "secondary": "#d0bcff",
+                      "on-error-container": "#ffdad6",
+                      "error": "#ffb4ab",
+                      "surface-variant": "#31353f",
+                      "background": "#0f131d",
+                      "on-primary-fixed-variant": "#0039b4",
+                      "surface": "#0f131d",
+                      "surface-dim": "#0f131d",
+                      "on-tertiary-fixed": "#002113",
+                      "surface-tint": "#b7c4ff",
+                      "outline": "#8d90a1",
+                      "on-surface": "#dfe2f0",
+                      "tertiary-container": "#008259",
+                      "primary": "#b7c4ff",
+                      "secondary-container": "#571bc1",
+                      "surface-container": "#1c1f29",
+                      "on-secondary-container": "#c4abff",
+                      "error-container": "#93000a",
+                      "on-background": "#dfe2f0",
+                      "on-secondary": "#3c0091",
+                      "secondary-fixed": "#e9ddff",
+                      "on-tertiary": "#003824",
+                      "primary-container": "#2d63ff",
+                      "on-primary-fixed": "#001551",
+                      "inverse-on-surface": "#2d303b",
+                      "tertiary": "#4edea3",
+                      "on-error": "#690005",
+                      "inverse-primary": "#004dea",
+                      "on-tertiary-container": "#e1ffec",
+                      "surface-container-high": "#262a34",
+                      "surface-container-lowest": "#0a0e17",
+                      "surface-bright": "#353944",
+                      "surface-container-highest": "#31353f",
+                      "on-primary-container": "#f9f7ff",
+                      "tertiary-fixed": "#6ffbbe",
+                      "tertiary-fixed-dim": "#4edea3",
+                      "primary-fixed-dim": "#b7c4ff",
+                      "on-secondary-fixed-variant": "#5516be",
+                      "surface-container-low": "#181b25"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "unit": "4px",
+                      "stack-sm": "8px",
+                      "stack-md": "16px",
+                      "stack-lg": "32px",
+                      "container-padding": "24px"
+              },
+              "fontFamily": {
+                      "display-lg": [
+                              "Inter"
+                      ],
+                      "mono-data": [
+                              "JetBrains Mono"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "label-caps": [
+                              "Inter"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "headline-sm": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "mono-data": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "11px",
+                              {
+                                      "lineHeight": "12px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-sm": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        /* Custom styles for glowing effects and glassmorphism */
+        .glass-panel {
+            background-color: rgba(28, 31, 41, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .ai-glow-active {
+            box-shadow: 0 0 30px rgba(45, 99, 255, 0.2);
+        }
+        
+        .pulse-ring {
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            80%, 100% { transform: scale(1.5); opacity: 0; }
+        }
+
+        .border-gradient {
+            position: relative;
+            background: transparent;
+        }
+        .border-gradient::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(to right, #571bc1, #2d63ff);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+        
+        /* Hide scrollbar for clean UI */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(141, 144, 161, 0.3);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex overflow-hidden antialiased">
+<!-- SideNavBar (Shared Component) -->
+<nav class="hidden md:flex flex-col h-screen w-60 fixed left-0 top-0 bg-surface-container-low/40 backdrop-blur-xl border-r border-white/10 shadow-2xl shadow-primary/5 py-stack-lg z-40">
+<div class="px-gutter mb-stack-lg">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary-container/20 flex items-center justify-center border-gradient">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div>
+<h1 class="font-display-lg text-headline-sm font-bold text-primary tracking-tight">EduVault AI</h1>
+<p class="font-label-caps text-label-caps text-tertiary flex items-center gap-1 mt-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+                        Agent Status: Online
+                    </p>
+</div>
+</div>
+</div>
+<div class="px-gutter mb-stack-md">
+<button class="w-full flex items-center justify-center gap-2 bg-primary-container text-on-primary-container font-body-md py-2 rounded-lg hover:shadow-[0_0_15px_rgba(45,99,255,0.3)] transition-all active:scale-95 duration-100">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+                Command Center
+            </button>
+</div>
+<div class="flex-1 overflow-y-auto px-unit">
+<ul class="space-y-unit">
+<!-- Navigation Items -->
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">school</span>
+<span class="font-body-md text-body-md">Discovery</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">psychology</span>
+<span class="font-body-md text-body-md">Intelligence</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">campaign</span>
+<span class="font-body-md text-body-md">Marketing</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">hub</span>
+<span class="font-body-md text-body-md">Campaigns</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">robot_2</span>
+<span class="font-body-md text-body-md">Workforce</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">forum</span>
+<span class="font-body-md text-body-md">Communication</span>
+</a>
+</li>
+<!-- ACTIVE TAB -->
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-primary font-bold bg-primary/10 border-r-2 border-primary active:scale-95 duration-100" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">payments</span>
+<span class="font-body-md text-body-md">Sales</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">account_tree</span>
+<span class="font-body-md text-body-md">CRM</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">group</span>
+<span class="font-body-md text-body-md">Customers</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">query_stats</span>
+<span class="font-body-md text-body-md">Market</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">analytics</span>
+<span class="font-body-md text-body-md">Analytics</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="px-unit mt-auto pt-stack-md">
+<a class="flex items-center gap-3 px-3 py-2 rounded-md text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 ml-0 md:ml-60 relative h-screen overflow-y-auto bg-[url('placeholder')] bg-cover bg-fixed bg-center" data-alt="A sophisticated abstract dark background for an AI operating system. Deep space blue and ink black gradient with subtle, glowing geometric tech nodes connected by thin glowing lines. High-end fintech aesthetic, clean, minimalistic, communicating intelligence and data flow. Very subtle depth of field.">
+<div class="absolute inset-0 bg-background/90 backdrop-blur-[2px] z-0"></div>
+<!-- TopNavBar (Shared Component) -->
+<header class="fixed top-4 right-4 left-4 md:left-64 rounded-xl bg-surface-container/30 backdrop-blur-md border border-white/10 shadow-[0_0_20px_rgba(45,99,255,0.15)] flex justify-between items-center px-gutter h-14 z-30">
+<!-- Command Bar Search (Left aligned as per JSON) -->
+<div class="flex-1 max-w-md relative flex items-center focus-within:ring-1 ring-primary/50 transition-all rounded-lg">
+<span class="material-symbols-outlined absolute left-3 text-on-surface-variant text-[18px]">search</span>
+<input class="w-full bg-white/5 border-none rounded-lg pl-10 pr-4 py-1.5 text-body-sm font-body-sm text-on-surface placeholder:text-on-surface-variant/50 focus:ring-0 focus:outline-none transition-all duration-300" placeholder="⌘K Ask AI Coach..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded border border-white/10 text-on-surface font-body-sm text-body-sm hover:border-primary/50 hover:bg-primary/10 transition-all">
+<span class="material-symbols-outlined text-[16px] text-tertiary">bolt</span>
+                    AI Credits: 9,240
+                </button>
+<button class="hidden sm:flex text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm transition-colors">Help</button>
+<div class="flex items-center gap-2 border-l border-white/10 pl-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-1 rounded hover:bg-white/5">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors p-1 rounded hover:bg-white/5">
+<img class="w-7 h-7 rounded-full object-cover border border-white/20" data-alt="Professional headshot of a corporate executive in a dark modern setting. High-key dramatic lighting on the face, cool blue rim light, communicating authority and tech-savvy. 1:1 aspect ratio." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIE4AzRyZzoxQQSd5bz3y3pbS_KqrJgi0ESUpePG8jV8lc96-MdRr1XZJDGinlpGSnMthI26ATw3LD2X8oY1oPRxCGT4LSkxuk_FjypfkvLBjAIg6yz7h4fQexXBcKDOC4RylPi32dhsYT91IIW6gVFA6Wiv24q5A_72c4S2NGz4ZVzVKzqAtiJFyAz5ZmXvHbd3DgQ44fm7KTalIgSaEGlwG4cJdR-smIuZrWAcUUCgT_iZWusOESWA"/>
+</button>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="relative z-10 pt-24 pb-stack-lg px-container-padding max-w-[1600px] mx-auto">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-stack-lg gap-4">
+<div>
+<h2 class="font-display-lg text-display-lg font-bold text-on-surface tracking-tight mb-2">AI Sales Training &amp; Coaching Center</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Real-time analysis and personalized intelligence for your global sales force.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 rounded-lg border border-white/10 text-on-surface font-body-md text-body-md hover:border-primary/50 hover:shadow-[0_0_15px_rgba(45,99,255,0.2)] transition-all flex items-center gap-2 glass-panel">
+<span class="material-symbols-outlined text-[18px]">history</span>
+                        Call History
+                    </button>
+<button class="px-4 py-2 rounded-lg bg-primary-container text-on-primary-container font-body-md text-body-md font-semibold shadow-[0_0_20px_rgba(45,99,255,0.3)] hover:bg-primary-container/90 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+                        Start Mock Session
+                    </button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-unit auto-rows-min">
+<!-- AI Coaching Insights (Priority Focus) - Span 8 cols -->
+<div class="md:col-span-8 glass-panel rounded-xl p-container-padding flex flex-col ai-glow-active">
+<div class="flex justify-between items-center mb-stack-md">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[20px]">psychology_alt</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Active Intelligence Alerts</h3>
+</div>
+<span class="font-label-caps text-label-caps text-primary px-2 py-1 rounded bg-primary/10 border border-primary/20">LIVE ANALYSIS</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-unit flex-1">
+<!-- Insight Card 1 -->
+<div class="bg-surface-container-high/50 border border-white/5 rounded-lg p-4 hover:bg-white/5 transition-colors relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-error"></div>
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-caps text-label-caps text-error">CRITICAL INTERVENTION</span>
+<span class="font-mono-data text-mono-data text-on-surface-variant text-[10px]">Just now</span>
+</div>
+<h4 class="font-body-md text-body-md font-semibold text-on-surface mb-1">Rahul needs help with pricing objections</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-3">In the last 3 calls, win rate dropped 42% when pressed on enterprise tier pricing.</p>
+<button class="text-primary font-body-sm text-body-sm flex items-center gap-1 group-hover:underline">
+                                Deploy Coaching Module <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+<!-- Insight Card 2 -->
+<div class="bg-surface-container-high/50 border border-white/5 rounded-lg p-4 hover:bg-white/5 transition-colors relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-tertiary"></div>
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-caps text-label-caps text-tertiary">POSITIVE REINFORCEMENT</span>
+<span class="font-mono-data text-mono-data text-on-surface-variant text-[10px]">2h ago</span>
+</div>
+<h4 class="font-body-md text-body-md font-semibold text-on-surface mb-1">Sarah's Discovery Phase is optimizing</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-3">Listening ratio improved to 68%. Feature dumping reduced by 80% this week.</p>
+<button class="text-tertiary font-body-sm text-body-sm flex items-center gap-1 group-hover:underline">
+                                Review Transcript <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Skill Spider Chart Summary - Span 4 cols -->
+<div class="md:col-span-4 glass-panel rounded-xl p-container-padding flex flex-col justify-between">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-8 h-8 rounded bg-secondary-container/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-[20px]">radar</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Team Competency</h3>
+</div>
+<div class="flex-1 flex items-center justify-center relative min-h-[200px]">
+<!-- Abstract representation of a radar chart using borders and rotated divs for high-end CSS-only look -->
+<div class="w-32 h-32 border border-white/10 rounded-full absolute flex items-center justify-center">
+<div class="w-24 h-24 border border-white/10 rounded-full flex items-center justify-center">
+<div class="w-16 h-16 border border-white/10 rounded-full"></div>
+</div>
+</div>
+<!-- Axis lines -->
+<div class="absolute w-full h-[1px] bg-white/5"></div>
+<div class="absolute w-full h-[1px] bg-white/5 rotate-60"></div>
+<div class="absolute w-full h-[1px] bg-white/5 -rotate-60"></div>
+<!-- Data Polygon (Stylized) -->
+<div class="absolute inset-0 bg-primary/20 border border-primary/50 z-10" style="clip-path: polygon(50% 10%, 85% 40%, 70% 85%, 30% 90%, 15% 45%); backdrop-filter: blur(2px);"></div>
+<!-- Points -->
+<div class="absolute w-2 h-2 rounded-full bg-primary top-[10%] left-[50%] -translate-x-1/2 -translate-y-1/2 z-20 shadow-[0_0_10px_#2d63ff]"></div>
+<div class="absolute w-2 h-2 rounded-full bg-primary top-[40%] left-[85%] -translate-x-1/2 -translate-y-1/2 z-20 shadow-[0_0_10px_#2d63ff]"></div>
+<div class="absolute w-2 h-2 rounded-full bg-primary top-[85%] left-[70%] -translate-x-1/2 -translate-y-1/2 z-20 shadow-[0_0_10px_#2d63ff]"></div>
+<!-- Labels -->
+<span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full font-label-caps text-label-caps text-on-surface-variant">DISCOVERY</span>
+<span class="absolute top-[40%] right-0 translate-x-1/4 font-label-caps text-label-caps text-on-surface-variant">PITCH</span>
+<span class="absolute bottom-0 left-[70%] translate-y-full font-label-caps text-label-caps text-on-surface-variant">NEGOTIATION</span>
+</div>
+</div>
+<!-- Team Leaderboard - Span 5 cols -->
+<div class="md:col-span-5 glass-panel rounded-xl p-0 overflow-hidden flex flex-col">
+<div class="p-4 border-b border-white/10 flex justify-between items-center bg-surface-container-highest/30">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface text-[20px]">leaderboard</span>
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Coaching Scores</h3>
+</div>
+<select class="bg-transparent border-none text-body-sm font-body-sm text-on-surface-variant focus:ring-0 cursor-pointer">
+<option>This Week</option>
+<option>This Month</option>
+</select>
+</div>
+<div class="flex-1 overflow-y-auto p-2 space-y-1">
+<!-- Rep 1 -->
+<div class="flex items-center justify-between p-3 rounded-lg hover:bg-white/5 transition-colors group">
+<div class="flex items-center gap-3">
+<div class="relative">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="Professional profile picture of a young female sales executive. Warm studio lighting, modern minimalist background. Smiling, confident expression." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWRjaWZLd4otcJ7ZGcGCX54y7glw_0ky0GKPjR_ROISTFlSz1c44E9k17oNQ6Pl_d3HAk9EUSZETzdSvfvpMuByZQL0lyZHt76VCU9hCwDNsbLQgwuUoiysS_3MVnsGNtkV2aoqIbotG8ilN0lhK_fL_phMv90AO0bGAg9opdmroEqizTKYiz4cbFnV6r23vFDwvGV4TS617oJHvXc9-QoJrjGAqh998bQNf8mwv6VWSSX43w_2Vuq-Q"/>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-tertiary rounded-full border-2 border-surface flex items-center justify-center text-[8px] font-bold text-surface">1</div>
+</div>
+<div>
+<p class="font-body-md text-body-md font-semibold text-on-surface">Elena Rostova</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Enterprise AE</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-mono-data text-mono-data text-tertiary">94.2 CS</p>
+<p class="font-body-sm text-[10px] text-tertiary flex items-center justify-end gap-1"><span class="material-symbols-outlined text-[12px]">trending_up</span> +2.4%</p>
+</div>
+</div>
+<!-- Rep 2 -->
+<div class="flex items-center justify-between p-3 rounded-lg hover:bg-white/5 transition-colors group bg-white/[0.02]">
+<div class="flex items-center gap-3">
+<div class="relative">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="Professional headshot of a male sales rep in his 30s. Corporate tech environment background, slightly blurred. Serious but approachable look." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4Eub2IhHxhdMxdtgVr7kpZgCduEQkujG5ya9h43ok3L7zN-7jUPVWIubW4eddNp4hwPqB_mA0W4KiYzzIHEQE0K5gIqXGSCbXM5hk3-QamoG09J9fiD4GJMk7yEgwClSDT6YfhIcAY5kKd2kEUK0j-GAL0o9gatSq8n2wyOk0AaXsSJAmog80R06tdeH0JgNu5oglHn4adAY98i3JMnlJgMafP3z4FtPT3A35qLxbCEVxDUTqQ7-h9A"/>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-surface-variant rounded-full border-2 border-surface flex items-center justify-center text-[8px] font-bold text-on-surface">2</div>
+</div>
+<div>
+<p class="font-body-md text-body-md font-semibold text-on-surface">Marcus Chen</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Mid-Market AE</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-mono-data text-mono-data text-on-surface">88.7 CS</p>
+<p class="font-body-sm text-[10px] text-on-surface-variant flex items-center justify-end gap-1"><span class="material-symbols-outlined text-[12px]">horizontal_rule</span> 0.0%</p>
+</div>
+</div>
+<!-- Rep 3 -->
+<div class="flex items-center justify-between p-3 rounded-lg hover:bg-white/5 transition-colors group">
+<div class="flex items-center gap-3">
+<div class="relative">
+<img class="w-8 h-8 rounded-full object-cover grayscale-[30%]" data-alt="Profile photo of a male sales development rep. Bright, modern office setting with glass walls. Enthusiastic expression." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZKeF_VER8XCJA4pBiBNA0SprzNrCU8NZeyBX6qRCl2o9T2zznzuhYj3_7UWl4zq8O54BAHT8_ZEu-2ZrnSx8j6rOxTKx3GKiS82208J31HyvEKXmIVtjAVzAv7indbinmNUjVtE-uv7xYfMLUfZspws39kOY0b5VnAwstnsaz0kSg-WuESeAO6TmOHtj2ubxisVKcvmM-an7rftPjmlF2R6vAFxJQtc5h_fjhgsxfnytTbH_EkChJ6Q"/>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-surface-variant rounded-full border-2 border-surface flex items-center justify-center text-[8px] font-bold text-on-surface">3</div>
+</div>
+<div>
+<p class="font-body-md text-body-md font-semibold text-on-surface">Rahul Sharma</p>
+<p class="font-body-sm text-body-sm text-error">Requires Coaching</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-mono-data text-mono-data text-error">71.3 CS</p>
+<p class="font-body-sm text-[10px] text-error flex items-center justify-end gap-1"><span class="material-symbols-outlined text-[12px]">trending_down</span> -5.1%</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Conversation Review (AI Analysis) - Span 7 cols -->
+<div class="md:col-span-7 glass-panel rounded-xl p-0 flex flex-col">
+<div class="p-4 border-b border-white/10 flex justify-between items-center bg-primary/5">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[20px]">record_voice_over</span>
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Conversation Review</h3>
+</div>
+<div class="flex gap-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant bg-white/5 px-2 py-1 rounded">CALL: ACME CORP DEMO</span>
+</div>
+</div>
+<div class="p-6 flex-1 flex flex-col gap-6">
+<!-- Transcript Snippet -->
+<div class="space-y-4">
+<!-- Prospect -->
+<div class="flex gap-3">
+<div class="w-6 h-6 rounded bg-surface-bright flex-shrink-0 flex items-center justify-center text-[10px] font-bold text-on-surface-variant">PR</div>
+<div class="bg-surface-container-high p-3 rounded-lg rounded-tl-none border border-white/5 inline-block max-w-[85%]">
+<p class="font-body-sm text-body-sm text-on-surface-variant">"It looks great, but honestly the enterprise tier seems a bit steep for our current budget cycle. We might need to look at cheaper alternatives."</p>
+</div>
+</div>
+<!-- Rep (Sub-optimal) -->
+<div class="flex gap-3 flex-row-reverse">
+<div class="w-6 h-6 rounded bg-surface-variant flex-shrink-0 flex items-center justify-center text-[10px] font-bold text-on-surface">RS</div>
+<div class="bg-error/10 p-3 rounded-lg rounded-tr-none border border-error/20 inline-block max-w-[85%] relative">
+<div class="absolute -left-2 top-1/2 -translate-y-1/2 w-4 h-4 bg-error rounded-full flex items-center justify-center shadow-[0_0_10px_rgba(255,180,171,0.5)]">
+<span class="material-symbols-outlined text-[10px] text-surface font-bold">close</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-error-container">"Well, we can offer a 15% discount if you sign today. Does that help?"</p>
+</div>
+</div>
+</div>
+<!-- AI Suggestion Box -->
+<div class="mt-auto bg-primary-container/10 border border-primary/30 rounded-xl p-4 relative overflow-hidden">
+<div class="absolute -right-10 -top-10 w-32 h-32 bg-primary/20 blur-2xl rounded-full"></div>
+<div class="flex items-start gap-3 relative z-10">
+<span class="material-symbols-outlined text-primary">model_training</span>
+<div>
+<h4 class="font-label-caps text-label-caps text-primary mb-1">AI BETTER ALTERNATIVE</h4>
+<p class="font-body-md text-body-md text-on-surface italic mb-3">"I understand budget is a primary concern. Before we discuss numbers, let's look at the ROI analysis we did earlier. The enterprise tier automates 30% of your current manual workflow. How much is that time costing you currently?"</p>
+<div class="flex gap-2">
+<span class="px-2 py-1 bg-white/5 rounded text-[10px] font-mono-data text-on-surface-variant border border-white/10">Value Selling</span>
+<span class="px-2 py-1 bg-white/5 rounded text-[10px] font-mono-data text-on-surface-variant border border-white/10">Deflection</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

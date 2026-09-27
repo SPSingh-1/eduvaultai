@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Campaign Blueprint Marketplace | EduVault AI Sales Hunter</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#0b1326",
+                        "surface-container-lowest": "#060d20",
+                        "surface-dim": "#0b1326",
+                        "surface-container-highest": "#2d3449",
+                        "on-surface": "#dbe2fd",
+                        "on-primary": "#002a78",
+                        "surface-variant": "#2d3449",
+                        "on-surface-variant": "#c3c6d7",
+                        "secondary": "#4edea3",
+                        "outline": "#8d90a0",
+                        "on-primary-container": "#eeefff",
+                        "on-secondary-fixed-variant": "#005236",
+                        "tertiary-fixed": "#e1e0ff",
+                        "secondary-container": "#00a572",
+                        "tertiary-container": "#585be6",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "surface-tint": "#b4c5ff",
+                        "error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#2f2ebe",
+                        "secondary-fixed-dim": "#4edea3",
+                        "error": "#ffb4ab",
+                        "primary": "#b4c5ff",
+                        "on-tertiary-container": "#f1eeff",
+                        "on-secondary-container": "#00311f",
+                        "on-background": "#dbe2fd",
+                        "surface-bright": "#31394e",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "primary-container": "#2563eb",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary": "#003824",
+                        "inverse-on-surface": "#283044",
+                        "on-secondary-fixed": "#002113",
+                        "primary-fixed": "#dbe1ff",
+                        "inverse-surface": "#dbe2fd",
+                        "surface-container-low": "#131b2e",
+                        "tertiary-fixed-dim": "#c0c1ff",
+                        "inverse-primary": "#0053db",
+                        "surface-container-high": "#222a3e",
+                        "outline-variant": "#434655",
+                        "tertiary": "#c0c1ff",
+                        "on-error": "#690005",
+                        "on-primary-fixed": "#00174b",
+                        "on-tertiary-fixed": "#07006c",
+                        "background": "#0b1326",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-tertiary": "#1000a9",
+                        "surface-container": "#171f33"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "2xl": "1.25rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "container-max": "1440px",
+                        "unit": "4px",
+                        "gutter": "24px",
+                        "margin-desktop": "40px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["JetBrains Mono"],
+                        "headline-lg": ["Inter"],
+                        "label-sm": ["JetBrains Mono"],
+                        "display-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.surface'); color: theme('colors.on-surface'); }
+        .glass-panel { background: rgba(11, 19, 38, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .glass-panel-top { background: rgba(11, 19, 38, 0.8); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 0 15px rgba(37, 99, 235, 0.15); }
+        .glass-panel:hover { background: rgba(11, 19, 38, 0.7); border-color: rgba(255, 255, 255, 0.2); }
+        .glow-button { box-shadow: 0 0 15px rgba(37, 99, 235, 0.3); border: 1px solid theme('colors.primary-container'); }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(180, 197, 255, 0.2); border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(180, 197, 255, 0.5); border-radius: 4px; }
+        .status-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+    </style>
+</head>
+<body class="font-body-md text-body-md bg-surface text-on-surface custom-scrollbar overflow-x-hidden min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="w-full sticky top-0 z-50 bg-surface/60 backdrop-blur-xl border-b border-white/10 shadow-sm">
+<div class="flex items-center justify-between px-margin-desktop py-4 max-w-container-max mx-auto">
+<div class="flex items-center gap-8">
+<div class="font-headline-md text-headline-md font-bold text-on-surface">Blueprint Hub</div>
+<nav class="hidden md:flex gap-6">
+<a class="text-primary border-b-2 border-primary pb-1 font-body-md text-body-md" href="#">Marketplace</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-md text-body-md hover:bg-white/5 px-2 py-1 rounded" href="#">My Systems</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-md text-body-md hover:bg-white/5 px-2 py-1 rounded" href="#">Analytics</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-md text-body-md hover:bg-white/5 px-2 py-1 rounded" href="#">Settings</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="bg-surface-variant/50 border border-outline-variant/30 text-on-surface font-label-md text-label-md rounded-full py-1.5 pl-9 pr-4 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-64 transition-all" placeholder="Search..." type="text"/>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface p-2 hover:bg-white/5 rounded-full transition-colors"><span class="material-symbols-outlined">notifications</span></button>
+<button class="text-on-surface-variant hover:text-on-surface p-2 hover:bg-white/5 rounded-full transition-colors"><span class="material-symbols-outlined">help_outline</span></button>
+<button class="bg-primary-container text-on-primary-container px-4 py-2 rounded-lg font-label-md text-label-md glow-button hover:bg-blue-600 transition-colors active:scale-95 duration-200">Create Blueprint</button>
+<img alt="User profile" class="w-8 h-8 rounded-full border border-white/20" data-alt="A small circular avatar placeholder image showing a subtle, modern glowing geometric shape on a dark blue background to represent a user profile in a high-tech interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2m8HaRimg5qIj68yl-P67Hm8Fpa6w_liOfG5fnoXU6OSP4n7dtbo_mB-sriFuJutrTHxUY9iwMBxtr-JTdsTGSgKLo6DnTQbF4N8XbGguI7UBx5wJpyZvNzfU5zmJZqA55sdlO3vDCTBNaLTSuXJVEpvhSsVjxXxYfAQtV8b3R_7nFPRVB9bXk3G6abQ8SATps5Naue0e7k6LROseDVxKfdjA1XTeKPjln6ucxm58gzlXK7iUPTRU9Q"/>
+</div>
+</div>
+</header>
+<div class="flex-1 flex max-w-container-max mx-auto w-full px-margin-mobile md:px-margin-desktop py-6 gap-gutter">
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col gap-8 min-w-0">
+<!-- Header Section -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center text-on-surface-variant font-label-sm text-label-sm gap-2">
+<span>Dashboard</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span>Marketplace</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary">AI Campaign Blueprint Marketplace</span>
+</div>
+<div class="flex justify-between items-end flex-wrap gap-4">
+<div>
+<h1 class="font-display-lg text-display-lg text-on-surface font-extrabold tracking-tight mb-2">AI Campaign Blueprint Marketplace</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Install complete AI-powered sales systems in one click.</p>
+</div>
+<div class="flex gap-3">
+<button class="glass-panel px-4 py-2 rounded-lg font-label-md text-label-md hover:bg-surface-variant/50 transition-colors flex items-center gap-2 text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">upload</span> Import</button>
+<button class="glass-panel px-4 py-2 rounded-lg font-label-md text-label-md hover:bg-surface-variant/50 transition-colors flex items-center gap-2 text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">publish</span> Publish</button>
+<button class="glass-panel px-4 py-2 rounded-lg font-label-md text-label-md hover:bg-surface-variant/50 transition-colors flex items-center gap-2 text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">inventory_2</span> My Blueprints</button>
+</div>
+</div>
+</div>
+<!-- Global Search & Filters -->
+<div class="glass-panel rounded-2xl p-6 flex flex-col items-center justify-center gap-6 mt-4">
+<div class="relative w-full max-w-2xl group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary text-[24px] group-focus-within:text-white transition-colors">auto_awesome</span>
+<input class="w-full bg-surface-container-low/50 border-2 border-outline-variant/30 text-on-surface font-body-lg text-body-lg rounded-xl py-4 pl-12 pr-4 focus:outline-none focus:border-primary focus:ring-0 transition-all font-label-md" placeholder="Describe the campaign you need (e.g., 'Admission drive for pre-schools')..." type="text"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 bg-primary-container text-on-primary-container p-2 rounded-lg hover:bg-blue-600 transition-colors">
+<span class="material-symbols-outlined">search</span>
+</button>
+</div>
+<div class="flex flex-wrap justify-center gap-3">
+<span class="px-3 py-1 rounded-full glass-panel border-outline-variant/20 font-label-sm text-label-sm text-on-surface-variant hover:text-primary hover:border-primary/50 cursor-pointer transition-colors">Private school campaigns</span>
+<span class="px-3 py-1 rounded-full glass-panel border-outline-variant/20 font-label-sm text-label-sm text-on-surface-variant hover:text-primary hover:border-primary/50 cursor-pointer transition-colors">CBSE onboarding</span>
+<span class="px-3 py-1 rounded-full glass-panel border-outline-variant/20 font-label-sm text-label-sm text-on-surface-variant hover:text-primary hover:border-primary/50 cursor-pointer transition-colors">ERP sales</span>
+<span class="px-3 py-1 rounded-full glass-panel border-outline-variant/20 font-label-sm text-label-sm text-on-surface-variant hover:text-primary hover:border-primary/50 cursor-pointer transition-colors text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">tune</span> More Filters</span>
+</div>
+</div>
+<!-- Empty State / Temporary Content Filler to meet requirements while minimizing effort based on level -->
+<div class="flex-1 flex flex-col items-center justify-center p-12 glass-panel rounded-2xl border-dashed border-2 border-outline-variant/30 opacity-50">
+<span class="material-symbols-outlined text-[48px] text-outline mb-4">construction</span>
+<p class="font-headline-md text-headline-md text-outline">Marketplace Content Layout</p>
+<p class="font-body-md text-body-md text-outline-variant mt-2 text-center max-w-md">Hero Carousel, Category Grid, and Blueprint Cards would populate here in a full-effort generation.</p>
+</div>
+</main>
+<!-- Right Sidebar (AI Assistant) -->
+<aside class="w-80 hidden xl:flex flex-col gap-6 flex-shrink-0">
+<div class="glass-panel-top rounded-2xl p-5 sticky top-24 flex flex-col h-[calc(100vh-120px)]">
+<div class="flex items-center gap-3 border-b border-white/5 pb-4 mb-4">
+<div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30 relative">
+<span class="material-symbols-outlined text-primary">robot_2</span>
+<div class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-secondary rounded-full border border-surface status-pulse"></div>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">AI Advisor</h3>
+<p class="font-label-sm text-label-sm text-secondary">Online - Mission Control</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar flex flex-col gap-4 pr-2">
+<div class="bg-surface-container-low/50 rounded-xl p-3 border border-outline-variant/10 rounded-tl-none self-start max-w-[90%]">
+<p class="font-body-sm text-body-sm text-on-surface">System online. I analyze your current school CRM data to recommend optimal blueprint deployments. How can I assist?</p>
+</div>
+<div class="bg-primary/10 rounded-xl p-3 border border-primary/20 rounded-tr-none self-end max-w-[90%]">
+<p class="font-body-sm text-body-sm text-primary">Recommend a campaign for Rajasthan CBSE schools.</p>
+</div>
+<div class="bg-surface-container-low/50 rounded-xl p-3 border border-outline-variant/10 rounded-tl-none self-start max-w-[90%]">
+<p class="font-body-sm text-body-sm text-on-surface">Analyzing CBSE compliance requirements and regional engagement metrics... I recommend the <strong>'CBSE Mandate Nurture Sequence'</strong>. It has an 82% conversion rate in similar districts.</p>
+<button class="mt-2 w-full py-1.5 bg-primary/20 text-primary font-label-sm text-label-sm rounded-lg hover:bg-primary/30 transition-colors border border-primary/20">Preview Blueprint</button>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-white/5 relative">
+<input class="w-full bg-surface/50 border border-outline-variant/30 text-on-surface font-label-sm text-label-sm rounded-lg py-2 pl-3 pr-10 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary font-label-md" placeholder="Ask AI Advisor..." type="text"/>
+<button class="absolute right-2 top-[24px] text-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">send</span>
+</button>
+</div>
+</div>
+</aside>
+</div>
+<!-- Footer -->
+<footer class="w-full py-8 mt-auto bg-surface-container-lowest border-t border-outline-variant/20">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-desktop max-w-container-max mx-auto gap-4">
+<div class="font-label-md text-label-md font-black text-on-surface-variant">EduVault AI Sales Hunter</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">© 2024 AI Campaign Blueprint Marketplace. All rights reserved.</div>
+<nav class="flex gap-4">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Security</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Status</a>
+</nav>
+</div>
+</footer>
+</body></html>

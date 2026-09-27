@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Agent Command Center | EduVault AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "outline": "#8d90a1",
+                      "primary-fixed": "#dce1ff",
+                      "primary-fixed-dim": "#b7c4ff",
+                      "secondary-container": "#00f4fe",
+                      "tertiary": "#ffba20",
+                      "on-tertiary-fixed": "#271900",
+                      "on-tertiary": "#412d00",
+                      "surface-bright": "#31394e",
+                      "on-background": "#dbe2fd",
+                      "on-tertiary-fixed-variant": "#5e4200",
+                      "on-secondary": "#003739",
+                      "surface-container": "#171f33",
+                      "on-tertiary-container": "#fff6ee",
+                      "surface-variant": "#2d3449",
+                      "secondary-fixed-dim": "#00dce5",
+                      "inverse-on-surface": "#283044",
+                      "tertiary-fixed": "#ffdea8",
+                      "secondary-fixed": "#63f7ff",
+                      "on-secondary-fixed": "#002021",
+                      "surface-container-highest": "#2d3449",
+                      "primary-container": "#2d63ff",
+                      "on-primary-fixed": "#001551",
+                      "on-surface-variant": "#c3c5d8",
+                      "surface-container-high": "#222a3e",
+                      "tertiary-fixed-dim": "#ffba20",
+                      "surface-container-lowest": "#060d20",
+                      "on-primary": "#002780",
+                      "primary": "#b7c4ff",
+                      "surface-tint": "#b7c4ff",
+                      "surface-container-low": "#131b2e",
+                      "outline-variant": "#434656",
+                      "on-secondary-container": "#006c71",
+                      "surface": "#0b1326",
+                      "background": "#0b1326",
+                      "surface-dim": "#0b1326",
+                      "tertiary-container": "#956a00",
+                      "error-container": "#93000a",
+                      "on-primary-fixed-variant": "#0039b4",
+                      "inverse-primary": "#004dea",
+                      "on-error": "#690005",
+                      "on-surface": "#dbe2fd",
+                      "on-secondary-fixed-variant": "#004f53",
+                      "on-primary-container": "#f9f7ff",
+                      "secondary": "#e6feff",
+                      "on-error-container": "#ffdad6",
+                      "inverse-surface": "#dbe2fd",
+                      "error": "#ffb4ab"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "module-gap": "24px",
+                      "element-padding-md": "12px 16px",
+                      "gutter": "16px",
+                      "container-padding": "32px",
+                      "element-padding-sm": "8px 12px",
+                      "unit": "4px"
+              },
+              "fontFamily": {
+                      "display-lg": [
+                              "Inter"
+                      ],
+                      "mono-label": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-sm": [
+                              "Inter"
+                      ],
+                      "label-md": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "label-sm": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "mono-label": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-sm": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "letterSpacing": "-0.005em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-md": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "letterSpacing": "0",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-sm": [
+                              "11px",
+                              {
+                                      "lineHeight": "14px",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "500"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .glass-panel {
+            background-color: rgba(21, 30, 45, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        @media (max-width: 768px) {
+            .glass-panel {
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+                background-color: #151e2d; /* Solid fallback */
+            }
+        }
+
+        .ai-pulse-green {
+            animation: pulse-green 2s infinite;
+        }
+        
+        .ai-pulse-amber {
+            animation: spin 3s linear infinite;
+        }
+
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(74, 222, 128, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Hide scrollbar for clean UI but keep functionality */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body-md">
+<!-- TopNavBar -->
+<nav class="fixed top-0 right-0 left-72 z-50 flex items-center justify-between px-6 border-b border-white/5 bg-surface/60 backdrop-blur-xl shadow-sm w-full h-16 md:w-[calc(100%-18rem)]">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md font-bold text-on-surface">EduVault AI</span>
+</div>
+<!-- Search (Left aligned relatively within its container context if full implemented, simplified here) -->
+<div class="hidden md:flex items-center bg-surface-container/50 border border-outline/20 rounded-lg px-3 py-1.5 focus-within:border-primary/50 transition-colors w-64 ml-8">
+<span class="material-symbols-outlined text-outline text-sm mr-2" data-icon="search">search</span>
+<input class="bg-transparent border-none text-on-surface focus:ring-0 text-sm w-full p-0 placeholder-outline" placeholder="Search operations..." type="text"/>
+</div>
+<div class="flex items-center gap-6 ml-auto">
+<div class="hidden lg:flex items-center gap-4 text-on-surface-variant font-label-md text-label-md">
+<a class="hover:text-primary transition-all duration-300" href="#">Credits: 1,250</a>
+<a class="hover:text-primary transition-all duration-300" href="#">Tasks</a>
+</div>
+<button class="hidden md:flex items-center justify-center bg-surface-variant text-on-surface px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-surface-container-high transition-colors">
+                AI Usage
+            </button>
+<button class="hidden md:flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center overflow-hidden border border-outline/20 cursor-pointer">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="account_circle">account_circle</span>
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col border-r border-white/10 bg-surface/60 backdrop-blur-xl shadow-md w-72 h-screen overflow-y-auto flex-shrink-0 z-50 hidden md:flex">
+<div class="p-6 pb-2 border-b border-white/5">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-10 h-10 rounded-lg bg-primary-container/20 flex items-center justify-center text-primary font-bold border border-primary/30">
+                    EV
+                </div>
+<div>
+<h1 class="font-display-lg text-display-lg font-bold text-primary tracking-tighter" style="font-size: 1.25rem; line-height: 1.5rem;">EduVault AI</h1>
+<p class="text-xs text-primary/70 flex items-center gap-1 mt-0.5">
+<span class="w-1.5 h-1.5 rounded-full bg-green-500 ai-pulse-green"></span> System Status: Active
+                    </p>
+</div>
+</div>
+</div>
+<div class="p-4 flex-1 overflow-y-auto no-scrollbar">
+<nav class="flex flex-col gap-1">
+<!-- Navigation Items -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant font-body-md hover:bg-surface-variant/40 hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="dashboard">dashboard</span>
+                    Dashboard
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant font-body-md hover:bg-surface-variant/40 hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="school">school</span>
+                    School Discovery
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant font-body-md hover:bg-surface-variant/40 hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="insights">insights</span>
+                    Lead Intelligence
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant font-body-md hover:bg-surface-variant/40 hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="campaign">campaign</span>
+                    Campaigns
+                </a>
+<!-- Active Tab -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-surface-variant/30 text-primary font-bold border-r-2 border-primary" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="smart_toy">smart_toy</span>
+                    Agent Command Center
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant font-body-md hover:bg-surface-variant/40 hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="travel_explore">travel_explore</span>
+                    Scout AI
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant font-body-md hover:bg-surface-variant/40 hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="map">map</span>
+                    Maps Intelligence
+                </a>
+</nav>
+</div>
+<div class="p-4 border-t border-white/5">
+<button class="w-full bg-primary-container text-on-primary-container hover:bg-primary hover:text-on-primary font-label-md text-label-md py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors mb-4">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span> Deploy New Agent
+            </button>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="help">help</span> Help
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-sm text-on-surface-variant hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="sensors">sensors</span> Status
+                </a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-72 pt-16 min-h-screen p-container-padding">
+<!-- Command Center Header & Overview -->
+<div class="mb-module-gap flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Autonomous Operations</h2>
+<p class="text-on-surface-variant font-body-lg">Monitoring 8 specialized AI agents actively prospecting, analyzing, and engaging.</p>
+</div>
+<div class="flex gap-4">
+<div class="glass-panel px-4 py-3 rounded-lg flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-green-400 ai-pulse-green"></div>
+<div>
+<div class="font-mono-label text-mono-label text-outline">FLEET STATUS</div>
+<div class="font-bold text-on-surface text-sm">8 Agents Active</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-12 gap-module-gap">
+<!-- Hero Network Visualization & KPIs -->
+<div class="col-span-12 lg:col-span-8 flex flex-col gap-module-gap">
+<!-- Central Visualization Area -->
+<div class="glass-panel rounded-xl h-80 relative overflow-hidden flex items-center justify-center border border-white/10 group">
+<!-- Placeholder for Network Graph Shader/Animation -->
+<div class="absolute inset-0 w-full h-full bg-surface-container opacity-50"></div>
+<div class="absolute inset-0 w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/10 via-background to-background"></div>
+<div class="z-10 text-center">
+<div class="w-20 h-20 mx-auto bg-surface-container rounded-full border border-primary/30 flex items-center justify-center mb-4 relative shadow-[0_0_30px_rgba(45,99,255,0.2)]">
+<span class="material-symbols-outlined text-4xl text-primary" data-icon="hub">hub</span>
+<!-- Orbiting dots -->
+<div class="absolute inset-[-10px] border border-dashed border-outline/30 rounded-full animate-[spin_10s_linear_infinite]"></div>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Central Nexus AI</h3>
+<p class="text-xs text-on-surface-variant mt-1">Orchestrating Workforce Operations</p>
+</div>
+</div>
+<!-- Core KPIs -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- KPI 1 -->
+<div class="glass-panel p-element-padding-md rounded-lg flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-primary/70" data-icon="school">school</span>
+<span class="text-xs font-mono-label text-green-400 bg-green-400/10 px-2 py-0.5 rounded">+12%</span>
+</div>
+<div>
+<div class="text-outline text-xs mb-1 uppercase tracking-wider">Schools Discovered Today</div>
+<div class="font-headline-md text-headline-md text-on-surface">3,241</div>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="glass-panel p-element-padding-md rounded-lg flex flex-col justify-between border-t-2 border-t-secondary-container">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-secondary-container/70" data-icon="contact_mail">contact_mail</span>
+<span class="text-xs font-mono-label text-green-400 bg-green-400/10 px-2 py-0.5 rounded">+8%</span>
+</div>
+<div>
+<div class="text-outline text-xs mb-1 uppercase tracking-wider">Leads Qualified</div>
+<div class="font-headline-md text-headline-md text-on-surface">842</div>
+</div>
+</div>
+<!-- KPI 3 -->
+<div class="glass-panel p-element-padding-md rounded-lg flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-tertiary/70" data-icon="monitoring">monitoring</span>
+<span class="text-xs font-mono-label text-outline bg-surface-variant px-2 py-0.5 rounded">Current</span>
+</div>
+<div>
+<div class="text-outline text-xs mb-1 uppercase tracking-wider">Estimated Pipeline</div>
+<div class="font-headline-md text-headline-md text-on-surface">$1.2M</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Activity Feed Panel -->
+<div class="col-span-12 lg:col-span-4 glass-panel rounded-xl flex flex-col border border-white/5">
+<div class="p-4 border-b border-white/5 flex justify-between items-center bg-surface-container-low/50 rounded-t-xl">
+<h3 class="font-label-md text-label-md text-on-surface uppercase tracking-wider flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary ai-pulse-green"></span>
+                        Live Telemetry
+                    </h3>
+<span class="material-symbols-outlined text-outline text-sm cursor-pointer hover:text-on-surface transition-colors" data-icon="more_horiz">more_horiz</span>
+</div>
+<div class="flex-1 overflow-y-auto p-4 flex flex-col gap-3 font-mono-label text-mono-label h-[460px] no-scrollbar">
+<!-- Feed Item -->
+<div class="flex gap-3 text-on-surface-variant items-start group">
+<div class="text-outline w-16 shrink-0 pt-0.5">14:02:11</div>
+<div class="w-2 h-2 rounded-full bg-secondary-fixed mt-1.5 shrink-0"></div>
+<div>
+<span class="text-secondary-fixed">Scout AI</span> discovered <span class="text-on-surface">Lincoln High School</span> in NY region. Added to processing queue.
+                        </div>
+</div>
+<!-- Feed Item -->
+<div class="flex gap-3 text-on-surface-variant items-start group">
+<div class="text-outline w-16 shrink-0 pt-0.5">14:01:45</div>
+<div class="w-2 h-2 rounded-full bg-tertiary mt-1.5 shrink-0"></div>
+<div>
+<span class="text-tertiary">Lead Scoring</span> updated <span class="text-on-surface">Tech Academy</span> to <span class="text-green-400">92% Match</span>.
+                        </div>
+</div>
+<!-- Feed Item -->
+<div class="flex gap-3 text-on-surface-variant items-start group">
+<div class="text-outline w-16 shrink-0 pt-0.5">13:58:20</div>
+<div class="w-2 h-2 rounded-full bg-primary mt-1.5 shrink-0"></div>
+<div>
+<span class="text-primary">Contact Intel</span> verified emails for 3 decision makers at <span class="text-on-surface">Oakridge District</span>.
+                        </div>
+</div>
+<!-- Feed Item -->
+<div class="flex gap-3 text-on-surface-variant items-start group">
+<div class="text-outline w-16 shrink-0 pt-0.5">13:55:01</div>
+<div class="w-2 h-2 rounded-full bg-purple-400 mt-1.5 shrink-0"></div>
+<div>
+<span class="text-purple-400">Reply Assistant</span> drafted follow-up sequence for <span class="text-on-surface">Campaign Alpha</span>.
+                        </div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

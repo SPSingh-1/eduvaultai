@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Audience Builder - EduVault AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#171f33",
+                        "secondary-fixed": "#e9ddff",
+                        "inverse-surface": "#dbe2fd",
+                        "inverse-on-surface": "#283044",
+                        "surface-glass": "rgba(255, 255, 255, 0.04)",
+                        "on-primary-fixed-variant": "#2c4677",
+                        "surface-container-lowest": "#060d20",
+                        "primary-container": "#7890c6",
+                        "on-primary-fixed": "#001a42",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "outline": "#8c909f",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "secondary-container": "#503f79",
+                        "secondary": "#d0bcff",
+                        "primary": "#adc6ff",
+                        "terminal-timestamp": "#4edea3",
+                        "surface-dim": "#0b1326",
+                        "on-error-container": "#ffdad6",
+                        "background": "#0b1326",
+                        "on-primary-container": "#082858",
+                        "on-surface": "#dbe2fd",
+                        "surface-variant": "#2d3449",
+                        "on-tertiary": "#003824",
+                        "tertiary": "#4edea3",
+                        "error": "#ffb4ab",
+                        "primary-fixed": "#d8e2ff",
+                        "error-container": "#93000a",
+                        "on-secondary": "#37265e",
+                        "on-error": "#690005",
+                        "surface-tint": "#adc6ff",
+                        "surface-container-highest": "#2d3449",
+                        "on-background": "#dbe2fd",
+                        "border-glass": "rgba(255, 255, 255, 0.1)",
+                        "tertiary-container": "#00a572",
+                        "on-primary": "#122f5f",
+                        "on-surface-variant": "#c2c6d6",
+                        "outline-variant": "#424754",
+                        "primary-fixed-dim": "#adc6ff",
+                        "on-tertiary-container": "#00311f",
+                        "surface-main": "#0b1326",
+                        "on-secondary-fixed-variant": "#4d3d76",
+                        "surface": "#0b1326",
+                        "tertiary-fixed": "#6ffbbe",
+                        "surface-container-low": "#131b2e",
+                        "on-secondary-fixed": "#210f48",
+                        "surface-bright": "#31394e",
+                        "inverse-primary": "#455e90",
+                        "glow-tertiary": "rgba(78, 222, 163, 0.1)",
+                        "surface-container-high": "#222a3e",
+                        "glow-primary": "rgba(173, 198, 255, 0.1)",
+                        "on-secondary-container": "#c2aef0",
+                        "on-tertiary-fixed": "#002114",
+                        "secondary-fixed-dim": "#d0bcff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-page": "24px",
+                        "grid-compact": "8px",
+                        "unit": "4px",
+                        "grid-wide": "24px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "grid-cell": ["Inter"],
+                        "kpi-md": ["Inter"],
+                        "mono-label": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "grid-header": ["Inter"],
+                        "kpi-xl": ["Inter"]
+                    },
+                    "fontSize": {
+                        "grid-cell": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "kpi-md": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "mono-label": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "grid-header": ["11px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "kpi-xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0b1326;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 32px 32px;
+            color: #dbe2fd;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-panel:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .pulse-node {
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(78, 222, 163, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(78, 222, 163, 0); }
+            100% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(78, 222, 163, 0); }
+        }
+    </style>
+</head>
+<body class="font-body-sm min-h-screen overflow-x-hidden antialiased text-on-surface">
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-grid-wide py-unit h-16 backdrop-blur-xl border-b border-border-glass bg-surface-glass shadow-xl font-headline-sm text-headline-sm hidden md:flex">
+<div class="flex items-center gap-4">
+<span class="font-headline-sm text-headline-sm font-bold text-primary tracking-tight">EduVault AI</span>
+</div>
+<div class="flex-1 flex justify-start pl-12">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]" style="font-variation-settings: 'FILL' 0;">search</span>
+<input class="w-full bg-surface-container border border-border-glass rounded-full py-1.5 pl-10 pr-4 text-on-surface text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all placeholder-on-surface-variant" placeholder="Search..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="bg-gradient-to-r from-primary to-secondary text-on-primary px-4 py-1.5 rounded-full font-medium text-sm hover:opacity-90 active:scale-95 transition-all shadow-[0_0_15px_rgba(173,198,255,0.2)]">
+                Ask Marketing AI...
+            </button>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span></button>
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">task_alt</span></button>
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">campaign</span></button>
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">account_balance_wallet</span></button>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden border border-border-glass">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A detailed, futuristic digital portrait of a professional operations manager in a high-tech command center environment. The lighting is dramatic, with cool blue and green accents reflecting off a sleek headset. Cyber-command aesthetic, sharp focus, 8k resolution, highly detailed." src="https://lh3.googleusercontent.com/aida-public/AB6AXuChGy07fzznDFGbAEnlQp5TMTcSsjdeU1HoDBcy6G0FgVqgGNCPiLHXVjcA2XktoNyoFbehYN1aAzWuIdbmjyFPgl4byI2f7QNvi5jV6bjX2VVTqZXRaalHXDx1Pq-TKbXgczYq-1s_HWtZGHu0LMHc3j3ApcaUYpCQLjn-97_tezS7zfZymdUXDvhXnk15Ho-pdBAudF99Z8jaaEbWDc7tUjUhBADFZ_1EVmnMaH3WwYAgsbDyB52bTQ"/>
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-64 z-40 flex flex-col pt-20 pb-grid-wide px-gutter border-r border-border-glass bg-surface-container-lowest hidden md:flex font-mono-label text-mono-label">
+<div class="mb-8 px-2 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-variant overflow-hidden border border-border-glass flex-shrink-0">
+<img alt="Marketing Engine" class="w-full h-full object-cover" data-alt="A stylized, glowing neon logo representing an AI marketing engine. The icon resembles an abstract eye or brain network, rendered in vibrant cyan and magenta tones against a deep space background. High-tech, futuristic aesthetic, crisp vector styling." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7Tu3Zk3cE2kLzrDEUvRMUII4qkBg8RHPshLwjxL990vEIeqVmlBuQY0LIP5_G4QjCMCp7MrE4LLwozI8TQ0EGJkxUqbwT-HdOzCUpsQtLHGV_esvV41n9OKEQQi-HpfuHB3P6OA2HjOuW3GAIx2rVcyW-dB4oz1v40HbO0h9r_ZCadRZz0Qg32Xw7O_TCta17t7awZLeo3xDpNW7dKhtW8kOT6R23PrDvOGzxGpftefVKKq-FpAgW3Q"/>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary">Sales Hunter</h2>
+<p class="text-on-surface-variant text-[10px] uppercase tracking-wider mt-0.5">Marketing &amp; Growth</p>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1 overflow-y-auto scrollbar-hide">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-glass rounded-lg hover:text-primary transition-all active:scale-98 duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+                Command Center
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-glass rounded-lg hover:text-primary transition-all active:scale-98 duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">psychology</span>
+                ICP Intelligence
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 bg-primary-container text-on-primary-container rounded-lg font-bold active:scale-98 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">groups</span>
+                Audience Builder
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-glass rounded-lg hover:text-primary transition-all active:scale-98 duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">precision_manufacturing</span>
+                Campaign Strategy
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-glass rounded-lg hover:text-primary transition-all active:scale-98 duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">auto_awesome</span>
+                Content Studio
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-glass rounded-lg hover:text-primary transition-all active:scale-98 duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">web</span>
+                Landing Pages
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-glass rounded-lg hover:text-primary transition-all active:scale-98 duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">science</span>
+                Experiments
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-glass rounded-lg hover:text-primary transition-all active:scale-98 duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">analytics</span>
+                Attribution
+            </a>
+</nav>
+<div class="mt-4 pt-4 border-t border-border-glass">
+<button class="w-full bg-gradient-to-r from-primary to-secondary text-on-primary py-2 rounded-lg font-bold text-sm mb-4 hover:opacity-90 active:scale-95 transition-all shadow-[0_0_15px_rgba(173,198,255,0.15)] flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+                Launch Campaign
+            </button>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-glass rounded-lg hover:text-primary transition-all active:scale-98 duration-200" href="#">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0;">settings</span>
+                    Settings
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-glass rounded-lg hover:text-primary transition-all active:scale-98 duration-200" href="#">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0;">help</span>
+                    Support
+                </a>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="md:ml-64 pt-20 p-grid-wide min-h-screen">
+<div class="max-w-[1600px] mx-auto space-y-6">
+<!-- Header Section -->
+<header class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-8">
+<div>
+<h1 class="font-kpi-xl text-kpi-xl text-primary font-bold tracking-tight mb-2">AI Audience Builder</h1>
+<p class="font-headline-sm text-headline-sm text-on-surface-variant">Describe your target audience. AI builds it for you.</p>
+</div>
+<div class="flex gap-3">
+<button class="glass-panel px-4 py-2 rounded-lg text-on-surface hover:text-primary font-medium text-sm flex items-center gap-2 transition-all active:scale-95">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                        Export
+                    </button>
+<button class="glass-panel px-4 py-2 rounded-lg text-on-surface hover:text-primary font-medium text-sm flex items-center gap-2 transition-all active:scale-95">
+<span class="material-symbols-outlined text-[18px]">group_add</span>
+                        Add to CRM
+                    </button>
+<button class="bg-gradient-to-r from-primary to-secondary text-on-primary px-6 py-2 rounded-lg font-bold text-sm hover:opacity-90 active:scale-95 transition-all shadow-[0_0_20px_rgba(173,198,255,0.2)] flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">campaign</span>
+                        Create Campaign
+                    </button>
+</div>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-6">
+<!-- AI Input Panel (Full Width Top) -->
+<div class="col-span-12 glass-panel rounded-xl p-6 relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-r from-glow-primary to-transparent opacity-50 pointer-events-none"></div>
+<div class="relative z-10 flex flex-col md:flex-row gap-6 items-start md:items-center">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-primary-container/20 border border-primary/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[24px] animate-pulse" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div class="flex-1 w-full">
+<label class="block font-grid-header text-grid-header text-primary mb-2 uppercase tracking-widest">AI Prompt Target</label>
+<div class="bg-surface-container-lowest border border-border-glass rounded-lg p-4 font-mono-label text-mono-label text-on-surface shadow-inner flex items-center justify-between">
+<span class="typing-effect">Find private CBSE schools in Rajasthan with more than 1,000 students, outdated websites and no parent app.</span>
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Audience Preview Stats (Col span 4) -->
+<div class="col-span-12 md:col-span-4 flex flex-col gap-6">
+<div class="glass-panel rounded-xl p-6 flex-1 flex flex-col justify-center">
+<div class="flex justify-between items-start mb-4">
+<h3 class="font-grid-header text-grid-header text-on-surface-variant uppercase tracking-widest">Total Discovered</h3>
+<span class="material-symbols-outlined text-primary">school</span>
+</div>
+<div class="font-kpi-xl text-kpi-xl text-on-surface mb-2">1,248</div>
+<div class="text-sm text-tertiary flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+                             Schools matching criteria
+                         </div>
+</div>
+<div class="glass-panel rounded-xl p-6 flex-1 flex flex-col justify-center relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-tertiary"></div>
+<div class="flex justify-between items-start mb-4">
+<h3 class="font-grid-header text-grid-header text-on-surface-variant uppercase tracking-widest">Verified Target List</h3>
+<span class="material-symbols-outlined text-tertiary">verified_user</span>
+</div>
+<div class="font-kpi-xl text-kpi-xl text-tertiary mb-2">1,103</div>
+<div class="text-sm text-on-surface-variant">Estimated Reach Pipeline</div>
+</div>
+<div class="glass-panel rounded-xl p-6 flex-1 flex flex-col justify-center">
+<div class="flex justify-between items-start mb-4">
+<h3 class="font-grid-header text-grid-header text-on-surface-variant uppercase tracking-widest">Audience Quality Score</h3>
+<span class="material-symbols-outlined text-secondary">donut_large</span>
+</div>
+<div class="flex items-end gap-3 mb-3">
+<div class="font-kpi-xl text-kpi-xl text-secondary">91%</div>
+<div class="text-secondary font-mono-label mb-2 px-2 py-0.5 bg-secondary/10 rounded border border-secondary/20">High Match</div>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[91%] shadow-[0_0_10px_rgba(208,188,255,0.5)]"></div>
+</div>
+</div>
+</div>
+<!-- Interactive Map Area (Col span 8) -->
+<div class="col-span-12 md:col-span-8 glass-panel rounded-xl p-1 relative min-h-[500px] overflow-hidden flex flex-col">
+<div class="absolute top-4 left-4 z-10 flex gap-2">
+<div class="bg-surface-glass backdrop-blur-md border border-border-glass rounded-lg px-3 py-1.5 flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-tertiary pulse-node"></div>
+<span class="font-mono-label text-xs text-on-surface">Live Scanning: Rajasthan Territory</span>
+</div>
+</div>
+<!-- Map Visual (Using placeholder and styling for cyber aesthetic) -->
+<div class="flex-1 rounded-lg overflow-hidden relative bg-[#050a14]">
+<img alt="Territory Map" class="w-full h-full object-cover opacity-80 mix-blend-screen" data-alt="A highly detailed, stylized tactical cyber-map of Rajasthan, India, viewed from a top-down satellite perspective. The map uses a dark mode aesthetic with deep navy and black tones, highlighted by glowing neon green and cyan data nodes representing school locations. Subtle scanlines and holographic grid overlays give it a futuristic command-center look. High resolution, sharp vector-like quality." data-location="Rajasthan, India" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYjNj1ONLT__xNEL2Kri3T8RZNeU7hBIP7ac3W1QOcTKHTChEwUUNmF7CJljV5yKbQqAJRRYkEWxThejYPRC2vj7EzpPmmAK0Pb4-riaJWJff69Kjn_-cG26KpF8fB-NnuWg1poVTQF6VfC4cM3MbeY6arSMKQzsMl_xin_r9wm1pWu_7j17lmyN258UBlwpKEApDcEwLIVBgnSwzpPjLtr2C8_YVgNDWVxV_AKfL8vXknL1PXNEoQwg"/>
+<!-- Simulated UI overlay on map -->
+<div class="absolute inset-0 pointer-events-none">
+<!-- Grid lines -->
+<div class="w-full h-full" style="background-image: linear-gradient(rgba(173, 198, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(173, 198, 255, 0.05) 1px, transparent 1px); background-size: 50px 50px;"></div>
+<!-- Random simulated data nodes -->
+<div class="absolute top-1/4 left-1/3 w-3 h-3 rounded-full bg-tertiary shadow-[0_0_15px_rgba(78,222,163,0.8)] pulse-node"></div>
+<div class="absolute top-1/2 left-1/2 w-2 h-2 rounded-full bg-tertiary shadow-[0_0_10px_rgba(78,222,163,0.8)] pulse-node" style="animation-delay: 0.5s"></div>
+<div class="absolute bottom-1/3 right-1/4 w-4 h-4 rounded-full bg-primary shadow-[0_0_20px_rgba(173,198,255,0.8)] pulse-node" style="animation-delay: 1.2s"></div>
+<div class="absolute top-1/3 right-1/3 w-2 h-2 rounded-full bg-tertiary shadow-[0_0_10px_rgba(78,222,163,0.8)] pulse-node" style="animation-delay: 0.2s"></div>
+<!-- Target Info Box -->
+<div class="absolute top-1/4 left-[35%] bg-surface-container-lowest/90 backdrop-blur border border-tertiary/30 p-3 rounded-lg shadow-xl min-w-[200px]">
+<div class="font-grid-header text-grid-header text-tertiary mb-1">TARGET ACQUIRED</div>
+<div class="text-sm font-medium text-on-surface truncate">Jaipur International Academy</div>
+<div class="text-xs text-on-surface-variant mt-1">Students: 1,250 | CBSE</div>
+<div class="flex gap-1 mt-2">
+<span class="px-1.5 py-0.5 bg-error/10 border border-error/20 text-error text-[10px] rounded">Outdated Web</span>
+<span class="px-1.5 py-0.5 bg-error/10 border border-error/20 text-error text-[10px] rounded">No App</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom control bar for map -->
+<div class="h-12 bg-surface-container border-t border-border-glass flex items-center justify-between px-4 rounded-b-lg">
+<div class="flex gap-4 text-xs font-mono-label text-on-surface-variant">
+<div class="flex items-center gap-1.5"><div class="w-2 h-2 rounded-full bg-tertiary"></div> Verified Target (1,103)</div>
+<div class="flex items-center gap-1.5"><div class="w-2 h-2 rounded-full bg-surface-variant border border-outline"></div> Unverified (145)</div>
+</div>
+<div class="flex gap-2">
+<button class="w-8 h-8 rounded bg-surface-variant hover:bg-surface-glass flex items-center justify-center text-on-surface transition-colors border border-border-glass"><span class="material-symbols-outlined text-[18px]">zoom_in</span></button>
+<button class="w-8 h-8 rounded bg-surface-variant hover:bg-surface-glass flex items-center justify-center text-on-surface transition-colors border border-border-glass"><span class="material-symbols-outlined text-[18px]">zoom_out</span></button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

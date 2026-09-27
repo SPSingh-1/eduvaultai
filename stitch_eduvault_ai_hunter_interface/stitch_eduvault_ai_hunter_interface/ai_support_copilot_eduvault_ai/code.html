@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Support Copilot | EduVault</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary-container": "#3e495d",
+                        "primary": "#8ed5ff",
+                        "tertiary-fixed": "#ffddb8",
+                        "surface-container-highest": "#2d3449",
+                        "error-container": "#93000a",
+                        "surface-tint": "#7bd0ff",
+                        "surface-variant": "#2d3449",
+                        "tertiary-fixed-dim": "#ffb960",
+                        "on-primary-fixed": "#001e2c",
+                        "on-error": "#690005",
+                        "surface-container-lowest": "#060d20",
+                        "on-secondary": "#263143",
+                        "error": "#ffb4ab",
+                        "on-tertiary-fixed": "#2a1700",
+                        "surface": "#0b1326",
+                        "surface-dim": "#0b1326",
+                        "primary-fixed": "#c4e7ff",
+                        "on-secondary-fixed-variant": "#3c475a",
+                        "primary-container": "#38bdf8",
+                        "secondary": "#bcc7de",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-surface": "#dbe2fd",
+                        "on-primary-container": "#004965",
+                        "surface-container-high": "#222a3e",
+                        "tertiary-container": "#f1a02b",
+                        "inverse-primary": "#00668a",
+                        "on-surface-variant": "#bdc8d1",
+                        "surface-bright": "#31394e",
+                        "outline": "#87929a",
+                        "primary-fixed-dim": "#7bd0ff",
+                        "on-tertiary-container": "#613b00",
+                        "surface-container": "#171f33",
+                        "on-secondary-fixed": "#111c2d",
+                        "tertiary": "#ffc176",
+                        "secondary-fixed": "#d8e3fb",
+                        "on-background": "#dbe2fd",
+                        "secondary-fixed-dim": "#bcc7de",
+                        "surface-container-low": "#131b2e",
+                        "inverse-on-surface": "#283044",
+                        "on-primary": "#00354a",
+                        "background": "#0b1326",
+                        "on-primary-fixed-variant": "#004c69",
+                        "inverse-surface": "#dbe2fd",
+                        "on-secondary-container": "#aeb9d0",
+                        "outline-variant": "#3e484f",
+                        "on-tertiary": "#472a00"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "unit": "4px",
+                        "max-width": "1600px",
+                        "margin-desktop": "32px",
+                        "gutter": "16px",
+                        "margin-mobile": "16px"
+                    },
+                    fontFamily: {
+                        "data-mono": ["JetBrains Mono"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "display": ["Inter"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-md": ["Inter"]
+                    },
+                    fontSize: {
+                        "data-mono": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "display": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .ai-glow {
+            box-shadow: inset 0 0 12px rgba(142, 213, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-lg antialiased overflow-hidden h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="bg-surface/60 backdrop-blur-lg fixed top-0 right-0 w-[calc(100%-16rem)] h-16 flex justify-between items-center px-margin-desktop z-40 border-b border-white/10 no-shadows hidden md:flex">
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+<input class="bg-surface-container-high border border-outline-variant rounded-full py-1.5 pl-10 pr-4 text-body-sm text-on-surface focus:outline-none focus:border-primary w-64 placeholder:text-on-surface-variant transition-colors" placeholder="Search tickets, customers..." type="text"/>
+</div>
+<nav class="flex gap-6 ml-4">
+<a class="text-primary border-b-2 border-primary pb-1 font-body-lg text-body-lg hover:text-primary transition-colors opacity-80" href="#">AI Strategy</a>
+</nav>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="notifications">notifications</span></button>
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="task_alt">task_alt</span></button>
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="warning">warning</span></button>
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="account_circle">account_circle</span></button>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="bg-surface/70 backdrop-blur-xl fixed left-0 top-0 h-full w-64 rounded-r-xl border-r border-white/10 shadow-xl flex flex-col py-margin-desktop px-4 z-50">
+<div class="mb-8 px-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center text-on-primary-container font-bold">EV</div>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-primary">EduVault</h1>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider">AI Operating System</p>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1 overflow-y-auto font-body-sm text-body-sm">
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high/50 hover:text-on-surface transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span> Dashboard
+            </a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high/50 hover:text-on-surface transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="explore">explore</span> School Discovery
+            </a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high/50 hover:text-on-surface transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span> Lead Intelligence
+            </a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high/50 hover:text-on-surface transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="campaign">campaign</span> Campaigns
+            </a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high/50 hover:text-on-surface transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span> AI Workforce
+            </a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg bg-surface-container-high text-primary font-bold border-r-2 border-primary transition-all duration-200 scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="forum">forum</span> Communication
+            </a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high/50 hover:text-on-surface transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span> Sales
+            </a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high/50 hover:text-on-surface transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="hub">hub</span> CRM
+            </a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high/50 hover:text-on-surface transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span> Customers
+            </a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high/50 hover:text-on-surface transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span> Analytics
+            </a>
+</nav>
+<div class="mt-auto pt-4 border-t border-white/10">
+<div class="flex items-center justify-between px-4 py-2 mb-2 text-xs text-on-surface-variant bg-surface-container-lowest rounded">
+<span>Agent Status:</span>
+<span class="text-primary flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-primary inline-block"></span> Active</span>
+</div>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high/50 transition-all font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span> Settings
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high/50 transition-all font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span> Help
+            </a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 mt-16 flex-1 flex p-gutter gap-gutter overflow-hidden h-[calc(100vh-4rem)]">
+<!-- Left Pane: Support Inbox -->
+<section class="w-1/4 glass-panel rounded-xl flex flex-col min-w-[300px]">
+<div class="p-4 border-b border-white/10 flex justify-between items-center">
+<h2 class="font-headline-md text-headline-md text-on-surface">Inbox</h2>
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined" data-icon="filter_list">filter_list</span></button>
+</div>
+<div class="flex border-b border-white/10 px-4 pt-2">
+<button class="px-3 py-1.5 text-primary border-b-2 border-primary font-label-caps text-label-caps">OPEN (12)</button>
+<button class="px-3 py-1.5 text-on-surface-variant hover:text-on-surface font-label-caps text-label-caps">NEW (4)</button>
+<button class="px-3 py-1.5 text-error hover:text-error-container font-label-caps text-label-caps flex items-center gap-1"><span class="material-symbols-outlined text-[14px]" data-icon="warning">warning</span> ESCALATED (2)</button>
+</div>
+<div class="flex-1 overflow-y-auto p-2 flex flex-col gap-2">
+<!-- Ticket Item Active -->
+<div class="bg-surface-container p-3 rounded-lg border-l-2 border-primary cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-start mb-1">
+<span class="font-body-sm text-body-sm font-semibold text-on-surface">Lincoln High District</span>
+<span class="font-data-mono text-data-mono text-on-surface-variant text-[10px]">10:42 AM</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate mb-2">Integration failing with latest Fee Module update.</p>
+<div class="flex justify-between items-center">
+<div class="flex gap-1">
+<span class="px-2 py-0.5 rounded bg-error/10 text-error font-label-caps text-[10px]">URGENT</span>
+<span class="px-2 py-0.5 rounded bg-surface-bright text-on-surface font-label-caps text-[10px]">API</span>
+</div>
+<span class="material-symbols-outlined text-primary text-[16px]" data-icon="smart_toy">smart_toy</span>
+</div>
+</div>
+<!-- Ticket Item -->
+<div class="p-3 rounded-lg border-l-2 border-transparent cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-start mb-1">
+<span class="font-body-sm text-body-sm font-semibold text-on-surface">Oakridge Academy</span>
+<span class="font-data-mono text-data-mono text-on-surface-variant text-[10px]">09:15 AM</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate mb-2">How to export student enrollment report?</p>
+<div class="flex justify-between items-center">
+<div class="flex gap-1">
+<span class="px-2 py-0.5 rounded bg-surface-bright text-on-surface font-label-caps text-[10px]">HOW-TO</span>
+</div>
+</div>
+</div>
+<!-- Ticket Item -->
+<div class="p-3 rounded-lg border-l-2 border-transparent cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="flex justify-between items-start mb-1">
+<span class="font-body-sm text-body-sm font-semibold text-on-surface">Westside Elementary</span>
+<span class="font-data-mono text-data-mono text-on-surface-variant text-[10px]">Yesterday</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate mb-2">Parent portal login issues (Multiple reports)</p>
+<div class="flex justify-between items-center">
+<div class="flex gap-1">
+<span class="px-2 py-0.5 rounded bg-tertiary-container/20 text-tertiary font-label-caps text-[10px]">FRUSTRATED</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]" data-icon="mail">mail</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Middle Pane: Active Conversation -->
+<section class="flex-1 glass-panel rounded-xl flex flex-col">
+<!-- Header -->
+<div class="p-4 border-b border-white/10 flex justify-between items-center bg-surface-container-lowest/50 rounded-t-xl">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+                        Lincoln High District 
+                        <span class="px-2 py-0.5 rounded bg-surface-bright text-on-surface-variant font-label-caps text-[12px] border border-white/10">TKT-8924</span>
+</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Contact: Sarah Jenkins (IT Admin)</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 bg-surface-container px-3 py-1.5 rounded-lg border border-white/10">
+<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span>
+<span class="font-label-caps text-label-caps text-on-surface">Frustrated</span>
+</div>
+<button class="flex items-center gap-2 bg-secondary-container hover:bg-secondary-container/80 text-on-surface px-4 py-2 rounded-lg font-body-sm transition-colors border border-white/10">
+<span class="material-symbols-outlined text-[18px]" data-icon="waving_hand">waving_hand</span> Human Handoff
+                    </button>
+</div>
+</div>
+<!-- AI Summary Banner -->
+<div class="m-4 p-3 rounded-lg ai-glow bg-primary/5 border border-primary/20 flex gap-3 items-start">
+<span class="material-symbols-outlined text-primary mt-0.5" data-icon="auto_awesome">auto_awesome</span>
+<div>
+<h4 class="font-label-caps text-label-caps text-primary mb-1">AI Context Summary</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Customer is experiencing sync failures with the Fee Module API post v4.2 update. Previous ticket (TKT-8102) indicates they use a custom legacy connector. Issue likely related to deprecated endpoint `/api/v3/fees`.</p>
+</div>
+</div>
+<!-- Chat History -->
+<div class="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
+<!-- Customer Message -->
+<div class="flex flex-col items-start max-w-[80%]">
+<div class="flex items-center gap-2 mb-1 pl-1">
+<span class="font-body-sm text-body-sm font-semibold text-on-surface">Sarah J.</span>
+<span class="font-data-mono text-data-mono text-on-surface-variant text-[10px]">10:42 AM</span>
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant" data-icon="mail">mail</span>
+</div>
+<div class="bg-surface-container-high p-3 rounded-2xl rounded-tl-sm border border-white/5 text-body-sm text-on-surface">
+                        Hi Support, since the update last night, none of our fee transactions are syncing to EduVault. We are getting a 404 error on the API. Need this fixed ASAP before end of day reconciliation.
+                    </div>
+</div>
+<!-- AI Draft Response -->
+<div class="flex flex-col items-end self-end max-w-[80%] w-full mt-4">
+<div class="flex items-center gap-2 mb-1 pr-1">
+<span class="font-data-mono text-data-mono text-on-surface-variant text-[10px]">Drafting...</span>
+<span class="font-body-sm text-body-sm font-semibold text-primary">Copilot</span>
+<span class="material-symbols-outlined text-[14px] text-primary" data-icon="smart_toy">smart_toy</span>
+</div>
+<div class="bg-primary-container/10 p-4 rounded-2xl rounded-tr-sm border border-primary/30 w-full ai-glow relative">
+<!-- Toolbar -->
+<div class="absolute -top-3 right-4 flex gap-1 bg-surface-container border border-outline-variant rounded-md p-1 shadow-lg">
+<button class="p-1 text-on-surface-variant hover:text-primary rounded tooltip" title="ProfessionalTone"><span class="material-symbols-outlined text-[16px]" data-icon="work">work</span></button>
+<button class="p-1 text-on-surface-variant hover:text-primary rounded tooltip" title="Simplify"><span class="material-symbols-outlined text-[16px]" data-icon="short_text">short_text</span></button>
+<button class="p-1 text-on-surface-variant hover:text-primary rounded tooltip" title="Translate"><span class="material-symbols-outlined text-[16px]" data-icon="translate">translate</span></button>
+<div class="w-px bg-outline-variant mx-1 my-1"></div>
+<button class="p-1 text-on-surface-variant hover:text-primary rounded tooltip" title="Regenerate"><span class="material-symbols-outlined text-[16px]" data-icon="refresh">refresh</span></button>
+</div>
+<textarea class="w-full bg-transparent border-none text-body-sm text-on-surface focus:ring-0 p-0 resize-none h-24" placeholder="Drafting response...">Hi Sarah, I understand the urgency regarding the fee transaction sync failures following the recent update.
+
+It appears you might still be hitting our legacy endpoint. In update v4.2, the endpoint `/api/v3/fees` was deprecated and replaced with `/api/v4/transactions`. 
+
+Could you please update your custom connector to point to the new v4 endpoint? Let me know if you need the updated API documentation for this.</textarea>
+<div class="mt-3 flex justify-between items-center pt-3 border-t border-primary/20">
+<div class="flex items-center gap-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant text-[10px]">SOURCES:</span>
+<span class="px-2 py-1 rounded bg-surface text-on-surface-variant text-[11px] border border-white/5 flex items-center gap-1 cursor-pointer hover:border-primary/50">
+<span class="material-symbols-outlined text-[12px]" data-icon="description">description</span> v4.2 API Migration Guide
+                                </span>
+</div>
+<button class="bg-primary hover:bg-primary-fixed text-on-primary font-body-sm font-semibold px-4 py-1.5 rounded flex items-center gap-2 transition-colors shadow-[0_0_10px_rgba(142,213,255,0.3)]">
+                                Send <span class="material-symbols-outlined text-[16px]" data-icon="send">send</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Input Area Fallback (if not using draft) -->
+<div class="p-4 border-t border-white/10 bg-surface-container-lowest/50">
+<div class="relative">
+<input class="w-full bg-surface-container border border-outline-variant rounded-lg py-3 pl-4 pr-12 text-body-sm text-on-surface focus:outline-none focus:border-primary placeholder:text-on-surface-variant" placeholder="Type a message or type '/' for AI commands..." type="text"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined" data-icon="mic">mic</span></button>
+</div>
+</div>
+</section>
+<!-- Right Pane: AI Intelligence & Analytics -->
+<section class="w-1/4 flex flex-col gap-gutter min-w-[280px]">
+<!-- Customer Health Card -->
+<div class="glass-panel rounded-xl p-4 flex flex-col border-l-2 border-error">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="monitoring">monitoring</span> Customer Health
+                </h3>
+<div class="flex justify-between items-end mb-4">
+<div>
+<span class="text-display font-display text-on-surface leading-none">62</span>
+<span class="text-body-sm text-on-surface-variant">/100</span>
+</div>
+<div class="flex items-center gap-1 text-error text-body-sm">
+<span class="material-symbols-outlined text-[16px]" data-icon="trending_down">trending_down</span> -12 pts
+                    </div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-[12px]">
+<span class="text-on-surface-variant">Usage Adoption</span>
+<span class="text-on-surface font-semibold">88%</span>
+</div>
+<div class="flex justify-between text-[12px]">
+<span class="text-on-surface-variant">Support Interactions</span>
+<span class="text-error font-semibold">High</span>
+</div>
+<div class="flex justify-between text-[12px]">
+<span class="text-on-surface-variant">Renewal Risk</span>
+<span class="text-tertiary font-semibold">Elevated</span>
+</div>
+</div>
+</div>
+<!-- Recommended Actions Bento -->
+<div class="glass-panel rounded-xl p-4 flex-1 flex flex-col">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="bolt">bolt</span> Next Best Actions
+                </h3>
+<div class="flex flex-col gap-2">
+<div class="bg-surface-container p-3 rounded-lg border border-white/5 hover:border-primary/30 cursor-pointer transition-all group">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary text-[18px]" data-icon="book">book</span>
+<span class="font-body-sm text-body-sm font-semibold text-on-surface group-hover:text-primary transition-colors">Send Documentation</span>
+</div>
+<p class="text-[11px] text-on-surface-variant">Share the v4.2 Migration Guide PDF.</p>
+</div>
+<div class="bg-surface-container p-3 rounded-lg border border-white/5 hover:border-primary/30 cursor-pointer transition-all group">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-tertiary text-[18px]" data-icon="bug_report">bug_report</span>
+<span class="font-body-sm text-body-sm font-semibold text-on-surface group-hover:text-primary transition-colors">Create Jira Ticket</span>
+</div>
+<p class="text-[11px] text-on-surface-variant">Log bug if API endpoints are returning 500s.</p>
+</div>
+</div>
+</div>
+<!-- Support Analytics KPI -->
+<div class="glass-panel rounded-xl p-4 grid grid-cols-2 gap-2">
+<div class="bg-surface-container-lowest p-3 rounded-lg border border-white/5">
+<span class="text-[10px] text-on-surface-variant uppercase tracking-wider block mb-1">Avg Resolution</span>
+<span class="text-headline-md font-headline-md text-on-surface">14m</span>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-lg border border-white/5 relative overflow-hidden">
+<div class="absolute inset-0 bg-primary/5"></div>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-wider block mb-1 relative z-10">AI Deflection</span>
+<span class="text-headline-md font-headline-md text-primary relative z-10">76%</span>
+</div>
+</div>
+</section>
+</main>
+</body></html>

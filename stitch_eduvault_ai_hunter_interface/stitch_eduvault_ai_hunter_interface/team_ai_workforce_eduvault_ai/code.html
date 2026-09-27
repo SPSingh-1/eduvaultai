@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Workforce Management - Mission Control</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#bdffdb",
+                        "outline-variant": "#434655",
+                        "tertiary-fixed": "#6ffbbe",
+                        "on-tertiary-fixed": "#002113",
+                        "on-surface": "#dbe2fd",
+                        "outline": "#8d90a0",
+                        "surface-tint": "#b4c5ff",
+                        "surface-container-lowest": "#060d20",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-primary-container": "#eeefff",
+                        "on-error": "#690005",
+                        "on-secondary": "#00344d",
+                        "error": "#ffb4ab",
+                        "on-secondary-fixed": "#001e2f",
+                        "surface": "#0b1326",
+                        "on-surface-variant": "#c3c6d7",
+                        "surface-dim": "#0b1326",
+                        "surface-container": "#171f33",
+                        "inverse-surface": "#dbe2fd",
+                        "tertiary": "#4edea3",
+                        "primary": "#b4c5ff",
+                        "secondary": "#89ceff",
+                        "inverse-primary": "#0053db",
+                        "on-secondary-container": "#00344e",
+                        "surface-container-high": "#222a3e",
+                        "secondary-fixed": "#c9e6ff",
+                        "primary-fixed": "#dbe1ff",
+                        "on-tertiary": "#003824",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "on-background": "#dbe2fd",
+                        "on-primary": "#002a78",
+                        "on-secondary-fixed-variant": "#004c6e",
+                        "primary-container": "#2563eb",
+                        "error-container": "#93000a",
+                        "secondary-fixed-dim": "#89ceff",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-fixed": "#00174b",
+                        "surface-bright": "#31394e",
+                        "surface-variant": "#2d3449",
+                        "tertiary-container": "#007d55",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "background": "#0b1326",
+                        "inverse-on-surface": "#283044",
+                        "surface-container-low": "#131b2e",
+                        "secondary-container": "#00a2e6",
+                        "surface-container-highest": "#2d3449",
+                        "on-primary-fixed-variant": "#003ea8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-md": "24px",
+                        "panel-gap": "12px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "margin-sm": "16px",
+                        "margin-lg": "40px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter", "sans-serif"],
+                        "headline-md": ["Inter", "sans-serif"],
+                        "display-lg": ["Inter", "sans-serif"],
+                        "body-sm": ["Inter", "sans-serif"],
+                        "data-mono": ["JetBrains Mono", "monospace"],
+                        "headline-sm": ["Inter", "sans-serif"],
+                        "label-caps": ["JetBrains Mono", "monospace"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "data-mono": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Base Styles & Utility Classes for Mission Control Aesthetic */
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-surface');
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .glass-panel {
+            background-color: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-panel-elevated {
+            background-color: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 8px 32px -4px rgba(0, 0, 0, 0.5);
+        }
+
+        .glow-rim:hover {
+            border-color: theme('colors.primary');
+            box-shadow: 0 0 15px -3px theme('colors.primary-container');
+        }
+
+        .dot-matrix-bg {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: theme('colors.surface-variant');
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: theme('colors.outline-variant');
+        }
+    </style>
+</head>
+<body class="font-body-sm text-body-sm overflow-hidden flex h-screen w-screen selection:bg-primary/20 selection:text-primary">
+<!-- SideNavBar (from JSON) -->
+<nav class="w-[280px] h-full fixed left-0 top-0 bg-surface text-primary border-r border-outline-variant/20 backdrop-blur-xl flex flex-col py-6 z-50">
+<!-- Header -->
+<div class="px-margin-md mb-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary-container/20 border border-primary/30 flex items-center justify-center text-primary glow-rim transition-all">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">explore</span>
+</div>
+<div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary tracking-tight">EduVault AI</h1>
+<p class="font-label-caps text-label-caps text-outline">Sales Hunter Suite</p>
+</div>
+</div>
+<!-- Main Navigation Tabs -->
+<div class="flex-1 overflow-y-auto px-margin-sm space-y-1">
+<!-- Inactive -->
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">dashboard</span>
+<span class="font-body-sm text-body-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">explore</span>
+<span class="font-body-sm text-body-sm">Discovery</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">radar</span>
+<span class="font-body-sm text-body-sm">Lead Intel</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">campaign</span>
+<span class="font-body-sm text-body-sm">Campaigns</span>
+</a>
+<!-- Active State: AI Workforce -->
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-primary bg-primary/10 border-r-2 border-primary scale-[0.98] duration-150 relative" href="#">
+<div class="absolute inset-0 bg-gradient-to-r from-transparent to-primary/5 rounded-lg pointer-events-none"></div>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+<span class="font-body-sm text-body-sm font-bold">AI Workforce</span>
+</a>
+<!-- Inactive -->
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">forum</span>
+<span class="font-body-sm text-body-sm">Communication</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">monetization_on</span>
+<span class="font-body-sm text-body-sm">Sales</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">groups</span>
+<span class="font-body-sm text-body-sm">CRM</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">payments</span>
+<span class="font-body-sm text-body-sm">Revenue</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">settings_input_component</span>
+<span class="font-body-sm text-body-sm">Automation</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">analytics</span>
+<span class="font-body-sm text-body-sm">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">storefront</span>
+<span class="font-body-sm text-body-sm">Marketplace</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">extension</span>
+<span class="font-body-sm text-body-sm">Integrations</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">settings</span>
+<span class="font-body-sm text-body-sm">Settings</span>
+</a>
+</div>
+<!-- CTA & Footer -->
+<div class="px-margin-sm mt-4 space-y-2">
+<button class="w-full bg-primary-container text-on-primary-container py-3 rounded-lg font-body-sm font-bold flex items-center justify-center gap-2 hover:bg-primary-container/90 transition-colors shadow-[0_0_15px_-3px_rgba(37,99,235,0.4)]">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                Deploy Agent
+            </button>
+<div class="border-t border-outline-variant/20 pt-2 mt-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary text-[18px]">help</span>
+<span class="font-body-sm text-body-sm">Support</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined text-outline group-hover:text-primary text-[18px]">account_circle</span>
+<span class="font-body-sm text-body-sm">Account</span>
+</a>
+</div>
+</div>
+</nav>
+<!-- TopNavBar (from JSON) -->
+<header class="fixed top-0 right-0 w-[calc(100%-280px)] h-16 bg-surface/80 text-primary border-b border-outline-variant/20 backdrop-blur-md flex justify-between items-center px-margin-md z-40">
+<!-- Navigation Links -->
+<div class="flex items-center gap-6 font-label-caps text-label-caps">
+<a class="text-primary font-bold hover:text-primary transition-all glow-effect" href="#">AI Command Center</a>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-4">
+<!-- Search -->
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors text-[18px]">search</span>
+<input class="bg-surface-container-high border border-outline-variant/30 rounded-full pl-9 pr-4 py-1.5 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all w-64" placeholder="Search mission control..." type="text"/>
+</div>
+<button class="px-4 py-1.5 border border-primary/30 rounded-full font-label-caps text-label-caps text-primary hover:bg-primary/10 transition-colors flex items-center gap-2">
+                Upgrade Credits
+            </button>
+<button class="px-4 py-1.5 rounded-full font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors">
+                Tasks
+            </button>
+<div class="h-6 w-px bg-outline-variant/30 mx-2"></div>
+<div class="flex items-center gap-2 text-outline">
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-surface-container-high hover:text-primary transition-colors relative">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full border border-surface"></span>
+</button>
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-surface-container-high hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">bolt</span>
+</button>
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-surface-container-high hover:text-primary transition-colors overflow-hidden border border-outline-variant/30 ml-2">
+<img class="w-full h-full object-cover" data-alt="A highly detailed professional corporate headshot of a sales operations director in a dark futuristic office setting with subtle blue rim lighting, facing forward with a confident expression." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZ66YR4AbBuZUtivgFP80WGoJSfUGhguPRaxvyqT6p6DfcLAmJh5kRTg4z5cRwGX9vCGAHksS6AiiPpUV7T4q11ujzicRozY5keHCuwCDmicF0mPKG1AVQrEAO3FpXVbc_cTWwkSRkzZ_1z8hGJY-QJOZNL7nkfPY7ExA_ka77i0SJ2Zq5VSV_ULfev5qmNFloWVnlxh3QTP4IjQIr3Vg4p2Vyop2-BoEx4G7bznJWsuW0RrKJSJ8YZQ"/>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="ml-[280px] mt-16 w-[calc(100%-280px)] h-[calc(100vh-64px)] overflow-y-auto bg-surface relative dot-matrix-bg">
+<div class="p-margin-md max-w-[1600px] mx-auto space-y-margin-md">
+<!-- Page Header & Workforce Toggle -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight mb-1">Workforce Intelligence</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Manage and monitor your combined human and autonomous sales force.</p>
+</div>
+<!-- Toggle Segmented Control -->
+<div class="bg-surface-container-high p-1 rounded-lg border border-outline-variant/20 inline-flex items-center">
+<button class="px-6 py-2 rounded-md font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">group</span>
+                        Human Team
+                    </button>
+<button class="px-6 py-2 rounded-md font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">smart_toy</span>
+                        AI Workforce
+                    </button>
+<button class="px-6 py-2 rounded-md bg-surface border border-outline-variant/30 font-label-caps text-label-caps text-primary shadow-sm flex items-center gap-2 pointer-events-none relative overflow-hidden">
+<div class="absolute inset-0 bg-primary/5"></div>
+<span class="material-symbols-outlined text-[16px]">hub</span>
+                        Combined View
+                    </button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-margin-md">
+<!-- Left Column: The Workforce Grid (8 cols) -->
+<div class="lg:col-span-8 space-y-margin-md">
+<!-- Section Title -->
+<div class="flex items-center justify-between border-b border-outline-variant/20 pb-2">
+<h3 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                            Active Agents
+                        </h3>
+<div class="flex gap-2">
+<button class="text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined">filter_list</span></button>
+<button class="text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined">grid_view</span></button>
+</div>
+</div>
+<!-- Grid of Agents -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-panel-gap">
+<!-- AI Agent Card (Scout AI) -->
+<div class="glass-panel rounded-xl p-5 glow-rim group relative overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:bg-surface-variant/20">
+<div class="absolute top-0 right-0 w-24 h-24 bg-tertiary/10 rounded-bl-full -z-10 blur-xl group-hover:bg-tertiary/20 transition-all"></div>
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high border border-tertiary/30 flex items-center justify-center relative">
+<div class="absolute inset-0 bg-tertiary/10 rounded-lg animate-pulse"></div>
+<span class="material-symbols-outlined text-tertiary text-[24px]">radar</span>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Scout-Alpha-01</h4>
+<span class="font-label-caps text-label-caps text-tertiary bg-tertiary/10 px-2 py-0.5 rounded border border-tertiary/20">Autonomous SDR</span>
+</div>
+</div>
+<div class="flex items-center gap-1 bg-surface-container-highest px-2 py-1 rounded border border-outline-variant/30">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span class="font-data-mono text-data-mono text-on-surface-variant text-[11px]">ACTIVE</span>
+</div>
+</div>
+<div class="space-y-3 mb-4">
+<div class="flex justify-between items-end">
+<span class="font-body-sm text-body-sm text-outline">Leads Prospected</span>
+<span class="font-data-mono text-data-mono text-on-surface">1,402 / <span class="text-outline">2k limit</span></span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full rounded-full" style="width: 70%"></div>
+</div>
+<div class="grid grid-cols-2 gap-4 mt-2">
+<div>
+<p class="font-label-caps text-label-caps text-outline mb-1">Conversion</p>
+<p class="font-data-mono text-data-mono text-primary flex items-center gap-1">
+                                            8.4% <span class="material-symbols-outlined text-[14px] text-tertiary">trending_up</span>
+</p>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-outline mb-1">Territory</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">EMEA Tech</p>
+</div>
+</div>
+</div>
+<div class="pt-3 border-t border-outline-variant/20 flex gap-2">
+<button class="flex-1 py-1.5 bg-surface-container-high hover:bg-surface-bright text-on-surface text-body-sm rounded border border-outline-variant/30 transition-colors">Details</button>
+<button class="py-1.5 px-3 bg-surface-container-high hover:bg-error/20 hover:text-error hover:border-error/50 text-outline rounded border border-outline-variant/30 transition-colors"><span class="material-symbols-outlined text-[16px]">pause</span></button>
+</div>
+</div>
+<!-- Human Agent Card -->
+<div class="glass-panel rounded-xl p-5 glow-rim group relative overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:bg-surface-variant/20">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg border border-outline-variant/50 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A striking portrait of a confident female sales executive with sharp features, wearing a dark blazer, lit by cool studio lights against a deep slate background, professional corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_bxv24MM9sU2X7924MR4MPRUpiCA4AtfSMDjtE4j4rvwAad5S3BofciMcGLADAH_9uwYn49U1tRxTP7LpjQ3rczxLYgDChEUycTb_bWwlb9uLm7cy5nVDVM6dYwhlkOt-FiwBeLQO04S7H8Uy5Fzsha-ELLbPLV53su9E3YtabpOp6BOmBS071xMmIENl_E8OtE1Rgkdv_vMT8QAmy7zU0YfiwNhwTTn3Zy8hrdtMcxwWf9uOpBthtw"/>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Sarah Jenkins</h4>
+<span class="font-label-caps text-label-caps text-secondary bg-secondary/10 px-2 py-0.5 rounded border border-secondary/20">Senior AE</span>
+</div>
+</div>
+<div class="flex items-center gap-1 bg-surface-container-highest px-2 py-1 rounded border border-outline-variant/30">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span class="font-data-mono text-data-mono text-on-surface-variant text-[11px]">ONLINE</span>
+</div>
+</div>
+<div class="space-y-3 mb-4">
+<div class="flex justify-between items-end">
+<span class="font-body-sm text-body-sm text-outline">Quota Attainment (Q3)</span>
+<span class="font-data-mono text-data-mono text-on-surface">82%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 82%"></div>
+</div>
+<div class="grid grid-cols-2 gap-4 mt-2">
+<div>
+<p class="font-label-caps text-label-caps text-outline mb-1">Active Deals</p>
+<p class="font-data-mono text-data-mono text-on-surface">24</p>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-outline mb-1">Pipeline</p>
+<p class="font-data-mono text-data-mono text-primary">$1.2M</p>
+</div>
+</div>
+</div>
+<div class="pt-3 border-t border-outline-variant/20 flex gap-2">
+<button class="flex-1 py-1.5 bg-surface-container-high hover:bg-surface-bright text-on-surface text-body-sm rounded border border-outline-variant/30 transition-colors">View CRM</button>
+<button class="py-1.5 px-3 bg-surface-container-high hover:bg-primary/20 hover:text-primary hover:border-primary/50 text-outline rounded border border-outline-variant/30 transition-colors"><span class="material-symbols-outlined text-[16px]">forum</span></button>
+</div>
+</div>
+<!-- AI Agent Card (Vision AI) -->
+<div class="glass-panel rounded-xl p-5 glow-rim group relative overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:bg-surface-variant/20 opacity-80">
+<div class="absolute top-0 right-0 w-24 h-24 bg-primary/10 rounded-bl-full -z-10 blur-xl group-hover:bg-primary/20 transition-all"></div>
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high border border-primary/30 flex items-center justify-center relative">
+<span class="material-symbols-outlined text-primary text-[24px]">visibility</span>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Vision-Beta-02</h4>
+<span class="font-label-caps text-label-caps text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20">Market Analyst</span>
+</div>
+</div>
+<div class="flex items-center gap-1 bg-surface-container-highest px-2 py-1 rounded border border-outline-variant/30">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+<span class="font-data-mono text-data-mono text-on-surface-variant text-[11px]">STANDBY</span>
+</div>
+</div>
+<div class="space-y-3 mb-4">
+<div class="flex justify-between items-end">
+<span class="font-body-sm text-body-sm text-outline">Data Processed</span>
+<span class="font-data-mono text-data-mono text-on-surface">0 / <span class="text-outline">50GB</span></span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 0%"></div>
+</div>
+<div class="grid grid-cols-2 gap-4 mt-2">
+<div>
+<p class="font-label-caps text-label-caps text-outline mb-1">Focus</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Competitor Intel</p>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-outline mb-1">Last Run</p>
+<p class="font-data-mono text-data-mono text-outline">2h ago</p>
+</div>
+</div>
+</div>
+<div class="pt-3 border-t border-outline-variant/20 flex gap-2">
+<button class="flex-1 py-1.5 bg-surface-container-high hover:bg-surface-bright text-on-surface text-body-sm rounded border border-outline-variant/30 transition-colors">Details</button>
+<button class="py-1.5 px-3 bg-surface-container-high hover:bg-tertiary/20 hover:text-tertiary hover:border-tertiary/50 text-outline rounded border border-outline-variant/30 transition-colors"><span class="material-symbols-outlined text-[16px]">play_arrow</span></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Analytics & Control Matrix (4 cols) -->
+<div class="lg:col-span-4 space-y-panel-gap">
+<!-- Performance Comparison Chart -->
+<div class="glass-panel-elevated rounded-xl p-5">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Efficiency Index</h3>
+<button class="text-outline hover:text-primary transition-colors"><span class="material-symbols-outlined text-[18px]">more_vert</span></button>
+</div>
+<!-- Mock Chart Area -->
+<div class="h-48 w-full relative mb-4">
+<!-- Grid lines -->
+<div class="absolute inset-0 flex flex-col justify-between border-l border-b border-outline-variant/20 pb-4 pl-1">
+<div class="border-t border-outline-variant/10 w-full"></div>
+<div class="border-t border-outline-variant/10 w-full"></div>
+<div class="border-t border-outline-variant/10 w-full"></div>
+</div>
+<!-- SVG Chart Lines -->
+<svg class="absolute inset-0 h-full w-full overflow-visible" preserveaspectratio="none" viewbox="0 0 100 100">
+<!-- AI Line (Tertiary) -->
+<path class="drop-shadow-[0_0_8px_rgba(78,222,163,0.5)]" d="M0,80 C20,70 40,40 60,30 C80,20 100,10 100,10" fill="none" stroke="theme('colors.tertiary')" stroke-width="2"></path>
+<!-- AI Area Gradient -->
+<path d="M0,80 C20,70 40,40 60,30 C80,20 100,10 100,10 L100,100 L0,100 Z" fill="url(#aiGradient)" opacity="0.2"></path>
+<!-- Human Line (Secondary) -->
+<path d="M0,60 C25,55 50,65 75,45 C90,35 100,40 100,40" fill="none" stroke="theme('colors.secondary')" stroke-width="2"></path>
+<defs>
+<lineargradient id="aiGradient" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="theme('colors.tertiary')" stop-opacity="1"></stop>
+<stop offset="100%" stop-color="theme('colors.tertiary')" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+<!-- Chart Legend -->
+<div class="flex justify-center gap-6">
+<div class="flex items-center gap-2">
+<span class="w-3 h-1 bg-tertiary rounded-full shadow-[0_0_5px_theme('colors.tertiary')]"></span>
+<span class="font-label-caps text-label-caps text-outline">AI Workforce</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-1 bg-secondary rounded-full"></span>
+<span class="font-label-caps text-label-caps text-outline">Human Team</span>
+</div>
+</div>
+</div>
+<!-- Role & Permission Matrix (Autonomy Levels) -->
+<div class="glass-panel rounded-xl p-5">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">admin_panel_settings</span>
+                                AI Autonomy Matrix
+                            </h3>
+</div>
+<div class="space-y-3">
+<!-- Level item -->
+<div class="p-3 bg-surface-container-high rounded-lg border border-outline-variant/20">
+<div class="flex justify-between items-start mb-1">
+<span class="font-body-sm text-body-sm font-bold text-on-surface">Email Outreach</span>
+<span class="font-label-caps text-label-caps text-tertiary border border-tertiary/30 px-1.5 rounded bg-tertiary/10">FULL</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline text-[12px]">Agents can draft and send without review.</p>
+</div>
+<!-- Level item -->
+<div class="p-3 bg-surface-container-high rounded-lg border border-outline-variant/20">
+<div class="flex justify-between items-start mb-1">
+<span class="font-body-sm text-body-sm font-bold text-on-surface">Meeting Scheduling</span>
+<span class="font-label-caps text-label-caps text-secondary border border-secondary/30 px-1.5 rounded bg-secondary/10">CO-PILOT</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline text-[12px]">Drafts invites, requires human approval.</p>
+</div>
+<!-- Level item -->
+<div class="p-3 bg-surface-container-high rounded-lg border border-outline-variant/20">
+<div class="flex justify-between items-start mb-1">
+<span class="font-body-sm text-body-sm font-bold text-on-surface">Deal Negotiation</span>
+<span class="font-label-caps text-label-caps text-outline border border-outline-variant/50 px-1.5 rounded bg-surface">READ-ONLY</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline text-[12px]">Analyzes sentiment, cannot modify deal terms.</p>
+</div>
+</div>
+<button class="w-full mt-4 py-2 border border-primary/30 text-primary font-label-caps text-label-caps rounded hover:bg-primary/10 transition-colors">Manage Permissions</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

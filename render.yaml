@@ -1,0 +1,70 @@
+services:
+  # 1. Backend Express API Web Service (Node.js)
+  - type: web
+    name: eduvault-ai-backend
+    env: node
+    region: singapore
+    plan: free
+    rootDir: backend
+    buildCommand: npm install && npx prisma generate && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        sync: false
+      - key: DIRECT_URL
+        sync: false
+      - key: GOOGLE_AI_API_KEY
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: BREVO_API_KEY
+        sync: false
+      - key: EMAIL_FROM
+        value: connectwitheduvault@gmail.com
+      - key: EMAIL_FROM_NAME
+        value: Eduvault AI
+      - key: GMAIL_USER
+        sync: false
+      - key: GMAIL_APP_PASSWORD
+        sync: false
+      - key: SERPER_API_KEY
+        sync: false
+      - key: UPSTASH_REDIS_REST_URL
+        sync: false
+      - key: UPSTASH_REDIS_REST_TOKEN
+        sync: false
+      - key: UPSTASH_REDIS_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: FRONTEND_URL
+        sync: false
+      - key: SENTRY_DSN_BACKEND
+        sync: false
+
+  # 2. Frontend React/Vite Static Site (Always ON Free CDN)
+  - type: web
+    name: eduvault-ai-frontend
+    env: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_URL
+        sync: false
+      - key: VITE_SUPABASE_URL
+        sync: false
+      - key: VITE_SUPABASE_ANON_KEY
+        sync: false
+      - key: VITE_SENTRY_DSN
+        sync: false
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

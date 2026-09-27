@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Omnichannel Messaging Hub - EduVault</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#07006c",
+                        "on-primary-container": "#eeefff",
+                        "on-background": "#dbe2fd",
+                        "on-tertiary": "#1000a9",
+                        "on-primary": "#002a78",
+                        "surface": "#0b1326",
+                        "outline": "#8d90a0",
+                        "inverse-on-surface": "#283044",
+                        "on-surface": "#dbe2fd",
+                        "on-secondary-fixed-variant": "#005236",
+                        "on-secondary": "#003824",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "surface-container-highest": "#2d3449",
+                        "inverse-surface": "#dbe2fd",
+                        "surface-container": "#171f33",
+                        "primary": "#b4c5ff",
+                        "tertiary-container": "#585be6",
+                        "surface-container-lowest": "#060d20",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "primary-container": "#2563eb",
+                        "background": "#0b1326",
+                        "tertiary-fixed-dim": "#c0c1ff",
+                        "error": "#ffb4ab",
+                        "on-secondary-container": "#00311f",
+                        "primary-fixed": "#dbe1ff",
+                        "on-surface-variant": "#c3c6d7",
+                        "on-tertiary-fixed-variant": "#2f2ebe",
+                        "secondary-container": "#00a572",
+                        "surface-container-high": "#222a3e",
+                        "secondary": "#4edea3",
+                        "on-secondary-fixed": "#002113",
+                        "on-primary-fixed": "#00174b",
+                        "surface-dim": "#0b1326",
+                        "on-error-container": "#ffdad6",
+                        "inverse-primary": "#0053db",
+                        "outline-variant": "#434655",
+                        "surface-variant": "#2d3449",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-error": "#690005",
+                        "on-tertiary-container": "#f1eeff",
+                        "surface-container-low": "#131b2e",
+                        "secondary-fixed-dim": "#4edea3",
+                        "tertiary-fixed": "#e1e0ff",
+                        "tertiary": "#c0c1ff",
+                        "surface-tint": "#b4c5ff",
+                        "surface-bright": "#31394e",
+                        "error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem",
+                        "2xl": "1.25rem" // Added for the 20px requested cards
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "margin-mobile": "16px",
+                        "unit": "4px",
+                        "margin-desktop": "40px",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Inter"],
+                        "label-sm": ["JetBrains Mono"],
+                        "display-lg": ["Inter"],
+                        "label-md": ["JetBrains Mono"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background-color: rgba(45, 52, 73, 0.6); /* surface-variant slightly transparent */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-card {
+            background-color: rgba(23, 31, 51, 0.6); /* surface-container slightly transparent */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            background-color: rgba(23, 31, 51, 0.7);
+            border-color: rgba(180, 197, 255, 0.2); /* primary */
+        }
+        .ai-glow {
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.3); /* primary-container glow */
+        }
+        .success-glow {
+            box-shadow: 0 0 15px rgba(0, 165, 114, 0.2); /* secondary-container glow */
+        }
+        
+        /* Thin Scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(180, 197, 255, 0.2);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(180, 197, 255, 0.5);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(180, 197, 255, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen overflow-x-hidden">
+<!-- Background Ambience -->
+<div class="fixed inset-0 z-0 pointer-events-none opacity-40">
+
+</div>
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-surface/60 dark:bg-surface/60 backdrop-blur-xl border-b border-white/10 shadow-md shadow-primary/5">
+<div class="flex items-center gap-8">
+<span class="font-headline-md text-headline-md font-bold text-primary">EduVault AI Sales Hunter</span>
+<nav class="hidden md:flex gap-6">
+<!-- Outreach is active as this is the messaging hub -->
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors scale-95 active:scale-90 transition-transform" href="#">Campaigns</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors scale-95 active:scale-90 transition-transform" href="#">Lead Vault</a>
+<a class="font-label-md text-label-md text-primary border-b-2 border-primary pb-1 hover:text-primary transition-colors scale-95 active:scale-90 transition-transform" href="#">Outreach</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors scale-95 active:scale-90 transition-transform" href="#">Analytics</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors scale-95 active:scale-90 transition-transform" href="#">Automation</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-2">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors p-2">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors p-2">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container overflow-hidden border border-outline-variant">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a corporate user in a modern office, highly detailed, sharp focus, futuristic UI lighting, cinematic depth of field." src="https://lh3.googleusercontent.com/aida-public/AB6AXuASe__nsbU3mK6DluvMco69X_-LeKO17oaeoMASLCzcYmEhDGq1yz8wRqDAgU-PTQpl_JeHrstHGIry5yUudKQk3xBXN4187n5oNmXTofNGnLNsK1w3ZBjscFNvOmYp-ECB7HauD_H33mFJxp_QXq7JDkC2mspPPqjOkd_fHjNE83e4l9eUtvwKAv32eV9MSv1LJxQZvduM65LpLrEhQvDYepyaDK6n3AWOSKzp5TjEOyBKd4xBCP5bbw"/>
+</div>
+</div>
+</header>
+<!-- Main Content Container -->
+<main class="relative z-10 pt-24 px-margin-mobile md:px-gutter max-w-container-max mx-auto pb-24">
+<!-- Page Header -->
+<div class="mb-8">
+<h1 class="font-display-lg text-display-lg mb-2 text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">AI Omnichannel Messaging Hub</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Intelligent routing and composition across all communication channels.</p>
+</div>
+<!-- Top KPI Bar -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+<div class="glass-card rounded-2xl p-6 flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Messages Today</span>
+<span class="material-symbols-outlined text-primary" data-icon="send">send</span>
+</div>
+<div class="flex items-end justify-between">
+<span class="font-headline-lg text-headline-lg">12,450</span>
+<span class="font-label-sm text-label-sm text-secondary flex items-center"><span class="material-symbols-outlined text-[16px]" data-icon="trending_up">trending_up</span> 14%</span>
+</div>
+</div>
+<div class="glass-card rounded-2xl p-6 flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Reply Rate</span>
+<span class="material-symbols-outlined text-primary" data-icon="forum">forum</span>
+</div>
+<div class="flex items-end justify-between">
+<span class="font-headline-lg text-headline-lg">28.4%</span>
+<span class="font-label-sm text-label-sm text-secondary flex items-center"><span class="material-symbols-outlined text-[16px]" data-icon="trending_up">trending_up</span> 2.1%</span>
+</div>
+</div>
+<div class="glass-card rounded-2xl p-6 flex flex-col justify-between success-glow">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Meetings</span>
+<span class="material-symbols-outlined text-secondary" data-icon="event">event</span>
+</div>
+<div class="flex items-end justify-between">
+<span class="font-headline-lg text-headline-lg">42</span>
+<span class="font-label-sm text-label-sm text-secondary flex items-center"><span class="material-symbols-outlined text-[16px]" data-icon="trending_up">trending_up</span> 8</span>
+</div>
+</div>
+<div class="glass-card rounded-2xl p-6 flex flex-col justify-between ai-glow">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">AI Channel Accuracy</span>
+<span class="material-symbols-outlined text-primary-container" data-icon="psychology">psychology</span>
+</div>
+<div class="flex items-end justify-between">
+<span class="font-headline-lg text-headline-lg">94.2%</span>
+<span class="font-label-sm text-label-sm text-primary flex items-center">Optimized</span>
+</div>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Left Column: Strategy & Routing -->
+<div class="lg:col-span-8 flex flex-col gap-6">
+<!-- Channel Selector -->
+<div class="glass-panel rounded-2xl p-6">
+<h2 class="font-headline-md text-headline-md mb-4 border-b border-white/5 pb-2">Active Channels</h2>
+<div class="flex overflow-x-auto gap-4 pb-2">
+<!-- Email -->
+<div class="flex-shrink-0 w-48 bg-surface-container/40 border border-primary/30 rounded-xl p-4 cursor-pointer hover:bg-surface-container/60 transition-colors">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary" data-icon="mail">mail</span>
+<span class="font-label-md text-label-md">Email</span>
+<div class="w-2 h-2 rounded-full bg-secondary ml-auto animate-pulse"></div>
+</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Vol: High | Resp: 22%</div>
+</div>
+<!-- LinkedIn -->
+<div class="flex-shrink-0 w-48 bg-surface-container/40 border border-outline/30 rounded-xl p-4 cursor-pointer hover:bg-surface-container/60 transition-colors opacity-70">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="work">work</span>
+<span class="font-label-md text-label-md">LinkedIn</span>
+<div class="w-2 h-2 rounded-full bg-outline ml-auto"></div>
+</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Vol: Med | Resp: 35%</div>
+</div>
+<!-- WhatsApp -->
+<div class="flex-shrink-0 w-48 bg-primary-container/20 border border-primary/50 rounded-xl p-4 cursor-pointer ai-glow">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-secondary" data-icon="chat">chat</span>
+<span class="font-label-md text-label-md font-bold">WhatsApp</span>
+<div class="w-2 h-2 rounded-full bg-secondary ml-auto animate-pulse"></div>
+</div>
+<div class="font-label-sm text-label-sm text-primary">Vol: Low | Resp: 68%</div>
+</div>
+<!-- SMS -->
+<div class="flex-shrink-0 w-48 bg-surface-container/40 border border-outline/30 rounded-xl p-4 cursor-pointer hover:bg-surface-container/60 transition-colors">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="sms">sms</span>
+<span class="font-label-md text-label-md">SMS</span>
+<div class="w-2 h-2 rounded-full bg-outline ml-auto"></div>
+</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Vol: Low | Resp: 15%</div>
+</div>
+</div>
+</div>
+<!-- Visual Conversation Journey -->
+<div class="glass-panel rounded-2xl p-6 relative overflow-hidden min-h-[300px]">
+<h2 class="font-headline-md text-headline-md mb-4 border-b border-white/5 pb-2">AI Routing Journey</h2>
+<!-- Abstract Visualization -->
+<div class="absolute inset-0 top-16 flex items-center justify-center opacity-30 pointer-events-none">
+
+</div>
+<div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4 mt-8 px-4">
+<!-- Node 1 -->
+<div class="flex flex-col items-center">
+<div class="w-12 h-12 rounded-full bg-surface-container border border-outline flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="person_add">person_add</span>
+</div>
+<span class="font-label-sm text-label-sm text-center">Lead Imported</span>
+</div>
+<div class="flex-1 h-px bg-gradient-to-r from-outline to-primary relative">
+<div class="absolute right-0 -top-1 w-2 h-2 rounded-full bg-primary"></div>
+</div>
+<!-- Node 2 -->
+<div class="flex flex-col items-center">
+<div class="w-12 h-12 rounded-full bg-primary-container/20 border border-primary flex items-center justify-center mb-2 ai-glow">
+<span class="material-symbols-outlined text-primary" data-icon="smart_toy">smart_toy</span>
+</div>
+<span class="font-label-sm text-label-sm text-center text-primary">AI Evaluation</span>
+</div>
+<div class="flex-1 h-px bg-gradient-to-r from-primary to-outline relative">
+<div class="absolute right-0 -top-1 w-2 h-2 rounded-full bg-outline"></div>
+</div>
+<!-- Node 3 -->
+<div class="flex flex-col items-center">
+<div class="w-12 h-12 rounded-full bg-surface-container border border-outline flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="mail">mail</span>
+</div>
+<span class="font-label-sm text-label-sm text-center text-on-surface-variant">Email Sent<br/><span class="text-error text-[10px]">No Reply (48h)</span></span>
+</div>
+<div class="flex-1 h-px bg-gradient-to-r from-outline to-secondary relative">
+<div class="absolute right-0 -top-1 w-2 h-2 rounded-full bg-secondary"></div>
+</div>
+<!-- Node 4 -->
+<div class="flex flex-col items-center">
+<div class="w-16 h-16 rounded-full bg-secondary-container/20 border-2 border-secondary flex items-center justify-center mb-2 success-glow">
+<span class="material-symbols-outlined text-secondary text-[32px]" data-icon="chat">chat</span>
+</div>
+<span class="font-label-sm text-label-sm text-center text-secondary font-bold">WhatsApp<br/><span class="text-on-surface text-[10px]">Active Thread</span></span>
+</div>
+</div>
+<!-- Smart Channel Decision Panel -->
+<div class="mt-8 bg-surface-container-highest/50 border border-primary/20 rounded-xl p-4 flex gap-4 items-start">
+<span class="material-symbols-outlined text-primary-container mt-1" data-icon="info">info</span>
+<div>
+<h3 class="font-label-md text-label-md text-primary font-bold mb-1">AI Routing Decision</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Switched to <strong>WhatsApp</strong>. Historical data indicates this lead profile (VP Sales, SaaS) has a 4.2x higher response rate on mobile messaging after initial email non-response.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Monitoring & Coaching -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<!-- AI Message Coach Sidebar -->
+<div class="glass-panel rounded-2xl p-6 flex-1 flex flex-col">
+<div class="flex items-center justify-between mb-4 border-b border-white/5 pb-2">
+<h2 class="font-headline-md text-headline-md flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="psychology">psychology</span>
+                            Message Coach
+                        </h2>
+<span class="bg-secondary/20 text-secondary px-2 py-1 rounded font-label-sm text-label-sm">Live</span>
+</div>
+<div class="flex-1 overflow-y-auto space-y-4 pr-2">
+<div class="bg-surface-container/60 border-l-2 border-error p-3 rounded-r-lg">
+<span class="font-label-sm text-label-sm text-error font-bold block mb-1">Tone Warning</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Opening is too formal for WhatsApp. Suggest a more conversational greeting.</p>
+<button class="mt-2 text-primary font-label-sm text-label-sm hover:underline">Apply Fix</button>
+</div>
+<div class="bg-surface-container/60 border-l-2 border-secondary p-3 rounded-r-lg">
+<span class="font-label-sm text-label-sm text-secondary font-bold block mb-1">CTA Optimization</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Instead of "Let's schedule a call", use "Open to a quick 5m chat tomorrow?" (+18% est. conversion).</p>
+<button class="mt-2 text-primary font-label-sm text-label-sm hover:underline">Apply Fix</button>
+</div>
+</div>
+</div>
+<!-- Delivery Monitor -->
+<div class="glass-panel rounded-2xl p-6 h-64 flex flex-col">
+<h2 class="font-headline-md text-headline-md mb-4 border-b border-white/5 pb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-outline" data-icon="receipt_long">receipt_long</span>
+                        Activity Feed
+                    </h2>
+<div class="flex-1 overflow-y-auto space-y-3 pr-2">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant w-12">10:42</span>
+<span class="material-symbols-outlined text-[16px] text-secondary" data-icon="chat">chat</span>
+<span class="font-body-sm text-body-sm truncate flex-1">Reply received from Sarah J.</span>
+</div>
+<div class="flex items-center gap-3 opacity-70">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant w-12">10:41</span>
+<span class="material-symbols-outlined text-[16px] text-primary" data-icon="mail">mail</span>
+<span class="font-body-sm text-body-sm truncate flex-1">Sequence #3 sent to ACME Corp</span>
+</div>
+<div class="flex items-center gap-3 opacity-50">
+<div class="w-2 h-2 rounded-full bg-outline"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant w-12">10:39</span>
+<span class="material-symbols-outlined text-[16px] text-outline" data-icon="hourglass_empty">hourglass_empty</span>
+<span class="font-body-sm text-body-sm truncate flex-1">Queuing SMS for David W.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

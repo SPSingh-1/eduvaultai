@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Growth Experiment Lab</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#171f33",
+                        "secondary-fixed": "#e9ddff",
+                        "inverse-surface": "#dbe2fd",
+                        "inverse-on-surface": "#283044",
+                        "surface-glass": "rgba(255, 255, 255, 0.04)",
+                        "on-primary-fixed-variant": "#2c4677",
+                        "surface-container-lowest": "#060d20",
+                        "primary-container": "#7890c6",
+                        "on-primary-fixed": "#001a42",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "outline": "#8c909f",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "secondary-container": "#503f79",
+                        "secondary": "#d0bcff",
+                        "primary": "#adc6ff",
+                        "terminal-timestamp": "#4edea3",
+                        "surface-dim": "#0b1326",
+                        "on-error-container": "#ffdad6",
+                        "background": "#0b1326",
+                        "on-primary-container": "#082858",
+                        "on-surface": "#dbe2fd",
+                        "surface-variant": "#2d3449",
+                        "on-tertiary": "#003824",
+                        "tertiary": "#4edea3",
+                        "error": "#ffb4ab",
+                        "primary-fixed": "#d8e2ff",
+                        "error-container": "#93000a",
+                        "on-secondary": "#37265e",
+                        "on-error": "#690005",
+                        "surface-tint": "#adc6ff",
+                        "surface-container-highest": "#2d3449",
+                        "on-background": "#dbe2fd",
+                        "border-glass": "rgba(255, 255, 255, 0.1)",
+                        "tertiary-container": "#00a572",
+                        "on-primary": "#122f5f",
+                        "on-surface-variant": "#c2c6d6",
+                        "outline-variant": "#424754",
+                        "primary-fixed-dim": "#adc6ff",
+                        "on-tertiary-container": "#00311f",
+                        "surface-main": "#0b1326",
+                        "on-secondary-fixed-variant": "#4d3d76",
+                        "surface": "#0b1326",
+                        "tertiary-fixed": "#6ffbbe",
+                        "surface-container-low": "#131b2e",
+                        "on-secondary-fixed": "#210f48",
+                        "surface-bright": "#31394e",
+                        "inverse-primary": "#455e90",
+                        "glow-tertiary": "rgba(78, 222, 163, 0.1)",
+                        "surface-container-high": "#222a3e",
+                        "glow-primary": "rgba(173, 198, 255, 0.1)",
+                        "on-secondary-container": "#c2aef0",
+                        "on-tertiary-fixed": "#002114",
+                        "secondary-fixed-dim": "#d0bcff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-page": "24px",
+                        "grid-compact": "8px",
+                        "unit": "4px",
+                        "grid-wide": "24px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "grid-cell": ["Inter"],
+                        "kpi-md": ["Inter"],
+                        "mono-label": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "grid-header": ["Inter"],
+                        "kpi-xl": ["Inter"]
+                    },
+                    "fontSize": {
+                        "grid-cell": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "kpi-md": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "mono-label": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "grid-header": ["11px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "kpi-xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0b1326;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(173, 198, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(78, 222, 163, 0.05) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-panel:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .glow-text-primary {
+            text-shadow: 0 0 10px rgba(173, 198, 255, 0.5);
+        }
+        .glow-text-tertiary {
+            text-shadow: 0 0 10px rgba(78, 222, 163, 0.5);
+        }
+        .progress-bar-glow {
+            box-shadow: 0 0 10px currentColor;
+        }
+    </style>
+</head>
+<body class="text-on-background min-h-screen overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container font-body-sm">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-grid-wide py-unit h-16 backdrop-blur-xl border-b border-border-glass bg-surface-glass shadow-xl">
+<div class="flex items-center gap-gutter">
+<span class="font-headline-sm text-headline-sm font-bold text-primary">EduVault AI</span>
+</div>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-mono-label text-mono-label" href="#">Command Center</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-mono-label text-mono-label" href="#">Campaign Strategy</a>
+<a class="text-primary border-b-2 border-primary pb-1 font-mono-label text-mono-label" href="#">Experiments</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="hidden lg:flex items-center gap-2 bg-gradient-to-r from-primary to-secondary text-on-primary px-4 py-1.5 rounded-full font-mono-label text-mono-label active:scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined text-[16px]">arrow_back_ios_new</span>
+                Ask Marketing AI...
+            </button>
+<div class="flex items-center gap-3">
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span></button>
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">task_alt</span></button>
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">campaign</span></button>
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">account_balance_wallet</span></button>
+</div>
+<img class="w-8 h-8 rounded-full border border-border-glass object-cover" data-alt="A futuristic AI agent avatar with subtle glowing blue circuitry lines, dark mode aesthetic, high-tech, highly detailed, photorealistic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgdlG00kTm_7V2OKgFsk_shqDv3K3b0wDV0aE7PTG-6GsKRSYjllMXA0LyjvpNGikC5f3cxxEfhPsjPO1tIun_-qmMsR_GjXtzl1d0chKbS-ZHxsnU2XZ3nljojLGFwF2IH0zMWnQBqzG6t8W40cth4nqUwm5fwfyOLH5x62EF9dMU_EYglPMVMdlqDfYxEuv8GeEkyuu-Ri2BhWKQfUGDIOosBX6nLv5MF4z9TCJhGugpXkhTcctGMg"/>
+</div>
+</nav>
+<!-- Side Navigation -->
+<aside class="hidden md:flex fixed left-0 top-0 h-full w-64 z-40 flex-col pt-20 pb-grid-wide px-gutter border-r border-border-glass bg-surface-container-lowest">
+<div class="mb-8 px-2 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-glass border border-border-glass flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">hub</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm font-bold text-on-surface">Sales Hunter</div>
+<div class="font-mono-label text-mono-label text-on-surface-variant">Marketing &amp; Growth</div>
+</div>
+</div>
+<div class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-glass rounded-lg hover:text-primary transition-all active:scale-98" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="font-mono-label text-mono-label">Command Center</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-glass rounded-lg hover:text-primary transition-all active:scale-98" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">psychology</span>
+<span class="font-mono-label text-mono-label">ICP Intelligence</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-glass rounded-lg hover:text-primary transition-all active:scale-98" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">groups</span>
+<span class="font-mono-label text-mono-label">Audience Builder</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-glass rounded-lg hover:text-primary transition-all active:scale-98" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">precision_manufacturing</span>
+<span class="font-mono-label text-mono-label">Campaign Strategy</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-glass rounded-lg hover:text-primary transition-all active:scale-98" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">auto_awesome</span>
+<span class="font-mono-label text-mono-label">Content Studio</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-glass rounded-lg hover:text-primary transition-all active:scale-98" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">web</span>
+<span class="font-mono-label text-mono-label">Landing Pages</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-primary-container text-on-primary-container rounded-lg font-bold hover:bg-surface-glass transition-all active:scale-98" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">science</span>
+<span class="font-mono-label text-mono-label">Experiments</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-glass rounded-lg hover:text-primary transition-all active:scale-98" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">analytics</span>
+<span class="font-mono-label text-mono-label">Attribution</span>
+</a>
+</div>
+<div class="mt-auto space-y-1 pt-4 border-t border-border-glass">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-glass rounded-lg hover:text-primary transition-all active:scale-98" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+<span class="font-mono-label text-mono-label">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-glass rounded-lg hover:text-primary transition-all active:scale-98" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">help</span>
+<span class="font-mono-label text-mono-label">Support</span>
+</a>
+<button class="mt-4 w-full bg-gradient-to-r from-primary to-secondary text-on-primary py-2 rounded-lg font-mono-label text-mono-label font-bold active:scale-95 transition-transform">
+                Launch Campaign
+            </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="md:ml-64 pt-20 px-grid-wide pb-margin-page max-w-[1600px] mx-auto min-h-screen">
+<!-- Header -->
+<header class="mb-grid-wide flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="font-kpi-xl text-kpi-xl text-on-surface mb-2 tracking-tight">AI Growth Experiment Lab.</h1>
+<p class="font-headline-sm text-headline-sm text-tertiary glow-text-tertiary">Turn every campaign into a learning system.</p>
+</div>
+<div class="flex gap-3">
+<button class="glass-panel text-on-surface px-4 py-2 rounded-lg font-mono-label text-mono-label flex items-center gap-2 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[16px]">history</span>
+                    Past Experiments
+                </button>
+<button class="bg-primary-container text-on-primary-container px-4 py-2 rounded-lg font-mono-label text-mono-label font-bold flex items-center gap-2 active:scale-95 transition-transform hover:brightness-110">
+<span class="material-symbols-outlined text-[16px]">add</span>
+                    New Hypothesis
+                </button>
+</div>
+</header>
+<!-- Bento Grid -->
+<div class="grid grid-cols-12 gap-grid-wide">
+<!-- Hero / Active Hypothesis -->
+<div class="col-span-12 lg:col-span-8 glass-panel rounded-xl p-grid-wide relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-[120px]">science</span>
+</div>
+<div class="relative z-10 flex flex-col h-full justify-between">
+<div>
+<div class="flex items-center gap-2 mb-4">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse shadow-[0_0_8px_#4edea3]"></span>
+<span class="font-grid-header text-grid-header text-tertiary uppercase tracking-widest">Active Hypothesis • Running</span>
+</div>
+<h2 class="font-kpi-md text-kpi-md text-on-surface mb-2 w-4/5">
+                            "Personalized website audit offers increase demo requests."
+                        </h2>
+<p class="text-on-surface-variant font-body-sm w-3/4">
+                            Testing dynamic landing page content against a static control group for ICP segments showing high intent signals.
+                        </p>
+</div>
+<div class="mt-8 bg-surface-container-lowest border border-border-glass rounded-lg p-4 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary text-[32px]">psychology</span>
+<div>
+<div class="font-grid-header text-grid-header text-on-surface-variant uppercase mb-1">AI Recommendation</div>
+<div class="font-headline-sm text-headline-sm text-primary font-bold">Deploy Variant B</div>
+</div>
+</div>
+<div class="text-right">
+<div class="font-mono-label text-mono-label text-on-surface-variant mb-1">Confidence Score</div>
+<div class="font-kpi-md text-kpi-md text-tertiary">98.4%</div>
+</div>
+<button class="bg-gradient-to-r from-primary to-secondary text-on-primary px-6 py-3 rounded-lg font-mono-label text-mono-label font-bold active:scale-95 transition-transform hover:shadow-[0_0_15px_rgba(173,198,255,0.3)]">
+                            Auto-Deploy Winner
+                        </button>
+</div>
+</div>
+</div>
+<!-- Live Terminal -->
+<div class="col-span-12 lg:col-span-4 glass-panel rounded-xl p-4 flex flex-col h-[320px]">
+<div class="flex items-center justify-between border-b border-border-glass pb-2 mb-2">
+<span class="font-grid-header text-grid-header text-on-surface-variant uppercase tracking-wider">Experiment Logs</span>
+<span class="flex items-center gap-1 text-[10px] text-tertiary">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-ping"></span> Live
+                    </span>
+</div>
+<div class="flex-1 overflow-y-auto space-y-2 font-mono text-[11px] leading-relaxed custom-scrollbar pr-2">
+<div class="text-on-surface-variant"><span class="text-terminal-timestamp mr-2">[14:32:01]</span> System initialized variant routing...</div>
+<div class="text-on-surface-variant"><span class="text-terminal-timestamp mr-2">[14:32:05]</span> <span class="text-primary">[TRAFFIC]</span> User 984a_x routed to Variant B</div>
+<div class="text-on-surface-variant"><span class="text-terminal-timestamp mr-2">[14:35:12]</span> <span class="text-tertiary">[EVENT]</span> Conversion detected on Variant A</div>
+<div class="text-on-surface-variant"><span class="text-terminal-timestamp mr-2">[14:40:00]</span> <span class="text-primary">[SYS]</span> Recalculating statistical significance...</div>
+<div class="text-on-surface-variant"><span class="text-terminal-timestamp mr-2">[14:40:02]</span> Variant B holding 19% conversion rate.</div>
+<div class="text-on-surface-variant"><span class="text-terminal-timestamp mr-2">[14:45:18]</span> <span class="text-primary">[TRAFFIC]</span> User 102c_f routed to Control</div>
+<div class="text-on-surface-variant opacity-50"><span class="text-terminal-timestamp mr-2">[14:45:20]</span> Awaiting further data...</div>
+</div>
+</div>
+<!-- Live Experiment Results -->
+<div class="col-span-12 glass-panel rounded-xl p-grid-wide">
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">monitoring</span> Live Conversion Data
+                </h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Control -->
+<div class="bg-surface-container-lowest border border-border-glass rounded-lg p-4 relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-outline-variant"></div>
+<div class="flex justify-between items-start mb-4">
+<div>
+<div class="font-grid-header text-grid-header text-on-surface-variant uppercase">Control Group</div>
+<div class="font-body-sm text-on-surface">Static Generic Page</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant">horizontal_rule</span>
+</div>
+<div class="flex items-end gap-2 mb-2">
+<span class="font-kpi-xl text-kpi-xl text-on-surface">12%</span>
+<span class="font-mono-label text-mono-label text-on-surface-variant pb-2">Conv. Rate</span>
+</div>
+<div class="w-full h-1.5 bg-surface-glass rounded-full overflow-hidden">
+<div class="h-full bg-outline-variant w-[12%]"></div>
+</div>
+</div>
+<!-- Variant A -->
+<div class="bg-surface-container-lowest border border-border-glass rounded-lg p-4 relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="flex justify-between items-start mb-4">
+<div>
+<div class="font-grid-header text-grid-header text-primary uppercase">Variant A</div>
+<div class="font-body-sm text-on-surface">Dynamic Industry Image</div>
+</div>
+<span class="material-symbols-outlined text-primary">trending_up</span>
+</div>
+<div class="flex items-end gap-2 mb-2">
+<span class="font-kpi-xl text-kpi-xl text-primary glow-text-primary">15%</span>
+<span class="font-mono-label text-mono-label text-on-surface-variant pb-2">Conv. Rate</span>
+</div>
+<div class="w-full h-1.5 bg-surface-glass rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[15%] progress-bar-glow"></div>
+</div>
+</div>
+<!-- Variant B (Winner) -->
+<div class="bg-surface-container-lowest border border-tertiary rounded-lg p-4 relative overflow-hidden shadow-[0_0_20px_rgba(78,222,163,0.1)]">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-tertiary"></div>
+<div class="absolute top-0 right-0 bg-tertiary text-on-tertiary font-grid-header text-[9px] px-2 py-1 rounded-bl-lg uppercase font-bold">Projected Winner</div>
+<div class="flex justify-between items-start mb-4 mt-2">
+<div>
+<div class="font-grid-header text-grid-header text-tertiary uppercase">Variant B</div>
+<div class="font-body-sm text-on-surface">Personalized Audit Offer</div>
+</div>
+<span class="material-symbols-outlined text-tertiary">workspace_premium</span>
+</div>
+<div class="flex items-end gap-2 mb-2">
+<span class="font-kpi-xl text-kpi-xl text-tertiary glow-text-tertiary">19%</span>
+<span class="font-mono-label text-mono-label text-on-surface-variant pb-2">Conv. Rate</span>
+</div>
+<div class="w-full h-1.5 bg-surface-glass rounded-full overflow-hidden relative">
+<div class="h-full bg-tertiary w-[19%] progress-bar-glow relative">
+<div class="absolute right-0 top-0 bottom-0 w-4 bg-white opacity-50 blur-[2px]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Experiment Queue Cards -->
+<div class="col-span-12">
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface mb-4">Upcoming Experiments</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="glass-panel rounded-lg p-4 hover:border-primary transition-colors cursor-pointer group">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">chat</span>
+<span class="font-grid-header text-grid-header text-secondary uppercase">Message Test</span>
+</div>
+<span class="bg-surface-glass px-2 py-0.5 rounded font-mono-label text-[10px] text-on-surface-variant border border-border-glass">Draft</span>
+</div>
+<div class="font-headline-sm text-headline-sm text-on-surface mb-2 group-hover:text-primary transition-colors">Subject Line Impact</div>
+<p class="font-body-sm text-on-surface-variant text-sm line-clamp-2">Testing aggressive value-prop vs question-based subject lines in cold outreach sequence.</p>
+</div>
+<div class="glass-panel rounded-lg p-4 hover:border-primary transition-colors cursor-pointer group">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">local_offer</span>
+<span class="font-grid-header text-grid-header text-primary uppercase">Offer Test</span>
+</div>
+<span class="bg-surface-glass px-2 py-0.5 rounded font-mono-label text-[10px] text-on-surface-variant border border-border-glass">Queued</span>
+</div>
+<div class="font-headline-sm text-headline-sm text-on-surface mb-2 group-hover:text-primary transition-colors">Free Trial vs Freemium</div>
+<p class="font-body-sm text-on-surface-variant text-sm line-clamp-2">Analyzing sign-up velocity and activation rates across different barrier-to-entry models.</p>
+</div>
+<div class="glass-panel rounded-lg p-4 hover:border-primary transition-colors cursor-pointer group">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-[20px]">schedule</span>
+<span class="font-grid-header text-grid-header text-tertiary uppercase">Timing Test</span>
+</div>
+<span class="bg-surface-glass px-2 py-0.5 rounded font-mono-label text-[10px] text-on-surface-variant border border-border-glass">Draft</span>
+</div>
+<div class="font-headline-sm text-headline-sm text-on-surface mb-2 group-hover:text-primary transition-colors">Channel Delivery Time</div>
+<p class="font-body-sm text-on-surface-variant text-sm line-clamp-2">Optimizing LinkedIn outreach timing (Morning vs Evening) for Enterprise personas.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</body></html>

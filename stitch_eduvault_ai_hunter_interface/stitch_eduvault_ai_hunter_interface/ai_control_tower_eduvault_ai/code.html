@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Control Tower - EduVault AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#434656",
+                        "on-surface-variant": "#c3c5d8",
+                        "on-primary": "#002780",
+                        "on-secondary-fixed": "#23005c",
+                        "secondary-fixed-dim": "#d0bcff",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "inverse-surface": "#dfe2f0",
+                        "primary-fixed": "#dce1ff",
+                        "secondary": "#d0bcff",
+                        "on-error-container": "#ffdad6",
+                        "error": "#ffb4ab",
+                        "surface-variant": "#31353f",
+                        "background": "#0f131d",
+                        "on-primary-fixed-variant": "#0039b4",
+                        "surface": "#0f131d",
+                        "surface-dim": "#0f131d",
+                        "on-tertiary-fixed": "#002113",
+                        "surface-tint": "#b7c4ff",
+                        "outline": "#8d90a1",
+                        "on-surface": "#dfe2f0",
+                        "tertiary-container": "#008259",
+                        "primary": "#b7c4ff",
+                        "secondary-container": "#571bc1",
+                        "surface-container": "#1c1f29",
+                        "on-secondary-container": "#c4abff",
+                        "error-container": "#93000a",
+                        "on-background": "#dfe2f0",
+                        "on-secondary": "#3c0091",
+                        "secondary-fixed": "#e9ddff",
+                        "on-tertiary": "#003824",
+                        "primary-container": "#2d63ff",
+                        "on-primary-fixed": "#001551",
+                        "inverse-on-surface": "#2d303b",
+                        "tertiary": "#4edea3",
+                        "on-error": "#690005",
+                        "inverse-primary": "#004dea",
+                        "on-tertiary-container": "#e1ffec",
+                        "surface-container-high": "#262a34",
+                        "surface-container-lowest": "#0a0e17",
+                        "surface-bright": "#353944",
+                        "surface-container-highest": "#31353f",
+                        "on-primary-container": "#f9f7ff",
+                        "tertiary-fixed": "#6ffbbe",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "primary-fixed-dim": "#b7c4ff",
+                        "on-secondary-fixed-variant": "#5516be",
+                        "surface-container-low": "#181b25"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "unit": "4px",
+                        "stack-sm": "8px",
+                        "stack-md": "16px",
+                        "stack-lg": "32px",
+                        "container-padding": "24px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Inter"],
+                        "mono-data": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "mono-data": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-caps": ["11px", { "lineHeight": "12px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "headline-sm": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #050811; color: #dfe2f0; } /* Ink Level 0 Base */
+        .glass-panel {
+            background-color: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+        }
+        .ai-glow {
+            box-shadow: 0 0 30px rgba(45, 99, 255, 0.2);
+        }
+        .pulse-emerald {
+            animation: pulse-em 2s infinite;
+        }
+        @keyframes pulse-em {
+            0% { box-shadow: 0 0 0 0 rgba(78, 222, 163, 0.4); }
+            70% { box-shadow: 0 0 0 8px rgba(78, 222, 163, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(78, 222, 163, 0); }
+        }
+        /* Custom scrollbar for streaming log */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex overflow-hidden">
+<!-- SideNavBar -->
+<nav class="bg-surface-container-low/40 backdrop-blur-xl h-screen w-60 fixed left-0 top-0 border-r border-white/10 shadow-2xl shadow-primary/5 flex flex-col py-stack-lg z-50">
+<div class="px-gutter mb-stack-lg">
+<h1 class="font-display-lg text-headline-sm font-bold text-primary tracking-tight">EduVault AI</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-unit">Agent Status: Online</p>
+</div>
+<div class="flex-1 overflow-y-auto px-unit">
+<a class="flex items-center px-gutter py-stack-sm mb-unit rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-200 active:scale-95 duration-100" href="#">
+<span class="material-symbols-outlined mr-stack-sm" data-icon="dashboard">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center px-gutter py-stack-sm mb-unit rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-200 active:scale-95 duration-100" href="#">
+<span class="material-symbols-outlined mr-stack-sm" data-icon="school">school</span>
+<span class="font-body-md text-body-md">Discovery</span>
+</a>
+<!-- Active State on Intelligence/Control Tower proxy -->
+<a class="flex items-center px-gutter py-stack-sm mb-unit rounded-lg text-primary font-bold bg-primary/10 border-r-2 border-primary transition-all duration-200 active:scale-95 duration-100" href="#">
+<span class="material-symbols-outlined mr-stack-sm" data-icon="psychology" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<span class="font-body-md text-body-md">Intelligence</span>
+</a>
+<a class="flex items-center px-gutter py-stack-sm mb-unit rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-200 active:scale-95 duration-100" href="#">
+<span class="material-symbols-outlined mr-stack-sm" data-icon="campaign">campaign</span>
+<span class="font-body-md text-body-md">Marketing</span>
+</a>
+<a class="flex items-center px-gutter py-stack-sm mb-unit rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-200 active:scale-95 duration-100" href="#">
+<span class="material-symbols-outlined mr-stack-sm" data-icon="hub">hub</span>
+<span class="font-body-md text-body-md">Campaigns</span>
+</a>
+<a class="flex items-center px-gutter py-stack-sm mb-unit rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-200 active:scale-95 duration-100" href="#">
+<span class="material-symbols-outlined mr-stack-sm" data-icon="robot_2">robot_2</span>
+<span class="font-body-md text-body-md">Workforce</span>
+</a>
+</div>
+<div class="px-gutter mt-auto pt-stack-md">
+<button class="w-full bg-primary-container text-white py-stack-sm rounded-lg font-body-md text-body-md hover:bg-primary/80 transition-colors">Command Center</button>
+<a class="flex items-center px-gutter py-stack-sm mt-stack-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined mr-stack-sm" data-icon="settings">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+<div class="mt-stack-md flex items-center justify-center">
+<img alt="Executive User Profile" class="w-10 h-10 rounded-full border border-white/10" data-alt="A sleek, futuristic circular avatar icon for an executive user profile, rendered in glowing neon blues and dark cybernetic greys against a stark black void. The portrait suggests advanced AI integration with subtle glowing circuitry lines on the periphery." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-wG7a6TT6tbsXjrwleKHFYSvUIoxaYPhD3zCLRactsFz5lP1mT56iiQyMBcKJ755Ud9xOT43ry8sU2XN2m3FkM3xLdBWy3PZngSbMjlCvKdC0a9zg_cNp_0nrBk9K94hOHZG1SMjNSdbZmgTgQKBnEkx6wS7V_9MSLjjDy3VpkxU-g3NPym1w8dW2xt8J3zFmjwFxJ_5pPcX5vV6WR1HWwleutyBt7lRGQJ0veIhsaS_hkRRY1vtFAA"/>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="ml-60 flex-1 h-screen overflow-y-auto relative p-container-padding flex flex-col gap-container-padding">
+<!-- TopNavBar -->
+<header class="bg-surface-container/30 backdrop-blur-md rounded-xl border border-white/10 shadow-[0_0_20px_rgba(45,99,255,0.15)] flex justify-between items-center px-gutter h-14 z-40 sticky top-0 shrink-0">
+<div class="flex items-center gap-stack-md">
+<div class="relative focus-within:ring-1 ring-primary/50 transition-all rounded-md">
+<span class="material-symbols-outlined absolute left-2 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm" data-icon="search">search</span>
+<input class="bg-transparent border-none text-body-sm font-body-sm text-on-surface pl-8 pr-4 py-1.5 focus:ring-0 placeholder:text-on-surface-variant/40 w-64 rounded-md" placeholder="Search operations (⌘K)" type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-stack-md">
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="notifications">notifications</span></button>
+<div class="h-6 w-px bg-white/10"></div>
+<button class="text-body-sm font-body-sm text-primary font-semibold hover:text-primary/80">AI Credits</button>
+<button class="text-body-sm font-body-sm text-on-surface-variant hover:text-on-surface">Help</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="account_circle">account_circle</span></button>
+</div>
+</header>
+<!-- Control Tower Grid Layout -->
+<div class="grid grid-cols-12 gap-container-padding flex-1">
+<!-- System Visualization (Center Stage) -->
+<div class="col-span-12 lg:col-span-8 glass-panel flex flex-col p-container-padding relative overflow-hidden ai-glow">
+<!-- Background ambient texture placeholder -->
+<div class="absolute inset-0 bg-cover bg-center opacity-20 z-0 mix-blend-screen pointer-events-none" data-alt="A highly complex, abstract futuristic data visualization representing an AI engine flow. Flowing lines of light in sapphire and emerald weave through a dark, grid-like void, connecting glowing nodes that represent market data, lead generation, and customer acquisition. The aesthetic is extremely precise, tech-forward, and luminous." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDdr4yFIoDypj97Sw4Bdq8vfBEcCYNZUQmENLaRLUXWCDf9AwEoJcWhU6fUdDetT8ugrEac9BNNGGTLp7_ePX4D5UEvvBCrz-NhsDNiIUFsGh1wu2uw5ZJ1R3v8GcyV_nljE1SbGp46nxi67YIECfX8z46m_Qgd_vyQfqBUWPKjPdI_vicbLYu8m18MMnYBiSFp6XBfmFy8NdkcrUQIdsbx-ygX5E2A1cjK4mRgV8pCbADys3KoJKGQfQ')"></div>
+<div class="flex justify-between items-start mb-stack-md relative z-10">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-unit">
+<span class="material-symbols-outlined text-primary" data-icon="account_tree">account_tree</span>
+                            Engine Flow Visualization
+                        </h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-unit">Real-time autonomous pipeline monitoring</p>
+</div>
+<div class="flex gap-unit">
+<span class="px-2 py-1 bg-tertiary-container/20 text-tertiary font-mono-data text-mono-data rounded border border-tertiary/30 flex items-center gap-1">
+<div class="w-2 h-2 rounded-full bg-tertiary pulse-emerald"></div> Live
+                         </span>
+</div>
+</div>
+<!-- Abstracted Flow Diagram Area -->
+<div class="flex-1 flex flex-col justify-center items-center relative z-10 py-stack-lg">
+<div class="w-full max-w-3xl flex justify-between items-center relative">
+<!-- Connecting Line -->
+<div class="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-primary/10 via-primary/50 to-primary/10 -translate-y-1/2 z-0"></div>
+<!-- Nodes -->
+<div class="flex flex-col items-center z-10 bg-[#050811] p-2 rounded-xl border border-white/10 shadow-lg">
+<div class="w-12 h-12 rounded-full border border-primary/30 flex items-center justify-center bg-primary/5 text-primary mb-2 relative">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface">MARKET</span>
+<span class="font-mono-data text-mono-data text-on-surface-variant mt-1">4.2M nodes</span>
+</div>
+<div class="flex flex-col items-center z-10 bg-[#050811] p-2 rounded-xl border border-white/10 shadow-lg">
+<div class="w-12 h-12 rounded-full border border-secondary/30 flex items-center justify-center bg-secondary/5 text-secondary mb-2">
+<span class="material-symbols-outlined" data-icon="person_search">person_search</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface">LEAD</span>
+<span class="font-mono-data text-mono-data text-on-surface-variant mt-1">8,402 active</span>
+</div>
+<div class="flex flex-col items-center z-10 bg-[#050811] p-2 rounded-xl border border-white/10 shadow-lg">
+<div class="w-12 h-12 rounded-full border border-tertiary/30 flex items-center justify-center bg-tertiary/5 text-tertiary mb-2">
+<span class="material-symbols-outlined" data-icon="handshake">handshake</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface">DEAL</span>
+<span class="font-mono-data text-mono-data text-on-surface-variant mt-1">24 in-flight</span>
+</div>
+<div class="flex flex-col items-center z-10 bg-[#050811] p-2 rounded-xl border border-white/10 shadow-lg">
+<div class="w-12 h-12 rounded-full border border-primary/30 flex items-center justify-center bg-primary/20 text-primary mb-2 shadow-[0_0_15px_rgba(45,99,255,0.4)]">
+<span class="material-symbols-outlined" data-icon="group" style="font-variation-settings: 'FILL' 1;">group</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface font-bold">CUSTOMER</span>
+<span class="font-mono-data text-mono-data text-primary mt-1">+12 today</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Side Panel: Workforce & Emergencies -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-container-padding">
+<!-- AI Workforce Status -->
+<div class="glass-panel p-container-padding flex-1">
+<h3 class="font-headline-sm text-body-md font-semibold text-on-surface mb-stack-md flex items-center gap-unit">
+<span class="material-symbols-outlined text-primary" data-icon="robot_2">robot_2</span>
+                        Workforce Status
+                    </h3>
+<div class="flex flex-col gap-stack-sm">
+<!-- Agent Card -->
+<div class="bg-surface-container-high/50 border border-white/5 p-stack-sm rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-stack-sm">
+<div class="w-8 h-8 rounded bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-sm" data-icon="radar">radar</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-surface font-medium">Scout Agent</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Scanning target sector</p>
+</div>
+</div>
+<div class="w-2 h-2 rounded-full bg-tertiary pulse-emerald"></div>
+</div>
+<!-- Agent Card -->
+<div class="bg-surface-container-high/50 border border-white/5 p-stack-sm rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-stack-sm">
+<div class="w-8 h-8 rounded bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-sm" data-icon="visibility">visibility</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-surface font-medium">Vision Agent</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Analyzing profiles</p>
+</div>
+</div>
+<div class="w-2 h-2 rounded-full bg-tertiary pulse-emerald"></div>
+</div>
+<!-- Agent Card -->
+<div class="bg-surface-container-high/50 border border-white/5 p-stack-sm rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-stack-sm">
+<div class="w-8 h-8 rounded bg-tertiary/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-sm" data-icon="forum">forum</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-surface font-medium">Reply Agent</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Drafting communications</p>
+</div>
+</div>
+<div class="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.5)]"></div>
+</div>
+</div>
+</div>
+<!-- Emergency Controls -->
+<div class="glass-panel p-container-padding bg-error-container/10 border-error/20">
+<h3 class="font-headline-sm text-body-md font-semibold text-error mb-stack-sm flex items-center gap-unit">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+                        Emergency Overrides
+                    </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-stack-md">Immediately halt autonomous actions across specific sectors.</p>
+<div class="grid grid-cols-2 gap-unit">
+<button class="bg-surface-container border border-error/30 hover:bg-error/20 text-on-surface font-body-sm text-body-sm py-2 rounded-md transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="pause_circle">pause_circle</span> Pause Engine
+                        </button>
+<button class="bg-surface-container border border-error/30 hover:bg-error/20 text-on-surface font-body-sm text-body-sm py-2 rounded-md transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="lock">lock</span> Lock Comms
+                        </button>
+</div>
+</div>
+</div>
+<!-- Streaming Activity Log -->
+<div class="col-span-12 glass-panel p-container-padding h-64 flex flex-col">
+<h3 class="font-headline-sm text-body-md font-semibold text-on-surface mb-stack-md flex items-center gap-unit border-b border-white/10 pb-2">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="list_alt">list_alt</span>
+                    Real-Time Activity Stream
+                </h3>
+<div class="flex-1 overflow-y-auto font-mono-data text-mono-data space-y-2 pr-2">
+<div class="flex gap-stack-md text-on-surface-variant/80 border-b border-white/5 pb-1">
+<span class="text-primary w-20">10:42:01</span>
+<span class="text-tertiary w-16">[INFO]</span>
+<span>Reply Agent drafted initial contact sequence for Lead ID #8492. Awaiting approval.</span>
+</div>
+<div class="flex gap-stack-md text-on-surface-variant/80 border-b border-white/5 pb-1">
+<span class="text-primary w-20">10:41:55</span>
+<span class="text-secondary w-16">[EXEC]</span>
+<span>Vision Agent completed sentiment analysis on sector tech_ed. Confidence: 92%.</span>
+</div>
+<div class="flex gap-stack-md text-on-surface-variant/80 border-b border-white/5 pb-1">
+<span class="text-primary w-20">10:41:12</span>
+<span class="text-tertiary w-16">[INFO]</span>
+<span>Scout Agent identified 14 new high-probability nodes in target demographic.</span>
+</div>
+<div class="flex gap-stack-md text-on-surface-variant/80 border-b border-white/5 pb-1">
+<span class="text-primary w-20">10:40:05</span>
+<span class="text-amber-400 w-16">[WARN]</span>
+<span>API rate limit approaching for secondary data enrichment source. Throttling requests.</span>
+</div>
+<div class="flex gap-stack-md text-on-surface-variant/80 border-b border-white/5 pb-1 opacity-50">
+<span class="text-primary w-20">10:39:44</span>
+<span class="text-tertiary w-16">[INFO]</span>
+<span>Deal node updated. Lead #8110 transitioned to negotiation phase.</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EduVault AI - Onboarding Step 2</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#eeefff",
+                        "on-tertiary-fixed-variant": "#2f2ebe",
+                        "surface-container-low": "#131b2e",
+                        "on-error": "#690005",
+                        "tertiary-fixed-dim": "#c0c1ff",
+                        "error": "#ffb4ab",
+                        "on-background": "#dae2fd",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-secondary-fixed-variant": "#005236",
+                        "tertiary": "#c0c1ff",
+                        "surface-variant": "#2d3449",
+                        "tertiary-container": "#585be6",
+                        "on-secondary-container": "#00311f",
+                        "outline": "#8d90a0",
+                        "on-secondary-fixed": "#002113",
+                        "surface-dim": "#0b1326",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "primary-fixed": "#dbe1ff",
+                        "on-primary": "#002a78",
+                        "outline-variant": "#434655",
+                        "on-tertiary-container": "#f1eeff",
+                        "inverse-primary": "#0053db",
+                        "surface": "#0b1326",
+                        "surface-tint": "#b4c5ff",
+                        "on-tertiary": "#1000a9",
+                        "surface-container-lowest": "#060e20",
+                        "surface-bright": "#31394d",
+                        "on-surface": "#dae2fd",
+                        "surface-container": "#171f33",
+                        "on-primary-fixed": "#00174b",
+                        "on-surface-variant": "#c3c6d7",
+                        "tertiary-fixed": "#e1e0ff",
+                        "on-secondary": "#003824",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "inverse-on-surface": "#283044",
+                        "secondary-fixed-dim": "#4edea3",
+                        "inverse-surface": "#dae2fd",
+                        "background": "#0b1326",
+                        "secondary-container": "#00a572",
+                        "surface-container-high": "#222a3d",
+                        "primary": "#b4c5ff",
+                        "secondary": "#4edea3",
+                        "error-container": "#93000a",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-highest": "#2d3449",
+                        "primary-container": "#2563eb",
+                        "on-tertiary-fixed": "#07006c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1200px",
+                        "stack-md": "24px",
+                        "stack-lg": "48px",
+                        "stack-sm": "12px",
+                        "margin-edge": "32px",
+                        "gutter": "24px",
+                        "unit": "8px"
+                    },
+                    "fontFamily": {
+                        "mono-code": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-lg-mobile": ["Inter"]
+                    },
+                    "fontSize": {
+                        "mono-code": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "display-lg-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Custom styles for specific requirements not easily handled by inline utility classes */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Custom scrollbar for form area */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        /* Checkbox custom styling */
+        .custom-checkbox:checked + div {
+            background-color: theme('colors.primary');
+            border-color: theme('colors.primary');
+        }
+        .custom-checkbox:checked + div .check-icon {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        /* Subtle pulse for progress bar */
+        @keyframes subtle-pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        .animate-progress-pulse {
+            animation: subtle-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background h-screen w-full flex overflow-hidden antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- Left Panel: Visual/Atmosphere -->
+<div class="hidden lg:flex w-1/2 relative bg-surface-container-lowest flex-col justify-between p-margin-edge overflow-hidden border-r border-white/5">
+<!-- Background Mesh/Glow -->
+<div class="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-primary/10 blur-[120px] rounded-full pointer-events-none"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-tertiary/10 blur-[100px] rounded-full pointer-events-none"></div>
+<!-- Branding -->
+<div class="relative z-10 flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-tertiary flex items-center justify-center shadow-[0_0_20px_rgba(180,197,255,0.3)]">
+<span class="material-symbols-outlined text-on-primary-fixed text-[18px]">neurology</span>
+</div>
+<span class="font-headline-md text-headline-md text-primary tracking-tight">EduVault AI</span>
+</div>
+<!-- AI Animation Canvas -->
+<div class="absolute inset-0 flex items-center justify-center mix-blend-screen opacity-80 pointer-events-none z-0">
+<!-- STITCH_THREEJS_START:ANIMATION_10 class="w-full h-full max-w-[800px] max-h-[800px]" -->
+<div class="w-full h-full max-w-[800px] max-h-[800px]" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_10" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_10');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  
+const container = document.getElementById('threejs-container-ANIMATION_10');
+const width = container.clientWidth || window.innerWidth;
+const height = container.clientHeight || window.innerHeight;
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+
+renderer.setSize(width, height);
+renderer.setPixelRatio(window.devicePixelRatio);
+container.appendChild(renderer.domElement);
+
+const brainGroup = new THREE.Group();
+scene.add(brainGroup);
+
+// Create a more "neural" brain shape using a cluster of spheres
+const points = [];
+for (let i = 0; i < 60; i++) {
+    const phi = Math.acos(-1 + (2 * i) / 60);
+    const theta = Math.sqrt(60 * Math.PI) * phi;
+    
+    const x = Math.cos(theta) * Math.sin(phi);
+    const y = Math.sin(theta) * Math.sin(phi);
+    const z = Math.cos(phi);
+    
+    points.push(new THREE.Vector3(x * 1.5, y * 1.5, z * 1.5));
+}
+
+const nodeGeometry = new THREE.SphereGeometry(0.06, 12, 12);
+const nodeMaterial = new THREE.MeshPhongMaterial({ 
+    color: 0x2563EB, 
+    emissive: 0x2563EB, 
+    emissiveIntensity: 0.5,
+    shininess: 100 
+});
+
+const nodes = [];
+points.forEach(p => {
+    const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
+    node.position.copy(p);
+    brainGroup.add(node);
+    nodes.push(node);
+});
+
+// Connections
+const lineMaterial = new THREE.LineBasicMaterial({ 
+    color: 0x10B981, 
+    transparent: true, 
+    opacity: 0.2 
+});
+
+for (let i = 0; i < nodes.length; i++) {
+    const lineGeometry = new THREE.BufferGeometry();
+    const connections = [];
+    for (let j = i + 1; j < nodes.length; j++) {
+        if (nodes[i].position.distanceTo(nodes[j].position) < 1.2) {
+            connections.push(nodes[i].position.x, nodes[i].position.y, nodes[i].position.z);
+            connections.push(nodes[j].position.x, nodes[j].position.y, nodes[j].position.z);
+        }
+    }
+    lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(connections, 3));
+    const lineSegments = new THREE.LineSegments(lineGeometry, lineMaterial);
+    brainGroup.add(lineSegments);
+}
+
+const light = new THREE.PointLight(0xffffff, 1, 100);
+light.position.set(5, 5, 5);
+scene.add(light);
+scene.add(new THREE.AmbientLight(0x404040));
+
+camera.position.z = 4;
+
+function animate() {
+    requestAnimationFrame(animate);
+    brainGroup.rotation.y += 0.003;
+    brainGroup.rotation.x += 0.001;
+    
+    const time = Date.now() * 0.001;
+    nodes.forEach((node, i) => {
+        const pulse = 1 + Math.sin(time + i) * 0.1;
+        node.scale.set(pulse, pulse, pulse);
+    });
+    
+    renderer.render(scene, camera);
+}
+
+window.addEventListener('resize', () => {
+    const w = container.clientWidth || window.innerWidth;
+    const h = container.clientHeight || window.innerHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+});
+
+animate();
+
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_10 -->
+</div>
+<!-- Contextual Copy -->
+<div class="relative z-10 max-w-md">
+<div class="flex items-center gap-2 mb-4">
+<div class="w-2 h-2 rounded-full bg-secondary animate-progress-pulse"></div>
+<span class="font-mono-code text-mono-code text-secondary">Analyzing Market Sector...</span>
+</div>
+<h2 class="font-display-lg text-display-lg text-on-surface mb-stack-sm">Context is Key</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+                To calibrate your autonomous sales agents effectively, we need to understand the scale and specifics of your operation. This ensures hyper-personalized outreach.
+            </p>
+</div>
+</div>
+<!-- Right Panel: Interactive Form -->
+<div class="w-full lg:w-1/2 h-full flex flex-col bg-background relative overflow-y-auto custom-scrollbar">
+<!-- Main Form Container -->
+<div class="flex-1 w-full max-w-[640px] mx-auto px-margin-edge py-[81px] flex flex-col justify-center">
+<!-- Progress Stepper -->
+<div class="mb-stack-lg w-full">
+<div class="flex justify-between items-end mb-2">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-widest">Step 2 of 6</span>
+<span class="font-mono-code text-mono-code text-on-surface-variant">33%</span>
+</div>
+<!-- Progress Bar Base -->
+<div class="h-1 w-full bg-white/10 rounded-full overflow-hidden">
+<!-- Progress Bar Fill (Level 1 elevation equivalent styling for bar) -->
+<div class="h-full bg-secondary w-2/6 relative rounded-full shadow-[0_0_10px_rgba(78,222,163,0.5)]">
+<div class="absolute top-0 right-0 h-full w-4 bg-white/40 blur-[2px]"></div>
+</div>
+</div>
+</div>
+<!-- Header -->
+<div class="mb-stack-md">
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface mb-2">Business Details</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Define your organization's footprint and target audience.</p>
+</div>
+<!-- Glassmorphism Card Container (Level 1) -->
+<div class="bg-surface-container-high/40 backdrop-blur-[24px] border border-white/10 rounded-xl p-stack-md shadow-lg flex flex-col gap-stack-md relative z-10">
+<!-- Field: Company Size -->
+<div class="flex flex-col gap-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant" for="company-size">Company Size</label>
+<div class="relative">
+<select class="w-full bg-surface-dim/50 border border-outline-variant text-on-surface font-body-md text-body-md rounded-lg px-4 py-3 appearance-none focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-colors" id="company-size">
+<option disabled="" selected="" value="">Select employee count</option>
+<option value="1-10">1-10 Employees</option>
+<option value="11-50">11-50 Employees</option>
+<option value="51-200">51-200 Employees</option>
+<option value="201-500">201-500 Employees</option>
+<option value="500+">500+ Employees</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Field: Industry -->
+<div class="flex flex-col gap-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant" for="industry">Industry</label>
+<div class="relative">
+<input class="w-full bg-surface-dim/50 border border-outline-variant text-on-surface font-body-md text-body-md rounded-lg px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-colors placeholder:text-outline-variant" id="industry" type="text" value="Education Software"/>
+<!-- AI Highlight indication on field -->
+<div class="absolute inset-0 rounded-lg border border-primary/30 shadow-[0_0_8px_rgba(180,197,255,0.15)] pointer-events-none"></div>
+</div>
+<span class="font-mono-code text-[12px] text-secondary flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[14px]">auto_awesome</span> Auto-detected from domain
+                    </span>
+</div>
+<!-- Field: Target Customers (Grid) -->
+<div class="flex flex-col gap-3">
+<label class="font-label-sm text-label-sm text-on-surface-variant">Target Customer Segments</label>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+<!-- Checkbox Item 1 -->
+<label class="flex items-start gap-3 cursor-pointer group">
+<div class="relative flex items-start pt-[2px]">
+<input checked="" class="custom-checkbox opacity-0 absolute h-0 w-0" type="checkbox"/>
+<div class="w-5 h-5 rounded-[4px] border border-outline-variant bg-surface-dim flex items-center justify-center transition-colors group-hover:border-primary/50">
+<span class="material-symbols-outlined check-icon text-[16px] text-on-primary-fixed opacity-0 transform scale-50 transition-all duration-200">check</span>
+</div>
+</div>
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary-fixed transition-colors">Private Schools</span>
+</label>
+<!-- Checkbox Item 2 -->
+<label class="flex items-start gap-3 cursor-pointer group">
+<div class="relative flex items-start pt-[2px]">
+<input class="custom-checkbox opacity-0 absolute h-0 w-0" type="checkbox"/>
+<div class="w-5 h-5 rounded-[4px] border border-outline-variant bg-surface-dim flex items-center justify-center transition-colors group-hover:border-primary/50">
+<span class="material-symbols-outlined check-icon text-[16px] text-on-primary-fixed opacity-0 transform scale-50 transition-all duration-200">check</span>
+</div>
+</div>
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary-fixed transition-colors">Government Schools</span>
+</label>
+<!-- Checkbox Item 3 -->
+<label class="flex items-start gap-3 cursor-pointer group">
+<div class="relative flex items-start pt-[2px]">
+<input checked="" class="custom-checkbox opacity-0 absolute h-0 w-0" type="checkbox"/>
+<div class="w-5 h-5 rounded-[4px] border border-outline-variant bg-surface-dim flex items-center justify-center transition-colors group-hover:border-primary/50">
+<span class="material-symbols-outlined check-icon text-[16px] text-on-primary-fixed opacity-0 transform scale-50 transition-all duration-200">check</span>
+</div>
+</div>
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary-fixed transition-colors">CBSE Affiliated</span>
+</label>
+<!-- Checkbox Item 4 -->
+<label class="flex items-start gap-3 cursor-pointer group">
+<div class="relative flex items-start pt-[2px]">
+<input class="custom-checkbox opacity-0 absolute h-0 w-0" type="checkbox"/>
+<div class="w-5 h-5 rounded-[4px] border border-outline-variant bg-surface-dim flex items-center justify-center transition-colors group-hover:border-primary/50">
+<span class="material-symbols-outlined check-icon text-[16px] text-on-primary-fixed opacity-0 transform scale-50 transition-all duration-200">check</span>
+</div>
+</div>
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary-fixed transition-colors">Higher Ed / Universities</span>
+</label>
+</div>
+</div>
+<!-- Field: Product Description -->
+<div class="flex flex-col gap-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant flex justify-between" for="product-desc">
+<span>Product Overview</span>
+<span class="text-outline font-normal">Optional</span>
+</label>
+<textarea class="w-full bg-surface-dim/50 border border-outline-variant text-on-surface font-body-md text-body-md rounded-lg px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-colors placeholder:text-outline-variant resize-none" id="product-desc" placeholder="Briefly describe your main software offerings..." rows="4"></textarea>
+</div>
+</div>
+<!-- Navigation Actions -->
+<div class="flex items-center justify-between mt-stack-lg pb-stack-lg">
+<button class="group flex items-center gap-2 border border-white/20 text-on-surface font-label-sm text-label-sm rounded-xl px-6 py-3 hover:bg-white/5 transition-all" type="button">
+<span class="material-symbols-outlined text-[18px] transition-transform group-hover:-translate-x-1">arrow_back</span>
+                    Back
+                </button>
+<button class="group flex items-center gap-2 bg-gradient-to-r from-primary to-tertiary text-on-primary-fixed font-label-sm text-label-sm rounded-xl px-8 py-3 border-t border-white/20 shadow-[0_0_15px_rgba(180,197,255,0.2)] hover:shadow-[0_0_25px_rgba(180,197,255,0.4)] transition-all relative overflow-hidden" type="button">
+<div class="absolute inset-0 bg-white/20 translate-y-[100%] group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
+<span class="relative z-10">Continue</span>
+<span class="material-symbols-outlined text-[18px] relative z-10 transition-transform group-hover:translate-x-1">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

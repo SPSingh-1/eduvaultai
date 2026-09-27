@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduVault AI — Universal School Sales Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #070B14;
+      --bg-card: rgba(16, 24, 40, 0.75);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --primary: #06B6D4;
+      --primary-glow: rgba(6, 182, 212, 0.35);
+      --accent-green: #10B981;
+      --accent-purple: #8B5CF6;
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --grad-cyan: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%);
+      --grad-green: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-main);
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Ambient Background Glows */
+    .glow-sphere-1 {
+      position: absolute;
+      top: -15%;
+      left: 20%;
+      width: 50vw;
+      height: 50vw;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, transparent 70%);
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glow-sphere-2 {
+      position: absolute;
+      bottom: -15%;
+      right: 10%;
+      width: 45vw;
+      height: 45vw;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, transparent 70%);
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Top Bar */
+    header {
+      z-index: 10;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      border-bottom: 1px solid var(--card-border);
+      backdrop-filter: blur(12px);
+      background: rgba(7, 11, 20, 0.8);
+    }
+
+    .brand-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--grad-cyan);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 18px;
+      color: #fff;
+      box-shadow: 0 0 16px var(--primary-glow);
+    }
+
+    .brand-text {
+      font-family: 'Outfit', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .brand-badge {
+      background: rgba(6, 182, 212, 0.15);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      color: var(--primary);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .school-tag {
+      font-size: 14px;
+      color: #CBD5E1;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .school-tag span {
+      color: #38BDF8;
+      font-weight: 700;
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-nav {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--card-border);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-nav:hover {
+      background: rgba(255, 255, 255, 0.16);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: var(--grad-cyan);
+      border: none;
+      box-shadow: 0 0 16px var(--primary-glow);
+    }
+
+    /* Slides Container */
+    main {
+      flex: 1;
+      position: relative;
+      z-index: 5;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      padding: 30px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.96) translateY(20px);
+      transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1) translateY(0);
+    }
+
+    /* Typography & Components */
+    .tagline {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 30px;
+      background: rgba(6, 182, 212, 0.12);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      color: #38BDF8;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      width: fit-content;
+    }
+
+    h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 44px;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, #FFFFFF 30%, #94A3B8 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .highlight-cyan {
+      background: var(--grad-cyan);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .highlight-green {
+      background: var(--grad-green);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p.subtext {
+      font-size: 18px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      max-width: 680px;
+      margin-bottom: 24px;
+    }
+
+    /* Grid Layouts */
+    .two-col-slide {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 40px;
+      align-items: center;
+      height: 100%;
+    }
+
+    .image-card-wrapper {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(6, 182, 212, 0.15);
+      background: #000;
+      transition: transform 0.3s ease;
+    }
+
+    .image-card-wrapper:hover {
+      transform: translateY(-4px);
+    }
+
+    .image-card-wrapper img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    .floating-pill {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      background: rgba(7, 11, 20, 0.85);
+      backdrop-filter: blur(10px);
+      padding: 8px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .floating-pill .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10B981;
+      box-shadow: 0 0 10px #10B981;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    /* Feature Cards Minimal */
+    .feature-list-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .f-card {
+      background: var(--bg-card);
+      border: 1px solid var(--card-border);
+      padding: 14px 18px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      backdrop-filter: blur(10px);
+      transition: all 0.2s ease;
+    }
+
+    .f-card:hover {
+      border-color: rgba(6, 182, 212, 0.4);
+      background: rgba(16, 24, 40, 0.95);
+      transform: translateX(4px);
+    }
+
+    .f-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .f-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #F1F5F9;
+      margin-bottom: 2px;
+    }
+
+    .f-desc {
+      font-size: 12px;
+      color: #94A3B8;
+    }
+
+    /* Stats Row */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .stat-box {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--card-border);
+      padding: 16px 20px;
+      border-radius: 14px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Outfit', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: #38BDF8;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: #94A3B8;
+      font-weight: 500;
+    }
+
+    /* Comparison Table */
+    .comp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      max-width: 960px;
+      margin: 20px auto 0;
+    }
+
+    .comp-col {
+      background: var(--bg-card);
+      border-radius: 16px;
+      padding: 24px;
+      border: 1px solid var(--card-border);
+    }
+
+    .comp-col.winner {
+      border-color: rgba(6, 182, 212, 0.4);
+      box-shadow: 0 0 30px rgba(6, 182, 212, 0.1);
+      position: relative;
+    }
+
+    .comp-col.winner::before {
+      content: "RECOMMENDED CHOICE";
+      position: absolute;
+      top: -12px;
+      left: 24px;
+      background: var(--grad-cyan);
+      color: #000;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    .comp-col h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .comp-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 14px;
+    }
+
+    .comp-item:last-child {
+      border-bottom: none;
+    }
+
+    /* Bottom Speaker Note Bar */
+    .speaker-drawer {
+      z-index: 20;
+      background: rgba(15, 23, 42, 0.95);
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(16px);
+      padding: 14px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 70px;
+    }
+
+    .speaker-content {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex: 1;
+    }
+
+    .speaker-badge {
+      background: #3B82F6;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+    }
+
+    .speaker-dialogue {
+      font-size: 14px;
+      color: #E2E8F0;
+      line-height: 1.4;
+    }
+
+    .speaker-dialogue b {
+      color: #38BDF8;
+    }
+
+    /* Progress bar */
+    .progress-bar-container {
+      position: absolute;
+      top: 63px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.08);
+      z-index: 15;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 14%;
+      background: var(--grad-cyan);
+      box-shadow: 0 0 10px var(--primary);
+      transition: width 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+
+  
+  <!-- School Name Entry Modal -->
+  <div id="schoolModal" style="position:fixed;inset:0;z-index:9999;background:rgba(7,11,20,0.97);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(20px);">
+    <div style="background:rgba(16,24,40,0.95);border:1px solid rgba(6,182,212,0.4);border-radius:24px;padding:48px 52px;max-width:500px;width:90%;text-align:center;box-shadow:0 0 80px rgba(6,182,212,0.15);">
+      <div style="width:50px;height:50px;background:linear-gradient(135deg,#06B6D4,#3B82F6);border-radius:13px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:24px;color:#fff;margin:0 auto 18px;">E</div>
+      <div style="font-family:'Outfit',sans-serif;font-size:26px;font-weight:800;background:linear-gradient(135deg,#fff 30%,#94A3B8 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;">EduVault<span style="color:#38BDF8;">.AI</span> Demo</div>
+      <p style="font-size:13px;color:#64748B;margin-bottom:28px;line-height:1.5;">School ka naam enter karo. Presentation automatically personalize ho jayegi kisi bhi school ke liye.</p>
+      <div style="text-align:left;font-size:11px;font-weight:700;color:#06B6D4;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:7px;">School Name</div>
+      <input type="text" id="schoolNameInput" placeholder="e.g. Delhi Public School, St. Xavier's Academy..." style="width:100%;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.15);border-radius:12px;color:#fff;font-size:15px;font-weight:600;padding:13px 16px;outline:none;margin-bottom:20px;box-sizing:border-box;" autocomplete="off" />
+      <div style="text-align:left;font-size:11px;font-weight:700;color:#06B6D4;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:7px;">City (Optional)</div>
+      <input type="text" id="schoolCityInput" placeholder="e.g. Jaipur, Delhi, Lucknow, Pune..." style="width:100%;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.15);border-radius:12px;color:#fff;font-size:15px;font-weight:600;padding:13px 16px;outline:none;margin-bottom:24px;box-sizing:border-box;" autocomplete="off" />
+      <button onclick="startDemo()" style="width:100%;background:linear-gradient(135deg,#06B6D4,#3B82F6);border:none;border-radius:12px;color:#fff;font-size:15px;font-weight:700;padding:15px;cursor:pointer;box-shadow:0 0 20px rgba(6,182,212,0.35);">Launch Personalized Demo</button>
+      <div style="font-size:11px;color:#475569;margin-top:12px;">No data saved. Sirf is session ke liye use hoga.</div>
+    </div>
+  </div>
+
+
+  <div class="glow-sphere-1"></div>
+  <div class="glow-sphere-2"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="brand-box">
+      <div class="brand-logo-icon">E</div>
+      <div class="brand-text">EduVault<span style="color:#38BDF8;">.AI</span></div>
+      <div class="brand-badge">SCHOOL OS 2.0</div>
+    </div>
+
+    <div class="school-tag">
+      Partner Presentation: <span id="headerSchoolName">—</span>
+      <button id="editSchoolBtn" onclick="showModal()" style="background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.25);color:#38BDF8;font-size:11px;font-weight:700;padding:4px 9px;border-radius:6px;cursor:pointer;margin-left:4px;">Edit</button>
+    </div>
+
+    <div class="nav-controls">
+      <button class="btn-nav" id="prevBtn" onclick="prevSlide()">← Prev</button>
+      <span style="font-size: 13px; font-weight: 700; color: #94A3B8;" id="slideNumber">1 / 6</span>
+      <button class="btn-nav btn-primary" id="nextBtn" onclick="nextSlide()">Next →</button>
+      <button class="btn-nav" onclick="toggleFullScreen()" title="Full Screen (F11)">⛶</button>
+    </div>
+  </header>
+
+  <div class="progress-bar-container">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- Main Slides -->
+  <main>
+
+    <!-- SLIDE 1: COVER -->
+    <div class="slide active" id="slide-1">
+      <div style="text-align: center; max-width: 900px; margin: 0 auto;">
+        <div class="tagline">Next-Gen Autonomous School Intelligence</div>
+        <h1 style="font-size: 52px; margin-bottom: 20px;">
+          Empowering <span class="highlight-cyan" id="slide1SchoolName">Your School</span><br />
+          With Autonomous AI & Smart Automation
+        </h1>
+        <p class="subtext" style="margin: 0 auto 32px auto;">
+          Transforming daily admissions, parent communication, and fee operations into a 1-click autonomous system. Zero paperwork. Zero missed enquiries.
+        </p>
+
+        <div class="stats-row" style="max-width: 760px; margin: 0 auto 30px auto;">
+          <div class="stat-box">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Enquiry Follow-Up Rate</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number highlight-green">3X</div>
+            <div class="stat-label">Faster Fee Recovery</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Automated Parent Support</div>
+          </div>
+        </div>
+
+        <button class="btn-nav btn-primary" style="margin: 0 auto; font-size: 15px; padding: 12px 28px;" onclick="nextSlide()">
+          Explore Platform Features →
+        </button>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: HERO DASHBOARD -->
+    <div class="slide" id="slide-2">
+      <div class="two-col-slide">
+        <div>
+          <div class="tagline">All-In-One Unified Suite</div>
+          <h1>Complete School Control on <span class="highlight-cyan">Single Screen</span></h1>
+          <p class="subtext" style="font-size: 15px; margin-bottom: 18px;">
+            Principal aur Management ke liye real-time command center. Admissions, academics, aur communications ka live pulse.
+          </p>
+
+          <div class="feature-list-cards">
+            <div class="f-card">
+              <div class="f-icon" style="background: rgba(6,182,212,0.15); color: #06B6D4;">📊</div>
+              <div>
+                <div class="f-title">Live Admission & Academic Growth</div>
+                <div class="f-desc">Daily admission trends, class capacity status aur performance graphs.</div>
+              </div>
+            </div>
+
+            <div class="f-card">
+              <div class="f-icon" style="background: rgba(16,185,129,0.15); color: #10B981;">⚡</div>
+              <div>
+                <div class="f-title">Instant 1-Click Operations</div>
+                <div class="f-desc">Meeting schedule, student enrollment aur circulars bina manual entry ke.</div>
+              </div>
+            </div>
+
+            <div class="f-card">
+              <div class="f-icon" style="background: rgba(139,92,246,0.15); color: #8B5CF6;">🧠</div>
+              <div>
+                <div class="f-title">Autonomous AI Analytics</div>
+                <div class="f-desc">System khud batata hai kaunse student ya batch ko attention chahiye.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="image-card-wrapper">
+          <img src="./demo_assets/eduvault_hero_slide_1789416876206.jpg" alt="EduVault Hero Dashboard" />
+          <div class="floating-pill">
+            <span class="pulse-dot"></span> EduVault Live School OS • Active
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: WHATSAPP AUTOMATION -->
+    <div class="slide" id="slide-3">
+      <div class="two-col-slide">
+        <div>
+          <div class="tagline">Smart Parent Connect</div>
+          <h1>WhatsApp AI Bot: <span class="highlight-green">Zero Parent Churn</span></h1>
+          <p class="subtext" style="font-size: 15px; margin-bottom: 18px;">
+            98% parents WhatsApp check karte hain. EduVault unke WhatsApp par hi school ko live le aata hai.
+          </p>
+
+          <div class="feature-list-cards">
+            <div class="f-card">
+              <div class="f-icon" style="background: rgba(16,185,129,0.15); color: #10B981;">💬</div>
+              <div>
+                <div class="f-title">24x7 Instant Admission Enquiry Reply</div>
+                <div class="f-desc">Raat ko 10 baje bhi parent message karega toh bot prospectus & fee structure dega.</div>
+              </div>
+            </div>
+
+            <div class="f-card">
+              <div class="f-icon" style="background: rgba(6,182,212,0.15); color: #06B6D4;">💳</div>
+              <div>
+                <div class="f-title">Automated Fee Reminders with 1-Click UPI</div>
+                <div class="f-desc">Parents ko direct link milta hai, staff ko follow-up calling ki zaroorat nahi.</div>
+              </div>
+            </div>
+
+            <div class="f-card">
+              <div class="f-icon" style="background: rgba(245,158,11,0.15); color: #F59E0B;">📢</div>
+              <div>
+                <div class="f-title">Live Attendance & Report Cards</div>
+                <div class="f-desc">Bachhe ke school aate hi parent ke WhatsApp pe confirmed alert.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="image-card-wrapper">
+          <img src="./demo_assets/eduvault_whatsapp_1789416903404.jpg" alt="EduVault WhatsApp AI Integration" />
+          <div class="floating-pill">
+            <span class="pulse-dot"></span> WhatsApp Business API • Verified
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: PRINCIPAL COCKPIT -->
+    <div class="slide" id="slide-4">
+      <div class="two-col-slide">
+        <div>
+          <div class="tagline">Executive Decision Center</div>
+          <h1>Principal & Director <span class="highlight-cyan">Smart Cockpit</span></h1>
+          <p class="subtext" style="font-size: 15px; margin-bottom: 18px;">
+            Aap school mein baithein ho ya bahar travel kar rahe ho — pura school aapke tablet/phone par live dikhta hai.
+          </p>
+
+          <div class="feature-list-cards">
+            <div class="f-card">
+              <div class="f-icon" style="background: rgba(6,182,212,0.15); color: #06B6D4;">💰</div>
+              <div>
+                <div class="f-title">Live Fee Recovery Gauge</div>
+                <div class="f-desc">Kitna collection hua, kitna pending hai — bina accountant se poochhe 1-sec mein.</div>
+              </div>
+            </div>
+
+            <div class="f-card">
+              <div class="f-icon" style="background: rgba(16,185,129,0.15); color: #10B981;">🎓</div>
+              <div>
+                <div class="f-title">Daily School Attendance Meter</div>
+                <div class="f-desc">Overall school attendance rate (e.g. 96%) aur section-wise breakdowns.</div>
+              </div>
+            </div>
+
+            <div class="f-card">
+              <div class="f-icon" style="background: rgba(236,72,153,0.15); color: #EC4899;">🎯</div>
+              <div>
+                <div class="f-title">Admissions Conversion Funnel</div>
+                <div class="f-desc">Enquiry aane se lekar final admission hone tak har stage ka visual tracker.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="image-card-wrapper">
+          <img src="./demo_assets/eduvault_principal_tablet_1789416920304.jpg" alt="Principal Smart Tablet View" />
+          <div class="floating-pill">
+            <span class="pulse-dot"></span> Real-Time Sync • 0s Latency
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: COMPARISON -->
+    <div class="slide" id="slide-5">
+      <div style="text-align: center; max-width: 960px; margin: 0 auto; width: 100%;">
+        <div class="tagline">Clear Advantage</div>
+        <h1 style="font-size: 38px; margin-bottom: 6px;">Why Old ERPs Fail & <span class="highlight-cyan">EduVault Wins</span></h1>
+        <p class="subtext" style="font-size: 14px; margin: 0 auto 16px auto;">Puraane software sirf data store karte hain, EduVault school ko grow karne mein lead leta hai.</p>
+
+        <div class="comp-grid">
+          <div class="comp-col">
+            <h3 style="color: #94A3B8;">❌ Traditional School ERPs</h3>
+            <div class="comp-item">
+              <span style="color:#EF4444;">✕</span>
+              <span>Sirf manual data entry register jaisa software</span>
+            </div>
+            <div class="comp-item">
+              <span style="color:#EF4444;">✕</span>
+              <span>Expensive SMS packs jo koi parent nahi padhta</span>
+            </div>
+            <div class="comp-item">
+              <span style="color:#EF4444;">✕</span>
+              <span>Admissions enquiries excel sheet mein gum ho jati hain</span>
+            </div>
+            <div class="comp-item">
+              <span style="color:#EF4444;">✕</span>
+              <span>Staff ko fee reminder ke liye manual phone karna padta hai</span>
+            </div>
+            <div class="comp-item">
+              <span style="color:#EF4444;">✕</span>
+              <span>Complicated interface, staff sikhne mein months lagata hai</span>
+            </div>
+          </div>
+
+          <div class="comp-col winner">
+            <h3 style="color: #38BDF8;">✨ EduVault AI (Smart School OS)</h3>
+            <div class="comp-item">
+              <span style="color:#10B981;">✓</span>
+              <span><b>Autonomous AI:</b> Data entry khud automate karta hai</span>
+            </div>
+            <div class="comp-item">
+              <span style="color:#10B981;">✓</span>
+              <span><b>Direct WhatsApp:</b> 98% open rate, real-time alerts</span>
+            </div>
+            <div class="comp-item">
+              <span style="color:#10B981;">✓</span>
+              <span><b>Lead Intelligence:</b> 1 bhi admission enquiry drop nahi hoti</span>
+            </div>
+            <div class="comp-item">
+              <span style="color:#10B981;">✓</span>
+              <span><b>1-Click UPI Payment:</b> Automatic fee collection link</span>
+            </div>
+            <div class="comp-item">
+              <span style="color:#10B981;">✓</span>
+              <span><b>WhatsApp jitna aasan:</b> Staff 15 minute mein master kar leta hai</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: CLOSING OFFER -->
+
+    <div class="slide" id="slide-6">
+      <div style="text-align: center; max-width: 900px; margin: 0 auto; width: 100%;">
+        <div class="tagline">🚀 Next Step — Close The Deal</div>
+        <h1 style="font-size: 42px; margin-bottom: 10px;">
+          Exclusive Offer for <span class="highlight-cyan" id="slide7SchoolName">Your School</span>
+        </h1>
+        <p class="subtext" style="margin: 0 auto 20px auto; font-size: 16px;">
+          Hum chahte hain ki aapka school hamara premier partner bane. Isliye — no advance, zero risk, result guarantee.
+        </p>
+
+        <!-- Social Proof Bar -->
+        <div style="display:flex; justify-content:center; gap:24px; margin-bottom:20px; flex-wrap:wrap;">
+          <div style="background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.25); border-radius:12px; padding:10px 20px; text-align:center;">
+            <div style="font-family:'Outfit',sans-serif; font-size:22px; font-weight:800; color:#10B981;">16+</div>
+            <div style="font-size:11px; color:#64748B; font-weight:600;">Schools Already Using</div>
+          </div>
+          <div style="background:rgba(6,182,212,0.1); border:1px solid rgba(6,182,212,0.25); border-radius:12px; padding:10px 20px; text-align:center;">
+            <div style="font-family:'Outfit',sans-serif; font-size:22px; font-weight:800; color:#38BDF8;">₹3.62L</div>
+            <div style="font-size:11px; color:#64748B; font-weight:600;">Revenue Processed</div>
+          </div>
+          <div style="background:rgba(139,92,246,0.1); border:1px solid rgba(139,92,246,0.25); border-radius:12px; padding:10px 20px; text-align:center;">
+            <div style="font-family:'Outfit',sans-serif; font-size:22px; font-weight:800; color:#8B5CF6;">5 min</div>
+            <div style="font-size:11px; color:#64748B; font-weight:600;">Setup Time</div>
+          </div>
+          <div style="background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.25); border-radius:12px; padding:10px 20px; text-align:center;">
+            <div style="font-family:'Outfit',sans-serif; font-size:22px; font-weight:800; color:#F59E0B;">₹0</div>
+            <div style="font-size:11px; color:#64748B; font-weight:600;">Advance Required</div>
+          </div>
+        </div>
+
+        <!-- 3 Benefit Cards -->
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:14px; max-width:760px; margin:0 auto 20px auto;">
+          <div style="background:rgba(16,24,40,0.7); border:1px solid rgba(255,255,255,0.1); border-radius:14px; padding:16px; font-size:13px; color:#CBD5E1; text-align:left;">
+            <div style="font-size:22px; margin-bottom:8px;">⚡</div>
+            <b style="color:#fff; display:block; margin-bottom:4px;">Setup in 48 Hours</b>
+            School 2 din mein fully live. No IT team needed.
+          </div>
+          <div style="background:rgba(16,24,40,0.7); border:1px solid rgba(255,255,255,0.1); border-radius:14px; padding:16px; font-size:13px; color:#CBD5E1; text-align:left;">
+            <div style="font-size:22px; margin-bottom:8px;">📦</div>
+            <b style="color:#fff; display:block; margin-bottom:4px;">Free Data Migration</b>
+            Excel/register data ₹0 mein migrate. 100% data safe.
+          </div>
+          <div style="background:rgba(16,24,40,0.7); border:1px solid rgba(255,255,255,0.1); border-radius:14px; padding:16px; font-size:13px; color:#CBD5E1; text-align:left;">
+            <div style="font-size:22px; margin-bottom:8px;">🧑‍🏫</div>
+            <b style="color:#fff; display:block; margin-bottom:4px;">Staff Training Free</b>
+            On-site ya online — poori staff ko sikhate hain.
+          </div>
+        </div>
+
+        <!-- CTA Buttons -->
+        <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;">
+          <button class="btn-nav btn-primary" style="font-size:15px; padding:13px 28px;" onclick="window.open('https://eduvault.ruviq.com/', '_blank')">
+            🌐 View Live Platform
+          </button>
+          <button class="btn-nav btn-primary" style="font-size:15px; padding:13px 28px; background:linear-gradient(135deg,#10B981,#059669); box-shadow:0 0 16px rgba(16,185,129,0.4);" onclick="lockPilot()">
+            🚀 Lock Free Pilot Today
+          </button>
+          <button class="btn-nav" style="font-size:13px; padding:13px 20px;" onclick="shareWhatsApp()">
+            📱 Share on WhatsApp
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Bottom Speaker Note Drawer -->
+  <footer class="speaker-drawer">
+    <div class="speaker-content">
+      <div class="speaker-badge">Aapko Kya Bolna Hai</div>
+      <div class="speaker-dialogue" id="speakerNotes">
+        <!-- Dynamic based on current slide -->
+      </div>
+    </div>
+    <div style="color: #64748B; font-size: 12px; flex-shrink: 0;">
+      Keyboard: <b>←</b> Left / <b>→</b> Right | <b>F</b> Fullscreen
+    </div>
+  </footer>
+
+  <script>
+    let SCHOOL_NAME = 'Your School';
+    let SCHOOL_CITY = '';
+
+    function startDemo() {
+      const n = document.getElementById('schoolNameInput').value.trim();
+      const ci = document.getElementById('schoolCityInput').value.trim();
+      if (!n) { document.getElementById('schoolNameInput').style.borderColor = '#EF4444'; return; }
+      SCHOOL_NAME = n; SCHOOL_CITY = ci;
+      applySchoolName();
+      document.getElementById('schoolModal').style.display = 'none';
+      updateSlide();
+    }
+
+    function showModal() {
+      document.getElementById('schoolNameInput').value = SCHOOL_NAME;
+      document.getElementById('schoolCityInput').value = SCHOOL_CITY;
+      document.getElementById('schoolModal').style.display = 'flex';
+    }
+
+    function applySchoolName() {
+      ['headerSchoolName', 'slide1SchoolName', 'slide7SchoolName'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = SCHOOL_NAME;
+      });
+      document.title = 'EduVault AI — ' + SCHOOL_NAME + ' Demo';
+    }
+
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    let currentSlide = 0;
+
+    function getNotes() {
+      const S = SCHOOL_NAME;
+      const C = SCHOOL_CITY ? ', ' + SCHOOL_CITY : '';
+      return [
+        '<b>Opening Hook:</b> Namaste Sir/Maam! <b>' + S + '</b>' + C + ' education mein already ek landmark hai. Aaj hum koi boring software dikhane nahi aaye — hum laye hain EduVault School Management System jo school ka poora admin automate karta hai. Fees, attendance, results, parent communication — sab ek jagah.',
+        '<b>Dashboard:</b> Sir, yeh dekh rahe hain? <b>' + S + '</b> ka live command center. Admission kitne pending, attendance kya hai, fee collection status — sab 1 screen par. Koi files palatne ki zaroorat nahi. Principal aur Admin dono apne phone se bhi dekh sakte hain.',
+        '<b>WhatsApp + Fee:</b> Sir, 98% parents WhatsApp check karte hain. EduVault ke zariye <b>' + S + '</b> ke parents ko WhatsApp par instant admission enquiry reply, daily attendance alert, aur direct UPI Fee link milta hai. Fee recovery 3X fast ho jati hai — bina kisi awkward reminder call ke!',
+        '<b>Principal Cockpit:</b> Sir, yeh special view aapke liye hai. Aap chahe <b>' + S + '</b> mein ho ya out of station — tablet ya phone par real-time fee collection gauge, attendance percentage, aur admissions funnel milega. Koi accountant se poochhe bina.',
+        '<b>Comparison:</b> Sir, puraane ERP software sirf data store karte the — staff ko har cheez manually karna padta tha. EduVault <b>' + S + '</b> mein attendance auto-mark, fee reminders auto-send, report cards auto-generate. Yahi fark hai.',
+        '<b>Close Karo:</b> Sir, aap khud dekh sakte hain — already 16+ schools hum par trust karti hain, ₹3.62 lakh revenue process ho chuka hai. Hum aapko FREE 14-day pilot denge <b>' + S + '</b> ke liye. 48 ghante mein live. Koi bond nahi, koi advance nahi. Agar pasand na aaye — ₹0 charge. Pricing ke baare mein hum demo ke baad baat karte hain — pehle aap khud platform experience karo. Kya hum Monday se start karein?'
+      ];
+    }
+
+    function lockPilot() {
+      alert('Pilot confirmed for ' + SCHOOL_NAME + '!\n\nOur team will contact you within 24 hours to schedule onboarding.\n\nContact: spsrajjput@gmail.com\nPlatform: https://eduvault.ruviq.com/');
+    }
+
+    function shareWhatsApp() {
+      var text = 'Namaste Sir/Maam!\n\nHum aapke liye EduVault School Management System ka live demo ready kar rahe hain.\n\n✅ Fees, Attendance, Report Cards — sab automatic\n✅ WhatsApp par parent alerts\n✅ 16+ schools already using\n✅ 14-day FREE pilot\n\nLive demo dekhiye: https://eduvault.ruviq.com/\n\nKya hum is week ek 15-minute demo schedule kar sakte hain?';
+      window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
+    }
+
+    function updateSlide() {
+      slides.forEach(function(slide, index) {
+        slide.classList.toggle('active', index === currentSlide);
+      });
+      document.getElementById('slideNumber').innerText = (currentSlide + 1) + ' / ' + totalSlides;
+      document.getElementById('speakerNotes').innerHTML = getNotes()[currentSlide];
+      document.getElementById('progressFill').style.width = (((currentSlide + 1) / totalSlides) * 100) + '%';
+      document.getElementById('prevBtn').disabled = currentSlide === 0;
+      document.getElementById('nextBtn').innerText = currentSlide === totalSlides - 1 ? 'Finish' : 'Next →';
+    }
+
+    function nextSlide() { if (currentSlide < totalSlides - 1) { currentSlide++; updateSlide(); } }
+    function prevSlide() { if (currentSlide > 0) { currentSlide--; updateSlide(); } }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else if (document.exitFullscreen) document.exitFullscreen();
+    }
+
+    window.addEventListener('keydown', function(e) {
+      if (document.getElementById('schoolModal').style.display !== 'none') {
+        if (e.key === 'Enter') startDemo();
+        return;
+      }
+      if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+      else if (e.key === 'ArrowLeft') prevSlide();
+      else if (e.key === 'f' || e.key === 'F') toggleFullScreen();
+    });
+
+    updateSlide();
+  </script>
+</body>
+</html>

@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI School Discovery Center - EduVault</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary": "#1000a9",
+                      "tertiary-container": "#585be6",
+                      "on-tertiary-fixed": "#07006c",
+                      "surface-tint": "#b4c5ff",
+                      "on-secondary": "#003824",
+                      "on-error": "#690005",
+                      "on-primary": "#002a78",
+                      "surface-container-low": "#131b2e",
+                      "on-tertiary-fixed-variant": "#2f2ebe",
+                      "outline": "#8d90a0",
+                      "primary-fixed": "#dbe1ff",
+                      "surface-dim": "#0b1326",
+                      "on-primary-container": "#eeefff",
+                      "surface-container": "#171f33",
+                      "on-surface": "#dbe2fd",
+                      "inverse-on-surface": "#283044",
+                      "secondary-fixed": "#6ffbbe",
+                      "tertiary-fixed": "#e1e0ff",
+                      "surface-container-lowest": "#060d20",
+                      "primary": "#b4c5ff",
+                      "on-primary-fixed-variant": "#003ea8",
+                      "primary-fixed-dim": "#b4c5ff",
+                      "tertiary-fixed-dim": "#c0c1ff",
+                      "on-secondary-fixed": "#002113",
+                      "tertiary": "#c0c1ff",
+                      "on-background": "#dbe2fd",
+                      "secondary-fixed-dim": "#4edea3",
+                      "inverse-primary": "#0053db",
+                      "primary-container": "#2563eb",
+                      "on-secondary-fixed-variant": "#005236",
+                      "surface-container-highest": "#2d3449",
+                      "on-surface-variant": "#c3c6d7",
+                      "inverse-surface": "#dbe2fd",
+                      "error": "#ffb4ab",
+                      "on-tertiary-container": "#f1eeff",
+                      "background": "#0b1326",
+                      "outline-variant": "#434655",
+                      "surface-bright": "#31394e",
+                      "surface-variant": "#2d3449",
+                      "secondary": "#4edea3",
+                      "secondary-container": "#00a572",
+                      "surface": "#0b1326",
+                      "surface-container-high": "#222a3e",
+                      "on-secondary-container": "#00311f",
+                      "on-primary-fixed": "#00174b",
+                      "on-error-container": "#ffdad6",
+                      "error-container": "#93000a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "unit": "4px",
+                      "margin-desktop": "40px",
+                      "margin-mobile": "16px",
+                      "container-max": "1440px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "display-lg": [
+                              "Inter"
+                      ],
+                      "label-sm": [
+                              "JetBrains Mono"
+                      ],
+                      "label-md": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "headline-lg-mobile": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "34px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        /* Custom scrollbar for dark UI */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(37, 99, 235, 0.2);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(37, 99, 235, 0.5);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(37, 99, 235, 0.8);
+        }
+        
+        .glass-panel {
+            background: rgba(11, 19, 38, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-panel-hover:hover {
+            background: rgba(11, 19, 38, 0.7);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .pulse-emerald {
+            animation: pulse-em 2s infinite;
+        }
+
+        @keyframes pulse-em {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        .nav-item-active {
+            background-color: var(--tw-colors-primary-container);
+            color: var(--tw-colors-on-primary-container);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md h-screen overflow-hidden flex selection:bg-primary-container selection:text-white">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-full flex flex-col p-4 z-40 bg-surface-container/60 dark:bg-surface-container/60 backdrop-blur-xl text-primary dark:text-primary font-label-md text-label-md font-display-lg text-headline-md border-r border-white/10 none docked left-0 h-screen w-64">
+<div class="flex items-center gap-3 mb-8 px-2">
+<span class="material-symbols-outlined text-primary" style="font-size: 32px; font-variation-settings: 'FILL' 1;">blur_on</span>
+<div>
+<h1 class="font-headline-md text-headline-md text-primary tracking-tight leading-none">Discovery Center</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">AI Operating System</p>
+</div>
+</div>
+<button class="w-full mb-6 flex items-center justify-center gap-2 bg-primary-container hover:bg-primary-container/80 text-white font-label-md text-label-md py-2.5 px-4 rounded-lg border border-primary/30 shadow-[0_0_15px_rgba(37,99,235,0.3)] transition-all active:scale-95">
+<span class="material-symbols-outlined" style="font-size: 18px;">add</span>
+            New Mission
+        </button>
+<div class="flex-1 space-y-1">
+<a class="flex items-center gap-3 bg-primary-container text-on-primary-container rounded-lg px-3 py-2" href="#">
+<span class="material-symbols-outlined">radar</span>
+                Live Discovery
+            </a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-variant/50 hover:bg-white/5 transition-all hover:translate-x-1 duration-200 rounded-lg px-3 py-2" href="#">
+<span class="material-symbols-outlined">database</span>
+                School Database
+            </a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-variant/50 hover:bg-white/5 transition-all hover:translate-x-1 duration-200 rounded-lg px-3 py-2" href="#">
+<span class="material-symbols-outlined">map</span>
+                Territory Map
+            </a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-variant/50 hover:bg-white/5 transition-all hover:translate-x-1 duration-200 rounded-lg px-3 py-2" href="#">
+<span class="material-symbols-outlined">query_stats</span>
+                Sales Pipeline
+            </a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-variant/50 hover:bg-white/5 transition-all hover:translate-x-1 duration-200 rounded-lg px-3 py-2" href="#">
+<span class="material-symbols-outlined">terminal</span>
+                System Logs
+            </a>
+</div>
+<div class="mt-auto space-y-1 pt-4 border-t border-white/5">
+<a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-variant/50 hover:bg-white/5 transition-all rounded-lg px-3 py-2" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+                Support
+            </a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:bg-surface-variant/50 hover:bg-white/5 transition-all rounded-lg px-3 py-2" href="#">
+<span class="material-symbols-outlined">code</span>
+                API
+            </a>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="flex-1 ml-64 flex flex-col h-full relative z-10">
+<!-- TopNavBar (Horizontal, context aware) -->
+<header class="fixed top-0 w-[calc(100%-16rem)] z-50 flex justify-between items-center px-margin-desktop h-16 bg-surface/60 dark:bg-surface/60 backdrop-blur-xl text-primary dark:text-primary font-body-md text-body-md font-display-lg text-headline-md font-bold text-primary dark:text-primary tracking-tight docked full-width top-0 border-b border-white/10 shadow-sm">
+<div class="flex items-center gap-6">
+<!-- Breadcrumb context instead of brand logo here since we have sidenav -->
+<nav class="flex items-center text-sm font-label-md text-label-md text-on-surface-variant">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span class="material-symbols-outlined mx-2 text-[16px]">chevron_right</span>
+<span class="text-primary">AI Discovery Center</span>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex bg-surface-container rounded-lg p-1 border border-white/5">
+<button class="px-3 py-1.5 text-sm font-label-md rounded-md bg-white/10 text-white shadow-sm border border-white/10 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">play_arrow</span>
+                        Start Discovery
+                     </button>
+<button class="px-3 py-1.5 text-sm font-label-md rounded-md text-on-surface-variant hover:text-white hover:bg-white/5 flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[16px]">pause</span>
+                        Pause
+                     </button>
+</div>
+<button class="w-8 h-8 flex items-center justify-center rounded-full bg-surface-variant text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">bookmark</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-full bg-surface-variant text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+<div class="w-px h-6 bg-white/10 mx-2"></div>
+<button class="w-8 h-8 rounded-full overflow-hidden border border-white/10">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="A futuristic UI user avatar showing a glowing stylized profile silhouette against a dark blue background with abstract data nodes." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAY-cFb1Cpcwopd5RKauNsw3mOE9D9Tr9dgOtzLtfO2_UJanA6jWOeC79OIM-BfJ1BCgAA5yH5zG0VZSXCM81b1QOaRSJIPHLG3h3BojNuZmi4EUNymyfK9ihaoghtBESfFtHb-44vEXzzAZOK1eoDLKXktxacUUdQlxjhlfA55bU0YavrCbR61T0z8YpwjfFvUO1J66Q27nrOGJazW24ovQ8cGeud7C4nRM7ONqQEKXNqC7IfUNHtHKw"/>
+</button>
+</div>
+</header>
+<!-- Main Scrollable Canvas -->
+<main class="flex-1 overflow-y-auto mt-16 p-gutter flex flex-col gap-6 relative">
+<!-- Atmospheric Background -->
+<div class="fixed inset-0 pointer-events-none z-[-1] opacity-30">
+<div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary-container rounded-full blur-[120px]"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-tertiary-container rounded-full blur-[100px]"></div>
+</div>
+<!-- AI Search Bar -->
+<div class="glass-panel rounded-xl p-4 w-full max-w-4xl mx-auto shadow-lg relative group">
+<div class="absolute inset-0 rounded-xl bg-gradient-to-r from-primary-container/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none duration-500"></div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary text-[28px] pulse-emerald rounded-full">robot_2</span>
+<input class="flex-1 bg-transparent border-none text-body-lg text-white placeholder:text-on-surface-variant focus:ring-0 px-2 font-body-lg" placeholder="Describe what you want to discover... (e.g. Find CBSE schools in Jaipur with no website)" type="text"/>
+<button class="bg-primary-container hover:bg-primary-container/90 text-white px-4 py-2 rounded-lg font-label-md text-label-md shadow-[0_0_10px_rgba(37,99,235,0.4)] transition-all">
+                        Discover
+                    </button>
+</div>
+</div>
+<!-- Data Sources Strip -->
+<div class="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+<!-- Source 1 -->
+<div class="glass-panel flex-shrink-0 w-64 rounded-lg p-3 flex items-center justify-between border-l-2 border-l-secondary">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-white/5 flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[18px]">travel_explore</span>
+</div>
+<div>
+<div class="font-label-md text-label-md text-white leading-tight">Search Engine API</div>
+<div class="font-label-sm text-label-sm text-secondary flex items-center gap-1 mt-0.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Optimal
+                            </div>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-9 h-5 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+<!-- Source 2 -->
+<div class="glass-panel flex-shrink-0 w-64 rounded-lg p-3 flex items-center justify-between border-l-2 border-l-secondary">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-white/5 flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+</div>
+<div>
+<div class="font-label-md text-label-md text-white leading-tight">Maps Data</div>
+<div class="font-label-sm text-label-sm text-secondary flex items-center gap-1 mt-0.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Optimal
+                            </div>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-9 h-5 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+<!-- Source 3 -->
+<div class="glass-panel flex-shrink-0 w-64 rounded-lg p-3 flex items-center justify-between border-l-2 border-l-outline">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-white/5 flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[18px]">account_balance</span>
+</div>
+<div>
+<div class="font-label-md text-label-md text-white leading-tight">Govt Directory</div>
+<div class="font-label-sm text-label-sm text-outline flex items-center gap-1 mt-0.5">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span> Idle
+                            </div>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-9 h-5 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+</div>
+<!-- Main Layout Grid -->
+<div class="grid grid-cols-12 gap-6 flex-1 min-h-0">
+<!-- Left Sidebar: Smart Filters (3 cols) -->
+<div class="col-span-3 glass-panel rounded-xl flex flex-col h-full overflow-hidden">
+<div class="p-4 border-b border-white/5 flex justify-between items-center bg-white/5">
+<h3 class="font-headline-md text-body-lg text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">filter_list</span>
+                            Smart Filters
+                        </h3>
+<button class="text-on-surface-variant hover:text-white text-sm font-label-sm">Reset</button>
+</div>
+<div class="p-4 overflow-y-auto flex-1 space-y-6">
+<!-- Filter Group -->
+<div>
+<div class="font-label-md text-label-md text-on-surface-variant mb-2">Location Target</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant text-[18px]">search</span>
+<input class="w-full bg-surface-dim border border-white/10 rounded-lg pl-9 pr-3 py-2 text-sm text-white focus:border-primary-container focus:ring-1 focus:ring-primary-container" placeholder="e.g. Jaipur, Rajasthan" type="text"/>
+</div>
+</div>
+<!-- Filter Group -->
+<div>
+<div class="font-label-md text-label-md text-on-surface-variant mb-2">Education Board</div>
+<div class="space-y-2">
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="rounded bg-surface-dim border-white/20 text-primary-container focus:ring-primary-container focus:ring-offset-surface" type="checkbox"/>
+<span class="text-sm text-white group-hover:text-primary transition-colors">CBSE</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="rounded bg-surface-dim border-white/20 text-primary-container focus:ring-primary-container focus:ring-offset-surface" type="checkbox"/>
+<span class="text-sm text-white group-hover:text-primary transition-colors">ICSE</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="rounded bg-surface-dim border-white/20 text-primary-container focus:ring-primary-container focus:ring-offset-surface" type="checkbox"/>
+<span class="text-sm text-white group-hover:text-primary transition-colors">State Board</span>
+</label>
+</div>
+</div>
+<!-- Filter Group -->
+<div>
+<div class="font-label-md text-label-md text-on-surface-variant mb-2">Digital Presence</div>
+<select class="w-full bg-surface-dim border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:border-primary-container focus:ring-1 focus:ring-primary-container">
+<option>Any</option>
+<option>No Website (High Priority)</option>
+<option>Outdated Website</option>
+<option>Modern Website</option>
+</select>
+</div>
+<!-- Filter Group - Slider -->
+<div>
+<div class="flex justify-between items-center mb-2">
+<div class="font-label-md text-label-md text-on-surface-variant">Min Lead Score</div>
+<div class="font-label-sm text-label-sm text-primary">85+</div>
+</div>
+<input class="w-full h-1 bg-surface-variant rounded-lg appearance-none cursor-pointer accent-primary-container" max="100" min="0" type="range" value="85"/>
+</div>
+</div>
+</div>
+<!-- Center Area: Live Data & Map (6 cols) -->
+<div class="col-span-6 flex flex-col gap-6 h-full">
+<!-- AI Agents Row -->
+<div class="grid grid-cols-2 gap-4">
+<!-- Agent 1 -->
+<div class="glass-panel rounded-xl p-4 border-l-2 border-l-secondary relative overflow-hidden">
+<div class="absolute top-0 right-0 p-2 opacity-10">
+<span class="material-symbols-outlined text-[48px]">troubleshoot</span>
+</div>
+<div class="flex justify-between items-start mb-2 relative z-10">
+<div class="font-label-md text-label-md text-secondary flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+                                    Scout AI Active
+                                </div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">42 ms</span>
+</div>
+<div class="text-sm text-white font-medium mb-3 relative z-10">Crawling Jaipur education directory...</div>
+<div class="w-full bg-surface-variant rounded-full h-1.5">
+<div class="bg-secondary h-1.5 rounded-full" style="width: 65%"></div>
+</div>
+</div>
+<!-- Agent 2 -->
+<div class="glass-panel rounded-xl p-4 border-l-2 border-l-primary relative overflow-hidden">
+<div class="absolute top-0 right-0 p-2 opacity-10">
+<span class="material-symbols-outlined text-[48px]">visibility</span>
+</div>
+<div class="flex justify-between items-start mb-2 relative z-10">
+<div class="font-label-md text-label-md text-primary flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                                    Vision AI Active
+                                </div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">112 ms</span>
+</div>
+<div class="text-sm text-white font-medium mb-3 relative z-10">Analyzing 14 storefront images...</div>
+<div class="w-full bg-surface-variant rounded-full h-1.5">
+<div class="bg-primary h-1.5 rounded-full" style="width: 30%"></div>
+</div>
+</div>
+</div>
+<!-- Map / Table Split View -->
+<div class="flex-1 glass-panel rounded-xl flex flex-col overflow-hidden">
+<!-- Tabs -->
+<div class="flex border-b border-white/5 px-2 bg-white/5">
+<button class="px-4 py-3 text-sm font-label-md text-primary border-b-2 border-primary">Live Data Stream</button>
+<button class="px-4 py-3 text-sm font-label-md text-on-surface-variant hover:text-white transition-colors">Territory Map</button>
+</div>
+<!-- Table Content -->
+<div class="flex-1 overflow-auto p-2">
+<table class="w-full text-left border-collapse">
+<thead class="sticky top-0 bg-surface/90 backdrop-blur-md z-10">
+<tr>
+<th class="p-3 text-xs font-label-sm text-on-surface-variant uppercase tracking-wider">Entity Discovered</th>
+<th class="p-3 text-xs font-label-sm text-on-surface-variant uppercase tracking-wider">Signals</th>
+<th class="p-3 text-xs font-label-sm text-on-surface-variant uppercase tracking-wider text-right">Lead Score</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<tr class="hover:bg-white/5 transition-colors group cursor-pointer">
+<td class="p-3">
+<div class="text-sm font-medium text-white group-hover:text-primary transition-colors">St. Xavier's High School</div>
+<div class="text-xs text-on-surface-variant mt-0.5">Jaipur • CBSE • Est. 1998</div>
+</td>
+<td class="p-3">
+<div class="flex gap-2">
+<span class="px-2 py-0.5 rounded text-[10px] font-label-sm bg-error/10 text-error border border-error/20">No Website</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-label-sm bg-secondary/10 text-secondary border border-secondary/20">High Footfall</span>
+</div>
+</td>
+<td class="p-3 text-right">
+<div class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-secondary/10 text-secondary font-label-md border border-secondary/30">94</div>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors group cursor-pointer">
+<td class="p-3">
+<div class="text-sm font-medium text-white group-hover:text-primary transition-colors">Modern Academy</div>
+<div class="text-xs text-on-surface-variant mt-0.5">Jaipur • State Board</div>
+</td>
+<td class="p-3">
+<div class="flex gap-2">
+<span class="px-2 py-0.5 rounded text-[10px] font-label-sm bg-primary/10 text-primary border border-primary/20">Old Tech Stack</span>
+</div>
+</td>
+<td class="p-3 text-right">
+<div class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-label-md border border-primary/30">78</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Right Sidebar: Assistant (3 cols) -->
+<div class="col-span-3 glass-panel rounded-xl flex flex-col overflow-hidden h-full">
+<div class="p-4 border-b border-white/5 bg-white/5 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-tertiary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[18px]">smart_toy</span>
+</div>
+<div>
+<h3 class="font-headline-md text-sm text-white leading-tight">Insight AI</h3>
+<p class="font-label-sm text-[10px] text-tertiary">Strategic Assistant</p>
+</div>
+</div>
+<div class="flex-1 p-4 overflow-y-auto space-y-4">
+<!-- Chat Message Bot -->
+<div class="flex gap-3 max-w-[90%]">
+<div class="w-6 h-6 rounded-full bg-white/10 flex-shrink-0 flex items-center justify-center mt-1">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">smart_toy</span>
+</div>
+<div class="bg-surface-variant/50 rounded-2xl rounded-tl-sm p-3 border border-white/5">
+<p class="text-sm text-white font-body-md">I've initiated the discovery in Jaipur. I'm prioritizing schools with high local map ratings but missing URLs.</p>
+</div>
+</div>
+<!-- Chat Message User -->
+<div class="flex gap-3 max-w-[90%] ml-auto flex-row-reverse">
+<div class="w-6 h-6 rounded-full bg-primary-container flex-shrink-0 flex items-center justify-center mt-1 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Small avatar image of user in chat UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuALf3gEGXnFgpV_DPCzJzmvz1MbCdLbWm4bDtVgT4tynw9ithJDI66MOBoA19OGEYdd-7cBkCEr1R3--LxbMIKIR8CKEjF_AtZ46yGVhNU_FOnw_5V2ivA_t2_ri6Pb5vYDsGCNlAA9RX3gbpdAknESqKKZtkU3vMhGS0IGPzZ5pyzhBJqqMpg7Z5B8k5Jd_oPFQOP9VzyZwdUAXAFexDiLtwLZsIcdmEjI_bF7364igE81j4H3y5jZRA"/>
+</div>
+<div class="bg-primary-container/20 rounded-2xl rounded-tr-sm p-3 border border-primary/20">
+<p class="text-sm text-white font-body-md">Filter out anything below 500 students.</p>
+</div>
+</div>
+</div>
+<div class="p-3 border-t border-white/5 bg-surface-dim/50">
+<div class="relative">
+<input class="w-full bg-surface/80 border border-white/10 rounded-lg pl-3 pr-10 py-2.5 text-sm text-white focus:border-primary-container focus:ring-1 focus:ring-primary-container" placeholder="Command Insight AI..." type="text"/>
+<button class="absolute right-2 top-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">send</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Stats Strip -->
+<div class="flex gap-6 mt-auto">
+<div class="glass-panel flex-1 rounded-lg p-4 flex items-center gap-4 border-b-2 border-b-secondary">
+<div class="p-2 rounded bg-secondary/10 text-secondary">
+<span class="material-symbols-outlined">school</span>
+</div>
+<div>
+<div class="text-2xl font-display-lg text-white font-bold leading-none mb-1">142</div>
+<div class="font-label-sm text-xs text-on-surface-variant uppercase tracking-wider">Schools Found</div>
+</div>
+</div>
+<div class="glass-panel flex-1 rounded-lg p-4 flex items-center gap-4 border-b-2 border-b-error">
+<div class="p-2 rounded bg-error/10 text-error">
+<span class="material-symbols-outlined">link_off</span>
+</div>
+<div>
+<div class="text-2xl font-display-lg text-white font-bold leading-none mb-1">38</div>
+<div class="font-label-sm text-xs text-on-surface-variant uppercase tracking-wider">No Website</div>
+</div>
+</div>
+<div class="glass-panel flex-1 rounded-lg p-4 flex items-center gap-4 border-b-2 border-b-primary">
+<div class="p-2 rounded bg-primary/10 text-primary">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div>
+<div class="text-2xl font-display-lg text-white font-bold leading-none mb-1">₹4.2M</div>
+<div class="font-label-sm text-xs text-on-surface-variant uppercase tracking-wider">Pipeline Opp.</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

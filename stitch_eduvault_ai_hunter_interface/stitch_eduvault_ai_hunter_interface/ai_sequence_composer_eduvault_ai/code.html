@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Sequence Composer - EduVault AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#002a78",
+                        "on-tertiary-fixed-variant": "#2f2ebe",
+                        "tertiary": "#c0c1ff",
+                        "secondary": "#4edea3",
+                        "on-error": "#690005",
+                        "outline-variant": "#434655",
+                        "outline": "#8d90a0",
+                        "primary": "#b4c5ff",
+                        "error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#005236",
+                        "surface-bright": "#31394e",
+                        "surface-dim": "#0b1326",
+                        "surface-variant": "#2d3449",
+                        "surface-container-high": "#222a3e",
+                        "inverse-primary": "#0053db",
+                        "on-primary-container": "#eeefff",
+                        "on-secondary-container": "#00311f",
+                        "tertiary-fixed-dim": "#c0c1ff",
+                        "on-tertiary-fixed": "#07006c",
+                        "tertiary-fixed": "#e1e0ff",
+                        "secondary-container": "#00a572",
+                        "surface-container-lowest": "#060d20",
+                        "surface-container": "#171f33",
+                        "on-tertiary-container": "#f1eeff",
+                        "surface-container-highest": "#2d3449",
+                        "on-background": "#dbe2fd",
+                        "on-secondary-fixed": "#002113",
+                        "on-error-container": "#ffdad6",
+                        "error": "#ffb4ab",
+                        "surface-tint": "#b4c5ff",
+                        "surface": "#0b1326",
+                        "background": "#0b1326",
+                        "surface-container-low": "#131b2e",
+                        "on-tertiary": "#1000a9",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-surface": "#dbe2fd",
+                        "tertiary-container": "#585be6",
+                        "primary-fixed": "#dbe1ff",
+                        "secondary-fixed-dim": "#4edea3",
+                        "inverse-on-surface": "#283044",
+                        "secondary-fixed": "#6ffbbe",
+                        "primary-container": "#2563eb",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-surface-variant": "#c3c6d7",
+                        "on-secondary": "#003824",
+                        "on-primary-fixed": "#00174b",
+                        "inverse-surface": "#dbe2fd"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "container-max": "1440px",
+                        "margin-desktop": "40px",
+                        "gutter": "24px",
+                        "margin-mobile": "16px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["JetBrains Mono"],
+                        "headline-lg": ["Inter"],
+                        "label-sm": ["JetBrains Mono"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background-color: rgba(11, 19, 38, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-panel-top {
+            background-color: rgba(11, 19, 38, 0.8);
+            backdrop-filter: blur(24px);
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .btn-primary {
+            box-shadow: 0 0 10px rgba(37, 99, 235, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .btn-primary:hover {
+            box-shadow: 0 0 15px rgba(37, 99, 235, 0.5);
+            background-color: rgba(37, 99, 235, 1);
+        }
+        .node-card {
+            transition: all 0.3s ease;
+        }
+        .node-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.2);
+            border-color: rgba(37, 99, 235, 0.5);
+        }
+        .node-active {
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+            border-color: rgba(16, 185, 129, 0.5);
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(37, 99, 235, 0.2);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(37, 99, 235, 0.5);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(37, 99, 235, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen overflow-hidden flex flex-col">
+<!-- TopAppBar -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-surface/60 backdrop-blur-xl border-b border-white/10 shadow-md shadow-primary/5">
+<div class="flex items-center gap-8">
+<span class="font-headline-md text-headline-md font-bold text-primary">EduVault AI Sales Hunter</span>
+<div class="hidden md:flex gap-6">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors scale-95 active:scale-90 transition-transform" href="#">Campaigns</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors scale-95 active:scale-90 transition-transform" href="#">Lead Vault</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors scale-95 active:scale-90 transition-transform" href="#">Analytics</a>
+<a class="font-label-md text-label-md text-primary border-b-2 border-primary pb-1 scale-95 active:scale-90 transition-transform" href="#">Automation</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden border border-white/10">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A detailed professional headshot of a young female executive in a modern, brightly lit office environment. The mood is confident and approachable, with high-key lighting enhancing the premium corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqUwgdNgUPMhE4zzK-8hqjpb1wPgjvurhQmhg5FvCKmT6a3nzWqWY-82nTzaW_Y1cBZcUOuAsJwLzA9hBL5lk6ADnkxvgAkGGZL3Ju8U6zXMyzU6AQRl0-DuPyRPpbAGYB9rR9FQEuOGdIZNC0DDNciI6rk-_diY3_AD9zysRjOK6t0KVZ9T20p3VEtdPuREb_Y8BuMsoa6HHl5E5ldBehMR4DswSE0EYQZeXkvms7VBtuzYmgB83Jwg"/>
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="hidden md:flex fixed left-0 top-16 bottom-0 w-64 flex-col p-4 z-40 bg-surface-container-low/60 backdrop-blur-xl border-r border-white/10">
+<div class="mb-8">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-1">Campaign Overview</h2>
+<p class="font-label-sm text-label-sm text-secondary flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+                AI Hunter Active
+            </p>
+</div>
+<button class="w-full py-2 px-4 bg-primary-container text-on-primary-container rounded-lg font-label-md text-label-md btn-primary mb-6 transition-all duration-200">
+            Create New
+        </button>
+<div class="flex flex-col gap-2 flex-grow">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-xl font-label-md text-label-md transition-all duration-200 ease-in-out hover:bg-surface-variant/50" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-xl font-label-md text-label-md transition-all duration-200 ease-in-out hover:bg-surface-variant/50" href="#">
+<span class="material-symbols-outlined" data-icon="rocket_launch">rocket_launch</span>
+                Outreach
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-xl font-label-md text-label-md transition-all duration-200 ease-in-out hover:bg-surface-variant/50" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+                Audiences
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 bg-primary-container text-on-primary-container rounded-xl font-label-md text-label-md font-bold transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+                Templates
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-xl font-label-md text-label-md transition-all duration-200 ease-in-out hover:bg-surface-variant/50" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+                Reports
+            </a>
+</div>
+<div class="mt-auto border-t border-white/10 pt-4 flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-xl font-label-md text-label-md transition-all duration-200 ease-in-out hover:bg-surface-variant/50" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+                Help
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/30 rounded-xl font-label-md text-label-md transition-all duration-200 ease-in-out hover:bg-surface-variant/50" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+                Logout
+            </a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 ml-0 md:ml-64 mt-16 flex flex-col h-[calc(100vh-64px)] overflow-hidden bg-background relative">
+<!-- Optional Background Texture/Animation -->
+<div class="absolute inset-0 pointer-events-none opacity-20 z-0">
+<div class="w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary/10 via-background to-background"></div>
+</div>
+<!-- Top Summary Bar (KPIs) -->
+<div class="z-10 flex gap-gutter p-gutter border-b border-white/5 bg-surface-container-lowest/80 backdrop-blur-md">
+<div class="glass-panel p-4 rounded-xl flex-1 flex flex-col justify-center border-l-4 border-l-primary">
+<span class="font-label-sm text-label-sm text-outline-variant mb-1">Sequence Name</span>
+<span class="font-headline-md text-headline-md text-on-surface">Modernization Q3 Campaign</span>
+</div>
+<div class="glass-panel p-4 rounded-xl flex-1 flex flex-col justify-center">
+<span class="font-label-sm text-label-sm text-outline-variant mb-1">Audience Size</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-md text-headline-md text-on-surface">1,250</span>
+<span class="font-label-sm text-label-sm text-secondary">Principals</span>
+</div>
+</div>
+<div class="glass-panel p-4 rounded-xl flex-1 flex flex-col justify-center">
+<span class="font-label-sm text-label-sm text-outline-variant mb-1">Estimated Revenue</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-md text-headline-md text-on-surface">$450k</span>
+<span class="font-label-sm text-label-sm text-secondary">+12% vs avg</span>
+</div>
+</div>
+<div class="glass-panel p-4 rounded-xl flex-1 flex flex-col justify-center border-r-4 border-r-secondary">
+<span class="font-label-sm text-label-sm text-outline-variant mb-1">Health Score</span>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border-4 border-secondary flex items-center justify-center font-label-sm text-label-sm font-bold text-secondary bg-secondary/10">
+                        94
+                    </div>
+<span class="font-label-sm text-label-sm text-secondary">Excellent</span>
+</div>
+</div>
+</div>
+<!-- Workspace Area -->
+<div class="flex flex-1 overflow-hidden z-10">
+<!-- Left Sidebar (Sequence Library) -->
+<div class="w-64 border-r border-white/5 bg-surface-container-low/40 p-4 overflow-y-auto">
+<h3 class="font-label-md text-label-md text-outline mb-4 uppercase tracking-wider">Sequence Library</h3>
+<div class="mb-6">
+<h4 class="font-label-sm text-label-sm text-on-surface-variant mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="folder_open">folder_open</span> Active
+                    </h4>
+<ul class="space-y-1">
+<li class="p-2 rounded-lg bg-primary/10 text-primary font-label-sm text-label-sm border border-primary/20 cursor-pointer">Modernization Q3</li>
+<li class="p-2 rounded-lg hover:bg-surface-variant/30 text-on-surface-variant font-label-sm text-label-sm cursor-pointer transition-colors">EdTech Adoption</li>
+</ul>
+</div>
+<div class="mb-6">
+<h4 class="font-label-sm text-label-sm text-on-surface-variant mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="draft">draft</span> Drafts
+                    </h4>
+<ul class="space-y-1">
+<li class="p-2 rounded-lg hover:bg-surface-variant/30 text-on-surface-variant font-label-sm text-label-sm cursor-pointer transition-colors">Summer Pilot Follow-up</li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-sm text-label-sm text-on-surface-variant mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="auto_awesome">auto_awesome</span> Templates
+                    </h4>
+<ul class="space-y-2">
+<li class="p-2 rounded-lg glass-panel text-on-surface-variant font-label-sm text-label-sm cursor-pointer hover:border-primary/50 transition-colors flex items-center justify-between">
+                            Aggressive Outbound <span class="material-symbols-outlined text-[14px] text-primary" data-icon="add">add</span>
+</li>
+<li class="p-2 rounded-lg glass-panel text-on-surface-variant font-label-sm text-label-sm cursor-pointer hover:border-primary/50 transition-colors flex items-center justify-between">
+                            Nurture (Long-term) <span class="material-symbols-outlined text-[14px] text-primary" data-icon="add">add</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Central Canvas -->
+<div class="flex-1 bg-[radial-gradient(#2d3449_1px,transparent_1px)] [background-size:24px_24px] relative overflow-hidden flex items-center justify-center">
+<!-- Decorative SVG line representing flow -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: 0;">
+<path d="M 200,100 C 400,100 400,300 600,300 S 800,500 1000,500" fill="none" stroke="rgba(37, 99, 235, 0.3)" stroke-dasharray="5,5" stroke-width="2"></path>
+<!-- Add more paths as needed to connect nodes -->
+</svg>
+<div class="absolute inset-0 overflow-auto p-12 flex flex-col items-center gap-10 z-10" style="min-width: 800px;">
+<!-- Node 1 -->
+<div class="glass-panel node-card p-4 rounded-xl w-80 relative border-l-4 border-l-primary">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]" data-icon="mail">mail</span>
+</div>
+<span class="font-label-md text-label-md font-bold">Email 1 (Modernization Pitch)</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant cursor-pointer hover:text-on-surface text-[18px]" data-icon="more_vert">more_vert</span>
+</div>
+<div class="flex justify-between items-center text-label-sm font-label-sm">
+<div class="flex flex-col">
+<span class="text-outline-variant">Personalization</span>
+<span class="text-secondary font-bold">94%</span>
+</div>
+<div class="flex flex-col text-right">
+<span class="text-outline-variant">Est. Open</span>
+<span class="text-on-surface">42%</span>
+</div>
+</div>
+</div>
+<!-- Line connector -->
+<div class="w-0.5 h-10 bg-gradient-to-b from-primary/50 to-outline/30 relative">
+<div class="absolute w-2 h-2 rounded-full bg-primary top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-[0_0_8px_rgba(37,99,235,0.8)]"></div>
+</div>
+<!-- Node 2 -->
+<div class="glass-panel node-card p-3 rounded-xl w-48 flex items-center justify-center gap-2 border border-outline/30 text-outline">
+<span class="material-symbols-outlined text-[16px]" data-icon="schedule">schedule</span>
+<span class="font-label-sm text-label-sm">Wait 3 Days</span>
+</div>
+<!-- Line connector -->
+<div class="w-0.5 h-10 bg-gradient-to-b from-outline/30 to-tertiary/50"></div>
+<!-- Node 3 -->
+<div class="glass-panel node-active node-card p-4 rounded-xl w-80 border-l-4 border-l-secondary bg-surface-container-high/80">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-secondary/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[18px]" data-icon="psychology">psychology</span>
+</div>
+<span class="font-label-md text-label-md font-bold text-secondary">AI Decision (Interest?)</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant cursor-pointer hover:text-on-surface text-[18px]" data-icon="more_vert">more_vert</span>
+</div>
+<div class="text-label-sm font-label-sm text-outline-variant mt-2 border-t border-white/5 pt-2 flex justify-between">
+<span>Analyzing intent signals...</span>
+<span class="material-symbols-outlined text-secondary text-[16px] animate-spin" data-icon="sync">sync</span>
+</div>
+</div>
+<!-- Split Lines -->
+<div class="w-64 h-10 border-t-2 border-l-2 border-r-2 border-outline/30 rounded-t-xl relative top-2"></div>
+<div class="flex gap-16">
+<!-- Node 4a (Yes) -->
+<div class="flex flex-col items-center">
+<div class="mb-2 font-label-sm text-label-sm text-secondary bg-secondary/10 px-2 py-0.5 rounded-full border border-secondary/30">Yes</div>
+<div class="glass-panel node-card p-4 rounded-xl w-64 border-l-4 border-l-primary">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-tertiary-container/20 flex items-center justify-center text-tertiary-container">
+<span class="material-symbols-outlined text-[18px]" data-icon="chat">chat</span>
+</div>
+<span class="font-label-md text-label-md font-bold">WhatsApp Follow-up</span>
+</div>
+</div>
+<div class="flex justify-between items-center text-label-sm font-label-sm">
+<div class="flex flex-col">
+<span class="text-outline-variant">Est. Reply</span>
+<span class="text-on-surface">28%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Node 4b (No) -->
+<div class="flex flex-col items-center">
+<div class="mb-2 font-label-sm text-label-sm text-error bg-error/10 px-2 py-0.5 rounded-full border border-error/30">No Response</div>
+<div class="glass-panel node-card p-4 rounded-xl w-64 border border-outline/30 opacity-70">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-outline/20 flex items-center justify-center text-outline">
+<span class="material-symbols-outlined text-[18px]" data-icon="mail">mail</span>
+</div>
+<span class="font-label-md text-label-md font-bold text-outline">Nurture Email 2</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar (AI Coach & Multi-channel Editor) -->
+<div class="w-80 border-l border-white/5 bg-surface-container-low/80 flex flex-col backdrop-blur-xl">
+<!-- Multi-Channel Tabs -->
+<div class="flex border-b border-white/10">
+<button class="flex-1 py-3 font-label-sm text-label-sm font-bold text-primary border-b-2 border-primary bg-primary/5 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="mail">mail</span> Email
+                    </button>
+<button class="flex-1 py-3 font-label-sm text-label-sm text-outline-variant hover:text-on-surface hover:bg-surface-variant/30 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="chat">chat</span> WhatsApp
+                    </button>
+<button class="flex-1 py-3 font-label-sm text-label-sm text-outline-variant hover:text-on-surface hover:bg-surface-variant/30 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="sms">sms</span> SMS
+                    </button>
+</div>
+<!-- Editor Area (Simplified for space) -->
+<div class="p-4 flex-1 overflow-y-auto">
+<div class="mb-4">
+<label class="font-label-sm text-label-sm text-outline-variant block mb-1">Subject</label>
+<input class="w-full bg-surface-dim border border-outline-variant rounded-lg p-2 font-label-md text-label-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none font-[JetBrains_Mono]" type="text" value="Modernizing {{SchoolName}}'s IT Infrastructure"/>
+</div>
+<div class="mb-4">
+<label class="font-label-sm text-label-sm text-outline-variant block mb-1 flex justify-between">
+                            Body 
+                            <span class="text-primary cursor-pointer hover:underline">Insert Variable</span>
+</label>
+<textarea class="w-full bg-surface-dim border border-outline-variant rounded-lg p-2 font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none resize-none" rows="6">Hi {{PrincipalName}},
+                            
+I noticed {{SchoolName}} recently received funding for tech upgrades. Given your focus on bridging the {{TechnologyGap}}, I thought you might be interested in...</textarea>
+</div>
+<!-- Smart Variables Drag & Drop (Visual representation) -->
+<div class="mb-6">
+<span class="font-label-sm text-label-sm text-outline-variant block mb-2">Smart Variables (Drag)</span>
+<div class="flex flex-wrap gap-2">
+<span class="bg-surface-variant text-on-surface-variant font-label-sm text-label-sm px-2 py-1 rounded-md border border-white/10 cursor-grab hover:bg-primary/20 hover:text-primary transition-colors border-dashed">{{SchoolName}}</span>
+<span class="bg-surface-variant text-on-surface-variant font-label-sm text-label-sm px-2 py-1 rounded-md border border-white/10 cursor-grab hover:bg-primary/20 hover:text-primary transition-colors border-dashed">{{PrincipalName}}</span>
+<span class="bg-surface-variant text-on-surface-variant font-label-sm text-label-sm px-2 py-1 rounded-md border border-white/10 cursor-grab hover:bg-primary/20 hover:text-primary transition-colors border-dashed">{{TechnologyGap}}</span>
+</div>
+</div>
+</div>
+<!-- AI Optimization Panel -->
+<div class="border-t border-white/10 p-4 bg-surface/50">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-secondary" data-icon="smart_toy">smart_toy</span>
+<h4 class="font-label-md text-label-md font-bold">AI Optimization</h4>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center">
+<span class="font-label-sm text-label-sm text-outline-variant">Personalization</span>
+<div class="flex items-center gap-2 w-32">
+<div class="h-1.5 flex-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[94%]"></div>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold">94%</span>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-label-sm text-label-sm text-outline-variant">Readability</span>
+<div class="flex items-center gap-2 w-32">
+<div class="h-1.5 flex-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[82%]"></div>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-bold">82%</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-4 py-2 border border-primary/50 text-primary rounded-lg font-label-sm text-label-sm hover:bg-primary/10 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="chat_bubble">chat_bubble</span> Ask AI Coach
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 flex justify-center gap-8 items-center h-14 bg-surface-container/80 backdrop-blur-2xl border-t border-white/10 shadow-2xl">
+<a class="flex flex-col items-center text-outline hover:text-on-surface active:opacity-80" href="#">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+<span class="font-label-sm text-label-sm text-[10px]">Preview</span>
+</a>
+<a class="flex flex-col items-center text-secondary font-bold active:opacity-80" href="#">
+<span class="material-symbols-outlined text-secondary" data-icon="account_tree">account_tree</span>
+<span class="font-label-sm text-label-sm text-[10px] text-secondary">Editor</span>
+</a>
+<a class="flex flex-col items-center text-outline hover:text-on-surface active:opacity-80" href="#">
+<span class="material-symbols-outlined" data-icon="rebase_edit">rebase_edit</span>
+<span class="font-label-sm text-label-sm text-[10px]">Variables</span>
+</a>
+<a class="flex flex-col items-center text-outline hover:text-on-surface active:opacity-80" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-label-sm text-label-sm text-[10px]">History</span>
+</a>
+</nav>
+</body></html>

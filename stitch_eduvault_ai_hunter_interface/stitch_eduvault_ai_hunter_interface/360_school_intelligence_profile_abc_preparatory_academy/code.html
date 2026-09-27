@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>360° School Intelligence Profile - ABC Preparatory Academy</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container": "#171f33",
+                    "surface": "#0b1326",
+                    "surface-container-lowest": "#060d20",
+                    "on-primary-fixed": "#001a42",
+                    "outline-variant": "#424754",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "secondary-fixed": "#e9ddff",
+                    "on-tertiary-fixed": "#002113",
+                    "surface-bright": "#31394e",
+                    "on-secondary-fixed": "#23005c",
+                    "on-background": "#dbe2fd",
+                    "surface-variant": "#2d3449",
+                    "surface-container-high": "#222a3e",
+                    "error": "#ffb4ab",
+                    "on-surface": "#dbe2fd",
+                    "surface-container-highest": "#2d3449",
+                    "error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#5516be",
+                    "on-tertiary-container": "#00311f",
+                    "tertiary": "#4edea3",
+                    "on-secondary": "#3c0091",
+                    "primary-container": "#4d8eff",
+                    "on-surface-variant": "#c2c6d6",
+                    "on-secondary-container": "#c4abff",
+                    "secondary-container": "#571bc1",
+                    "inverse-primary": "#005ac2",
+                    "on-primary": "#002e6a",
+                    "on-error-container": "#ffdad6",
+                    "surface-container-low": "#131b2e",
+                    "primary": "#adc6ff",
+                    "primary-fixed": "#d8e2ff",
+                    "inverse-surface": "#dbe2fd",
+                    "primary-fixed-dim": "#adc6ff",
+                    "outline": "#8c909f",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "tertiary-fixed": "#6ffbbe",
+                    "surface-tint": "#adc6ff",
+                    "on-primary-container": "#00285d",
+                    "on-tertiary": "#003824",
+                    "surface-dim": "#0b1326",
+                    "tertiary-container": "#00a572",
+                    "background": "#0b1326",
+                    "secondary-fixed-dim": "#d0bcff",
+                    "on-error": "#690005",
+                    "on-primary-fixed-variant": "#004395",
+                    "inverse-on-surface": "#283044",
+                    "secondary": "#d0bcff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "margin-page": "24px",
+                    "grid-compact": "8px",
+                    "grid-wide": "24px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "grid-header": [
+                            "Inter"
+                    ],
+                    "mono-label": [
+                            "Inter"
+                    ],
+                    "kpi-md": [
+                            "Inter"
+                    ],
+                    "grid-cell": [
+                            "Inter"
+                    ],
+                    "headline-sm": [
+                            "Inter"
+                    ],
+                    "kpi-xl": [
+                            "Inter"
+                    ],
+                    "body-sm": [
+                            "Inter"
+                    ]
+            },
+            "fontSize": {
+                    "grid-header": [
+                            "11px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "mono-label": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.02em",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "kpi-md": [
+                            "32px",
+                            {
+                                    "lineHeight": "40px",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "grid-cell": [
+                            "13px",
+                            {
+                                    "lineHeight": "18px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-sm": [
+                            "18px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "kpi-xl": [
+                            "48px",
+                            {
+                                    "lineHeight": "56px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-sm": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "fontWeight": "400"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0b1326;
+            color: #dbe2fd;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+        }
+        .glass-panel-level-2 {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+        }
+        .glow-effect {
+            box-shadow: 0 0 20px rgba(77, 142, 255, 0.1);
+        }
+        .border-glass {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Circular Progress Animation */
+        .progress-ring__circle {
+            transition: stroke-dashoffset 1s ease-in-out;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+    </style>
+</head>
+<body class="min-h-screen font-sans antialiased overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/40 backdrop-blur-xl border-b border-white/10 shadow-sm flex items-center justify-between px-margin-page h-16 w-full">
+<div class="flex items-center gap-6">
+<span class="font-headline-sm text-headline-sm font-bold text-primary">EduVault AI Sales Hunter</span>
+<div class="hidden md:flex gap-6 items-center border-l border-white/10 pl-6 h-8">
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-colors cursor-pointer active:scale-95 transition-transform font-body-sm text-body-sm px-2 py-1 rounded" href="#">Dashboard</a>
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-colors cursor-pointer active:scale-95 transition-transform font-body-sm text-body-sm px-2 py-1 rounded" href="#">Workforce</a>
+<a class="text-primary border-b-2 border-primary pb-1 font-body-sm text-body-sm px-2 py-1" href="#">Pipeline</a>
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-colors cursor-pointer active:scale-95 transition-transform font-body-sm text-body-sm px-2 py-1 rounded" href="#">Analytics</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="bg-surface-container/50 border border-white/10 rounded-full pl-10 pr-4 py-1.5 text-grid-cell font-grid-cell focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 text-on-surface placeholder:text-on-surface-variant w-64 transition-all" placeholder="Search..." type="text"/>
+</div>
+<button class="bg-gradient-to-r from-primary to-secondary text-on-primary font-body-sm text-body-sm px-4 py-2 rounded-full font-medium hover:opacity-90 transition-opacity cursor-pointer active:scale-95 transition-transform hidden sm:block">
+                Deploy Hunter
+            </button>
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-white/5 rounded-full transition-colors cursor-pointer active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[20px]">smart_toy</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-white/5 rounded-full transition-colors cursor-pointer active:scale-95 transition-transform relative">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-white/5 rounded-full transition-colors cursor-pointer active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+</div>
+<div class="w-8 h-8 rounded-full border border-white/10 overflow-hidden ml-2 cursor-pointer active:scale-95 transition-transform">
+<img class="w-full h-full object-cover" data-alt="A futuristic UI profile avatar depicting a subtle, glowing abstract holographic geometric portrait in deep blues and soft neon cyans against a dark obsidian background. Clean, professional, high-end enterprise AI styling." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBr4-ttCWurAD1CbGxkHyV42bVHfoiwDHp4Czl6PeEeJmNNyzidEd09OfVBbp-G5cKvLAuUVIJaeNsCCkYn9x0MHLosO7oBBjC5n7RiJhhQ4OXMGT0LDuqHHq9lUz8yVimb1sYVsM3uyYvcOJPOdefxLre_g6ks23uSLOJGqmw1oQin1erfH92cOLF81Hfgn3Ha9AerozXSvana0-UHP5rfpOMPbfP89NZQVJ9hromBGa-14DxlqNCsvQ"/>
+</div>
+</div>
+</nav>
+<!-- SideNavBar (Hidden on Mobile) -->
+<nav class="hidden md:flex fixed left-0 top-16 bottom-0 w-64 z-40 bg-surface-container-low/40 backdrop-blur-2xl border-r border-white/10 shadow-xl flex-col py-grid-wide space-y-grid-compact justify-between">
+<div class="flex flex-col space-y-grid-compact px-4">
+<div class="flex items-center gap-3 px-4 py-4 mb-4 border-b border-white/5">
+<div class="w-10 h-10 rounded-lg bg-surface-container border border-white/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">public</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Global Ops</h2>
+<p class="font-grid-header text-grid-header text-on-surface-variant uppercase">AI Node: Alpha-7</p>
+</div>
+</div>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all hover:translate-x-1 font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+                Command
+            </a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-primary font-bold bg-primary/10 border border-primary/20 font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined text-[20px]">group</span>
+                Prospects
+            </a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all hover:translate-x-1 font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined text-[20px]">send</span>
+                Outreach
+            </a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all hover:translate-x-1 font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined text-[20px]">auto_fix_high</span>
+                Automations
+            </a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all hover:translate-x-1 font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined text-[20px]">terminal</span>
+                Logs
+            </a>
+</div>
+<div class="flex flex-col space-y-grid-compact px-4 pb-4">
+<button class="w-full flex items-center justify-center gap-2 py-2 mb-4 rounded-lg bg-surface-container border border-white/10 text-on-surface font-body-sm text-body-sm hover:bg-white/5 transition-colors cursor-pointer active:scale-95">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                New Hunter
+            </button>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined text-[20px]">help</span>
+                Help
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all font-body-sm text-body-sm" href="#">
+<span class="material-symbols-outlined text-[20px]">sensors</span>
+                Status
+            </a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-24 pb-12 md:pl-[280px] pr-margin-page pl-margin-page min-h-screen">
+<!-- Header Section -->
+<header class="mb-8">
+<nav class="flex items-center text-on-surface-variant font-grid-cell text-grid-cell mb-4 space-x-2">
+<a class="hover:text-primary transition-colors" href="#">Dashboard</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Lead Database</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-on-surface font-medium">ABC Preparatory Academy</span>
+</nav>
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<h1 class="font-kpi-md text-kpi-md text-on-surface">ABC Preparatory Academy</h1>
+<span class="flex items-center gap-1 bg-tertiary/10 border border-tertiary/30 text-tertiary px-2 py-1 rounded-full font-mono-label text-mono-label">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+                            Verified
+                        </span>
+<span class="flex items-center gap-1 bg-error/10 border border-error/30 text-error px-2 py-1 rounded-full font-mono-label text-mono-label">
+<span class="material-symbols-outlined text-[14px]">local_fire_department</span>
+                            High Priority
+                        </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">K-12 Institution • Bangalore, KA • Est. 1998</p>
+</div>
+<div class="flex flex-wrap items-center gap-3">
+<button class="glass-panel px-4 py-2 font-body-sm text-body-sm text-on-surface hover:bg-white/5 transition-colors flex items-center gap-2 cursor-pointer active:scale-95">
+<span class="material-symbols-outlined text-[18px]">description</span>
+                        Create Proposal
+                    </button>
+<button class="glass-panel px-4 py-2 font-body-sm text-body-sm text-on-surface hover:bg-white/5 transition-colors flex items-center gap-2 cursor-pointer active:scale-95">
+<span class="material-symbols-outlined text-[18px]">calendar_month</span>
+                        Schedule Demo
+                    </button>
+<button class="bg-gradient-to-r from-primary to-secondary text-on-primary font-body-sm text-body-sm px-4 py-2 rounded-full font-medium hover:opacity-90 transition-opacity flex items-center gap-2 cursor-pointer active:scale-95">
+<span class="material-symbols-outlined text-[18px]">auto_awesome</span>
+                        Generate Personalized Outreach
+                    </button>
+</div>
+</div>
+</header>
+<!-- 12-Column Intelligence Workspace -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- LEFT SIDEBAR (Col 1-3) -->
+<div class="col-span-1 md:col-span-12 lg:col-span-3 space-y-6">
+<!-- School Profile Overview -->
+<div class="glass-panel p-6">
+<h3 class="font-grid-header text-grid-header text-on-surface-variant uppercase mb-4 tracking-wider">Profile Overview</h3>
+<div class="space-y-4">
+<div class="flex justify-between items-center border-b border-white/5 pb-2">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Student Count</span>
+<span class="font-mono-label text-mono-label text-on-surface">1,850</span>
+</div>
+<div class="flex justify-between items-center border-b border-white/5 pb-2">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Staff Count</span>
+<span class="font-mono-label text-mono-label text-on-surface">142</span>
+</div>
+<div class="flex justify-between items-center border-b border-white/5 pb-2">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Annual Fee/Student</span>
+<span class="font-mono-label text-mono-label text-on-surface">₹1.2L - ₹2.5L</span>
+</div>
+<div class="flex justify-between items-center border-b border-white/5 pb-2">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Current ERP</span>
+<span class="font-mono-label text-mono-label text-error">Legacy V3</span>
+</div>
+</div>
+</div>
+<!-- Decision Makers -->
+<div class="glass-panel p-6">
+<h3 class="font-grid-header text-grid-header text-on-surface-variant uppercase mb-4 tracking-wider">Decision Makers</h3>
+<div class="space-y-4">
+<!-- Contact Card 1 -->
+<div class="flex items-center gap-3 p-3 rounded-xl bg-surface-container-high/30 border border-white/5 hover:bg-white/5 transition-colors cursor-pointer">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-white/10 shrink-0">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a middle-aged South Asian male principal in a sharp, modern navy blue suit. The lighting is crisp and corporate, set against a dark glass-like UI background. Extremely high quality, realistic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeKd9IYcmDg7YWb7tso2dIwJfnyuPwzBiZQa7pOyAz7QNQtLfr6MwDFmEPTor62kVltEx6-abuaBD7EzNrGvTg4bc58Q7L8q5GOJ7hGSLdfyHAFZgCzJe-wEdhcyB6zU_vd1ySih7kY2lcHvWFqoewLQNsuDWyhSXaZ_wC-IPT8bhjsDzvVFligxIU8bAZGO6e9F-xux4cG7w45TNRCla7FXMt49AF5yFB4RNpWR-I3X6sGRwwk9_NVQ"/>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-body-sm text-body-sm font-medium text-on-surface truncate">Dr. Rajesh Kumar</h4>
+<p class="font-grid-cell text-grid-cell text-on-surface-variant truncate">Principal / Director</p>
+</div>
+<a class="w-8 h-8 flex items-center justify-center rounded-full bg-surface-container hover:bg-primary/20 text-on-surface-variant hover:text-primary transition-colors shrink-0" href="#">
+<span class="material-symbols-outlined text-[16px]">mail</span>
+</a>
+</div>
+<!-- Contact Card 2 -->
+<div class="flex items-center gap-3 p-3 rounded-xl bg-surface-container-high/30 border border-white/5 hover:bg-white/5 transition-colors cursor-pointer">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-white/10 shrink-0">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a South Asian female IT director in her 30s wearing business casual attire. Confident expression. The lighting is crisp and corporate, set against a dark glass-like UI background. Extremely high quality, realistic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHa4qkCosziVIV1g_9Xq04-2c7a8wtWBBqJaWA836z6nanzcBhwT3kUCGkAdxCdYeCfL7YataHF3TjLNwPn1wG3v7Omc83aQVU4-Ou4yT9wOELOR1QMN9pHjHAs6a0PJ3lgwlfnD3_GUM9RUP5_PzNs6KgJv2a9-AD6fjZP8K1K_h-3Ezqh88I_PeRUlsICljsbLw5e40EjshLjbt-pfHbaoz0PCWObeIZShAvXdvNVa8u2uSfOve0Xg"/>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-body-sm text-body-sm font-medium text-on-surface truncate">Priya Sharma</h4>
+<p class="font-grid-cell text-grid-cell text-on-surface-variant truncate">Head of IT Infrastructure</p>
+</div>
+<a class="w-8 h-8 flex items-center justify-center rounded-full bg-surface-container hover:bg-primary/20 text-on-surface-variant hover:text-primary transition-colors shrink-0" href="#">
+<span class="material-symbols-outlined text-[16px]">mail</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Technology Detection -->
+<div class="glass-panel p-6">
+<h3 class="font-grid-header text-grid-header text-on-surface-variant uppercase mb-4 tracking-wider">Technology Stack</h3>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1.5 rounded-lg bg-surface-container border border-white/10 font-mono-label text-mono-label text-on-surface flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-[#21759b]"></span> WordPress
+                        </span>
+<span class="px-3 py-1.5 rounded-lg bg-surface-container border border-white/10 font-mono-label text-mono-label text-on-surface flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-[#61dafb]"></span> React
+                        </span>
+<span class="px-3 py-1.5 rounded-lg bg-surface-container border border-white/10 font-mono-label text-mono-label text-on-surface flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-[#f38020]"></span> Cloudflare
+                        </span>
+<span class="px-3 py-1.5 rounded-lg bg-surface-container border border-white/10 font-mono-label text-mono-label text-on-surface flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-[#4285F4]"></span> Google Workspace
+                        </span>
+</div>
+</div>
+</div>
+<!-- CENTER PANE (Col 4-9) -->
+<div class="col-span-1 md:col-span-12 lg:col-span-6 space-y-6">
+<!-- Executive Hero & AI Summary -->
+<div class="glass-panel p-1 relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-50"></div>
+<div class="relative bg-surface rounded-[18px] p-6 border border-white/5 flex flex-col gap-6">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center shrink-0 glow-effect">
+<span class="material-symbols-outlined text-on-primary text-[24px]">psychology</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-2">Executive Intelligence Summary</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+<strong class="text-on-surface">ABC Prep is a high-intent institution with 1,850 students.</strong> 
+                                    High buying probability identified due to detection of an outdated "Legacy V3" ERP system combined with recent administrative staff turnover. The website infrastructure indicates a willingness to invest in modern tech, but current operations remain fragmented. Recommended approach is an immediate modernization pitch emphasizing operational efficiency.
+                                </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Opportunity Score & Radars -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<!-- Score Circle -->
+<div class="glass-panel p-6 flex flex-col items-center justify-center text-center relative overflow-hidden">
+<h3 class="font-grid-header text-grid-header text-on-surface-variant uppercase mb-6 tracking-wider w-full text-left">AI Opportunity Score</h3>
+<div class="relative w-32 h-32 mb-4">
+<!-- Background Circle -->
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="45" stroke="rgba(255,255,255,0.05)" stroke-width="8"></circle>
+<!-- Progress Circle (92%) -->
+<circle class="progress-ring__circle" cx="50" cy="50" fill="none" r="45" stroke="url(#gradient)" stroke-dasharray="282.7" stroke-dashoffset="22.6" stroke-linecap="round" stroke-width="8"></circle>
+<defs>
+<lineargradient id="gradient" x1="0%" x2="100%" y1="0%" y2="0%">
+<stop offset="0%" stop-color="#4edea3"></stop>
+<stop offset="100%" stop-color="#adc6ff"></stop>
+</lineargradient>
+</defs>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center flex-col">
+<span class="font-kpi-xl text-kpi-xl text-on-surface tracking-tighter">92</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-tertiary">Exceptional Fit</p>
+</div>
+<!-- Radar/Metrics Placeholder -->
+<div class="glass-panel p-6 flex flex-col">
+<h3 class="font-grid-header text-grid-header text-on-surface-variant uppercase mb-4 tracking-wider">Intent Vectors</h3>
+<div class="flex-1 flex flex-col justify-center space-y-4">
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="font-mono-label text-mono-label text-on-surface-variant">Tech Readiness</span>
+<span class="font-mono-label text-mono-label text-on-surface">85%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 85%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="font-mono-label text-mono-label text-on-surface-variant">Website Age</span>
+<span class="font-mono-label text-mono-label text-on-surface">90%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-tertiary rounded-full" style="width: 90%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-1">
+<span class="font-mono-label text-mono-label text-on-surface-variant">Buying Intent Signals</span>
+<span class="font-mono-label text-mono-label text-on-surface">95%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-error rounded-full" style="width: 95%;"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Website Analysis -->
+<div class="glass-panel p-6">
+<h3 class="font-grid-header text-grid-header text-on-surface-variant uppercase mb-4 tracking-wider flex items-center justify-between">
+                        Website Infrastructure Analysis
+                        <a class="text-primary hover:underline text-[10px] flex items-center gap-1" href="#">
+                            View Full Report <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+</a>
+</h3>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+<div class="bg-surface-container-low border border-white/5 rounded-xl p-4 flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-tertiary mb-2">lock</span>
+<span class="font-mono-label text-mono-label text-on-surface-variant">SSL Status</span>
+<span class="font-body-sm text-body-sm text-on-surface">Active</span>
+</div>
+<div class="bg-surface-container-low border border-white/5 rounded-xl p-4 flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-error mb-2">speed</span>
+<span class="font-mono-label text-mono-label text-on-surface-variant">Load Speed</span>
+<span class="font-body-sm text-body-sm text-on-surface">4.2s (Slow)</span>
+</div>
+<div class="bg-surface-container-low border border-white/5 rounded-xl p-4 flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-primary mb-2">smartphone</span>
+<span class="font-mono-label text-mono-label text-on-surface-variant">Mobile Resp.</span>
+<span class="font-body-sm text-body-sm text-on-surface">Partial</span>
+</div>
+</div>
+<div class="rounded-xl overflow-hidden border border-white/10 h-48 relative">
+<div class="absolute inset-0 flex items-center justify-center bg-surface/80 backdrop-blur-sm z-10 opacity-0 hover:opacity-100 transition-opacity cursor-pointer">
+<span class="bg-primary/20 text-primary px-4 py-2 rounded-full font-body-sm text-body-sm border border-primary/30">View Captured Screenshot</span>
+</div>
+<img class="w-full h-full object-cover object-top opacity-50" data-alt="A screenshot of an outdated private school website showing a basic hero image of students, clunky navigation menu, and a small 'Admissions Open' banner. The design looks circa 2012. Placed inside a sleek dark mode browser mockup frame." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiCrge7aC5PZ2Z2zVpqlGmPCMJ89AZSe3XTr4d2gATobljzl08EM1rHeHLEt_qFgMPqxWXcIXF6Jkr9ufEFiJTWmx6IKEjnd2YpHO-EyNqnuAM_-CMRepURKVlaEidIjqBEQ0ow3nksdw6bvGP6VniH2xMjhLrjzkudqoMVCzS-HCbu64ecZI-J7lxzjbxY_9Jcbu5Hkn41a8h_MWSMjctELyu7eQlAK05517s0TjS6_4hFbqgNLtl0A"/>
+</div>
+</div>
+<!-- Communication Timeline -->
+<div class="glass-panel p-6">
+<h3 class="font-grid-header text-grid-header text-on-surface-variant uppercase mb-6 tracking-wider">Engagement Timeline</h3>
+<div class="relative border-l border-white/10 ml-3 space-y-6">
+<!-- Event 1 -->
+<div class="relative pl-6">
+<div class="absolute -left-1.5 top-1.5 w-3 h-3 rounded-full bg-primary ring-4 ring-surface"></div>
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-body-sm text-body-sm font-medium text-on-surface">Meeting Scheduled</h4>
+<span class="font-mono-label text-mono-label text-on-surface-variant">Today, 10:30 AM</span>
+</div>
+<p class="font-grid-cell text-grid-cell text-on-surface-variant">Initial discovery call booked via automated sequence. Priority: High.</p>
+</div>
+<!-- Event 2 -->
+<div class="relative pl-6">
+<div class="absolute -left-1.5 top-1.5 w-3 h-3 rounded-full bg-surface-container ring-4 ring-surface border border-white/20"></div>
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-body-sm text-body-sm font-medium text-on-surface">Email Opened</h4>
+<span class="font-mono-label text-mono-label text-on-surface-variant">Yesterday, 2:15 PM</span>
+</div>
+<p class="font-grid-cell text-grid-cell text-on-surface-variant">"Modernizing ABC Prep's Infrastructure" read by Dr. Rajesh Kumar (2 times).</p>
+</div>
+<!-- Event 3 -->
+<div class="relative pl-6">
+<div class="absolute -left-1.5 top-1.5 w-3 h-3 rounded-full bg-surface-container ring-4 ring-surface border border-white/20"></div>
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-body-sm text-body-sm font-medium text-on-surface">Lead Discovered</h4>
+<span class="font-mono-label text-mono-label text-on-surface-variant">Oct 12, 2023</span>
+</div>
+<p class="font-grid-cell text-grid-cell text-on-surface-variant">AI Sales Hunter identified domain mismatch with modern ERP markers.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT SIDEBAR (Col 10-12) -->
+<div class="col-span-1 md:col-span-12 lg:col-span-3 space-y-6">
+<!-- Revenue Estimation -->
+<div class="glass-panel-level-2 p-6 border-primary/20 relative overflow-hidden">
+<div class="absolute -top-10 -right-10 w-32 h-32 bg-primary/20 blur-3xl rounded-full"></div>
+<h3 class="font-grid-header text-grid-header text-primary uppercase mb-4 tracking-wider">Deal Economics</h3>
+<div class="mb-6">
+<span class="font-mono-label text-mono-label text-on-surface-variant block mb-1">Estimated Annual Contract Value</span>
+<div class="flex items-baseline gap-2">
+<span class="font-kpi-xl text-kpi-xl text-on-surface tracking-tighter">₹1.8L</span>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Win Probability</span>
+<span class="font-mono-label text-mono-label text-tertiary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> 85%
+                            </span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-tertiary rounded-full" style="width: 85%;"></div>
+</div>
+<div class="flex justify-between items-center pt-2">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Sales Cycle Est.</span>
+<span class="font-mono-label text-mono-label text-on-surface">14 - 21 Days</span>
+</div>
+</div>
+</div>
+<!-- AI Sales Strategy -->
+<div class="glass-panel p-6 border-secondary/20">
+<h3 class="font-grid-header text-grid-header text-secondary uppercase mb-4 tracking-wider flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">lightbulb</span> Recommended Strategy
+                    </h3>
+<div class="bg-surface-container-low rounded-xl p-4 border border-white/5 mb-4">
+<h4 class="font-body-sm text-body-sm font-medium text-on-surface mb-2">"Modernization Pitch"</h4>
+<p class="font-grid-cell text-grid-cell text-on-surface-variant mb-3">Focus entirely on replacing the legacy ERP to reduce administrative overhead. Highlight mobile-responsive parent portals.</p>
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-1 rounded bg-secondary/10 text-secondary font-mono-label text-[10px] border border-secondary/20">Pain Point: Inefficiency</span>
+<span class="px-2 py-1 rounded bg-secondary/10 text-secondary font-mono-label text-[10px] border border-secondary/20">Hook: Parent Experience</span>
+</div>
+</div>
+</div>
+<!-- AI Copilot Chat -->
+<div class="glass-panel flex flex-col h-[350px]">
+<div class="p-4 border-b border-white/5 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">temp_preferences_custom</span>
+<h3 class="font-grid-header text-grid-header text-on-surface uppercase tracking-wider">AI Copilot</h3>
+</div>
+<div class="flex-1 p-4 overflow-y-auto space-y-4">
+<div class="flex flex-col gap-1 max-w-[85%]">
+<div class="bg-surface-container-high rounded-2xl rounded-tl-sm p-3 border border-white/5">
+<p class="font-grid-cell text-grid-cell text-on-surface">I've analyzed ABC Prep's profile. Would you like me to draft a personalized meeting agenda or an email sequence?</p>
+</div>
+<span class="font-mono-label text-[10px] text-on-surface-variant ml-1">Copilot • Just now</span>
+</div>
+<div class="flex flex-col gap-1 max-w-[85%] self-end ml-auto">
+<div class="bg-primary/20 rounded-2xl rounded-tr-sm p-3 border border-primary/30">
+<p class="font-grid-cell text-grid-cell text-on-surface">Draft a meeting agenda focusing on the ERP modernization.</p>
+</div>
+<span class="font-mono-label text-[10px] text-on-surface-variant mr-1 text-right">You • Just now</span>
+</div>
+<div class="flex flex-col gap-1 max-w-[85%]">
+<div class="bg-surface-container-high rounded-2xl rounded-tl-sm p-3 border border-white/5">
+<div class="flex items-center gap-2 mb-2 text-primary">
+<span class="material-symbols-outlined text-[16px] animate-spin">sync</span>
+<span class="font-grid-cell text-grid-cell">Generating agenda...</span>
+</div>
+</div>
+</div>
+</div>
+<div class="p-3 border-t border-white/5">
+<div class="relative">
+<input class="w-full bg-surface-container rounded-full pl-4 pr-10 py-2 text-grid-cell font-grid-cell focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 border border-white/10 text-on-surface placeholder:text-on-surface-variant" placeholder="Ask Copilot..." type="text"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

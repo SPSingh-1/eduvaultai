@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Sales Pipeline - EduVault AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#a078ff",
+                        "surface-container": "#131b2e",
+                        "surface-container-lowest": "#0b0e15",
+                        "surface-container-high": "#272a31",
+                        "background": "#10131a",
+                        "on-error-container": "#ffdad6",
+                        "primary-fixed": "#d8e2ff",
+                        "on-primary-container": "#00285d",
+                        "error-container": "#93000a",
+                        "primary-fixed-dim": "#adc6ff",
+                        "secondary": "#4edea3",
+                        "on-surface-variant": "#c2c6d6",
+                        "secondary-container": "#00a572",
+                        "tertiary-fixed": "#e9ddff",
+                        "on-surface": "#f8fafc",
+                        "surface-bright": "#363941",
+                        "on-background": "#e1e2ec",
+                        "surface": "#0b1326",
+                        "inverse-surface": "#e1e2ec",
+                        "secondary-fixed-dim": "#4edea3",
+                        "on-tertiary-container": "#340080",
+                        "surface-variant": "#32353c",
+                        "secondary-fixed": "#6ffbbe",
+                        "inverse-on-surface": "#2e3038",
+                        "on-primary-fixed": "#001a42",
+                        "on-tertiary-fixed-variant": "#5516be",
+                        "surface-container-low": "#191b23",
+                        "inverse-primary": "#005ac2",
+                        "primary": "#adc6ff",
+                        "on-secondary": "#003824",
+                        "surface-container-highest": "#32353c",
+                        "on-tertiary": "#3c0091",
+                        "primary-container": "#4d8eff",
+                        "on-secondary-fixed": "#002113",
+                        "on-primary": "#002e6a",
+                        "warning": "#f59e0b",
+                        "on-error": "#690005",
+                        "outline": "#334155",
+                        "on-secondary-fixed-variant": "#005236",
+                        "on-primary-fixed-variant": "#004395",
+                        "tertiary": "#8b5cf6",
+                        "surface-tint": "#adc6ff",
+                        "error": "#ef4444",
+                        "on-tertiary-fixed": "#23005c",
+                        "on-secondary-container": "#00311f",
+                        "outline-variant": "#424754",
+                        "tertiary-fixed-dim": "#d0bcff",
+                        "surface-dim": "#10131a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "space-sm": "8px",
+                        "space-xs": "4px",
+                        "container-padding": "24px",
+                        "space-lg": "24px",
+                        "space-xl": "32px",
+                        "margin-desktop": "32px",
+                        "space-md": "16px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "title-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "display-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "title-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "title-sm": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-sm": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-md": ["45px", { "lineHeight": "52px", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "display-lg": ["56px", { "lineHeight": "64px", "fontWeight": "700" }],
+                        "label-sm": ["11px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-md": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "title-lg": ["22px", { "lineHeight": "28px", "fontWeight": "500" }],
+                        "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .kanban-column { min-height: 500px; }
+        .drag-over { border-color: #adc6ff !important; background-color: rgba(173, 198, 255, 0.05); }
+        .card-dragging { opacity: 0.5; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased overflow-hidden flex h-screen">
+<!-- SideNavBar (from JSON) -->
+<aside class="fixed z-50 docked h-screen w-64 left-0 top-0 bg-surface-container-lowest border-r border-outline-variant flex flex-col py-space-lg">
+<div class="px-space-md mb-space-lg flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-lg">
+<span class="material-symbols-outlined" data-icon="school" style="font-variation-settings: 'FILL' 1;">school</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm font-bold text-on-surface">EduVault AI</div>
+<div class="font-label-md text-label-md text-on-surface-variant">Sales OS</div>
+</div>
+</div>
+<div class="px-space-md mb-space-md">
+<button class="w-full bg-primary text-on-primary font-label-lg text-label-lg py-3 rounded-xl hover:bg-primary-fixed-dim transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                New Lead
+            </button>
+</div>
+<nav class="flex-1 overflow-y-auto px-space-sm flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors text-label-lg font-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="inbox">inbox</span>
+                Inbox
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors text-label-lg font-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="forum">forum</span>
+                Conversations
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors text-label-lg font-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="mail">mail</span>
+                Email
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors text-label-lg font-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+                WhatsApp
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors text-label-lg font-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="sms">sms</span>
+                SMS
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors text-label-lg font-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="call">call</span>
+                Calls
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors text-label-lg font-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="event">event</span>
+                Meetings
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors text-label-lg font-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+                Tasks
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors text-label-lg font-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
+                Calendar
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-primary font-bold border-r-2 border-primary bg-surface-container text-label-lg font-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="account_tree" style="font-variation-settings: 'FILL' 1;">account_tree</span>
+                Pipeline
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors text-label-lg font-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="monetization_on">monetization_on</span>
+                Deals
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors text-label-lg font-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+                Forecast
+            </a>
+</nav>
+<div class="px-space-sm mt-auto pt-space-md border-t border-outline-variant mx-space-md flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors text-label-lg font-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                Settings
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high transition-colors text-label-lg font-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+                Support
+            </a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col ml-64 h-full relative">
+<!-- Background elements for visual depth -->
+<div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+<div class="absolute top-[-10%] right-[-5%] w-[40%] h-[40%] rounded-full bg-tertiary-container/5 blur-[120px]"></div>
+<div class="absolute bottom-[-10%] left-[10%] w-[30%] h-[30%] rounded-full bg-primary/5 blur-[100px]"></div>
+</div>
+<!-- TopNavBar (from JSON) -->
+<header class="docked full-width top-0 sticky z-40 bg-surface-container/80 backdrop-blur-md border-b border-outline-variant flex justify-between items-center h-16 px-margin-desktop w-full">
+<div class="flex items-center gap-space-lg">
+<!-- Search -->
+<div class="relative w-64 hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-xl py-1.5 pl-10 pr-4 text-on-surface placeholder:text-on-surface-variant focus:border-primary focus:ring-1 focus:ring-primary font-body-sm text-body-sm transition-colors" placeholder="Search pipeline..." type="text"/>
+</div>
+<nav class="flex gap-space-md">
+<a class="text-on-surface-variant font-label-md text-label-md hover:text-primary transition-colors py-1" href="#">Dashboard</a>
+<a class="text-on-surface-variant font-label-md text-label-md hover:text-primary transition-colors py-1" href="#">Analytics</a>
+</nav>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="font-label-md text-label-md text-on-surface-variant bg-surface-container-high px-3 py-1 rounded-full border border-outline-variant">
+                    Credits: 1,240
+                </div>
+<button class="text-on-surface-variant hover:text-primary transition-colors relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+</button>
+<button class="bg-primary/10 text-primary font-label-md text-label-md px-4 py-1.5 rounded-lg border border-primary/20 hover:bg-primary/20 transition-colors">
+                    Upgrade
+                </button>
+<div class="w-8 h-8 rounded-full overflow-hidden border-2 border-outline-variant ml-2">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a corporate sales executive looking confident in a well-lit modern office environment. Dark mode aesthetic with subtle blue backlighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvxW3sZnTgux51YOB5joXCb16dz5gV6BVFGf3UoC5c8UCORzyMmbC6dezPJut81I-XJPzZ2Y4cgGwLbFfnL_CgEg2eIa3QdamlT4Ckp0tkEfBtdLRphNw2WXa7GC1lHVuHZgZxP6ixeu74LANZtiiE3Zkwy9EvyATycdre6XrIXk60Wy3E1qDYQBT9q237Uv_p0FPwcuLM72wHK46uEoq1D9aq0KJ7E0X4U1JaW_tF01EKfa-5Q7Mp4w"/>
+</div>
+</div>
+</header>
+<!-- Main Kanban Area -->
+<main class="flex-1 overflow-x-auto overflow-y-hidden z-10 flex flex-col">
+<!-- Context Bar / AI Insights -->
+<div class="px-margin-desktop py-space-md border-b border-outline-variant/50 flex justify-between items-end flex-shrink-0 bg-surface-container-lowest/50">
+<div>
+<h1 class="font-headline-lg text-headline-lg font-bold text-on-surface mb-2">School District Pipeline</h1>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 bg-warning/10 text-warning px-3 py-1.5 rounded-full font-label-sm text-label-sm border border-warning/20">
+<span class="material-symbols-outlined text-[16px]">smart_toy</span>
+                            AI Insight: 4 deals are stuck in Negotiation
+                        </div>
+<div class="flex items-center gap-2 bg-secondary/10 text-secondary px-3 py-1.5 rounded-full font-label-sm text-label-sm border border-secondary/20">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+                            $1.2M expected closing this week
+                        </div>
+</div>
+</div>
+<!-- Quick Forecast Widget -->
+<div class="bg-surface-container border border-outline-variant rounded-xl p-3 flex gap-6 items-center">
+<div>
+<div class="font-label-sm text-label-sm text-on-surface-variant mb-1">Expected Case</div>
+<div class="font-title-lg text-title-lg text-primary font-semibold">$3.4M</div>
+</div>
+<div class="w-px h-10 bg-outline-variant"></div>
+<div>
+<div class="font-label-sm text-label-sm text-on-surface-variant mb-1">Best Case</div>
+<div class="font-title-lg text-title-lg text-secondary font-semibold">$4.8M</div>
+</div>
+</div>
+</div>
+<!-- Kanban Board -->
+<div class="flex-1 flex gap-space-md px-margin-desktop py-space-md overflow-x-auto overflow-y-auto" id="kanban-board">
+<!-- Column: New Lead -->
+<div class="w-[320px] flex-shrink-0 flex flex-col">
+<div class="flex justify-between items-center mb-3 px-1">
+<div class="flex items-center gap-2">
+<div class="w-2.5 h-2.5 rounded-full bg-outline"></div>
+<h2 class="font-title-md text-title-md text-on-surface">New Lead</h2>
+<span class="bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm px-2 py-0.5 rounded-full">3</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">$145k</span>
+</div>
+<div class="kanban-column flex flex-col gap-3 bg-surface-container-lowest/30 rounded-2xl p-2 border border-dashed border-outline-variant/50 transition-colors" data-stage="new">
+<!-- Card 1 -->
+<div class="bg-surface-container border border-outline-variant rounded-xl p-4 cursor-grab hover:border-primary/50 transition-colors shadow-sm" draggable="true">
+<div class="flex justify-between items-start mb-3">
+<span class="bg-primary-container text-on-primary-container font-label-sm text-label-sm px-2 py-0.5 rounded-md">Enterprise</span>
+<button class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined text-[18px]">more_horiz</span></button>
+</div>
+<h3 class="font-title-sm text-title-sm text-on-surface font-semibold mb-1">Oakridge Public Schools</h3>
+<div class="font-body-sm text-body-sm text-on-surface-variant mb-4">District-wide OS deployment</div>
+<div class="flex justify-between items-center mb-4">
+<div class="font-title-md text-title-md text-on-surface">$85,000</div>
+<div class="flex items-center gap-1 text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">psychology</span> 15%
+                                </div>
+</div>
+<div class="border-t border-outline-variant/50 pt-3 flex justify-between items-center">
+<div class="flex items-center gap-2 text-warning font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+                                    Initial Call Needed
+                                </div>
+<div class="w-6 h-6 rounded-full bg-surface-container-highest border border-outline-variant flex items-center justify-center text-[10px] text-on-surface font-bold">JD</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column: Discovery -->
+<div class="w-[320px] flex-shrink-0 flex flex-col">
+<div class="flex justify-between items-center mb-3 px-1">
+<div class="flex items-center gap-2">
+<div class="w-2.5 h-2.5 rounded-full bg-tertiary"></div>
+<h2 class="font-title-md text-title-md text-on-surface">Discovery</h2>
+<span class="bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm px-2 py-0.5 rounded-full">2</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">$320k</span>
+</div>
+<div class="kanban-column flex flex-col gap-3 bg-surface-container-lowest/30 rounded-2xl p-2 border border-dashed border-outline-variant/50 transition-colors" data-stage="discovery">
+<!-- Card 2 -->
+<div class="bg-surface-container border border-outline-variant rounded-xl p-4 cursor-grab hover:border-primary/50 transition-colors shadow-sm" draggable="true">
+<div class="flex justify-between items-start mb-3">
+<span class="bg-surface-container-highest text-on-surface font-label-sm text-label-sm px-2 py-0.5 rounded-md border border-outline-variant">Mid-Market</span>
+<button class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined text-[18px]">more_horiz</span></button>
+</div>
+<h3 class="font-title-sm text-title-sm text-on-surface font-semibold mb-1">Lincoln Prep Academy</h3>
+<div class="font-body-sm text-body-sm text-on-surface-variant mb-4">Pilot program expansion</div>
+<div class="flex justify-between items-center mb-4">
+<div class="font-title-md text-title-md text-on-surface">$120,000</div>
+<div class="flex items-center gap-1 text-tertiary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">psychology</span> 35%
+                                </div>
+</div>
+<div class="border-t border-outline-variant/50 pt-3 flex justify-between items-center">
+<div class="flex items-center gap-2 text-primary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">mail</span>
+                                    Send Case Study
+                                </div>
+<div class="w-6 h-6 rounded-full bg-surface-container-highest border border-outline-variant overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Small thumbnail portrait of a female sales rep in a dark corporate setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHLNvpsq9Aj5AY6npwisYXaoHkKexmayE_YPIh2-c7UxviO5HUA5PPpwPN3J4BvaDM65m0HSu6heO_lCdvZjO4ZWff76nb8KrXaWGSznjsDhDQc8OOkG-S6sUMe5LM5a8BbXaAZF-FLBk5kY_QnC9yzfYUop7frJ5daT3ZvzL8_tYhuQha1cjFBzZlYLdAYWANKmXnO0HsfkeTB9wFjjTXFNtHtBA1IcVXTUN-X55WNCWICpDU_t4Oyg"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column: Negotiation (AI Highlighted) -->
+<div class="w-[320px] flex-shrink-0 flex flex-col">
+<div class="flex justify-between items-center mb-3 px-1">
+<div class="flex items-center gap-2">
+<div class="w-2.5 h-2.5 rounded-full bg-warning"></div>
+<h2 class="font-title-md text-title-md text-on-surface">Negotiation</h2>
+<span class="bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm px-2 py-0.5 rounded-full">4</span>
+</div>
+<span class="font-label-sm text-label-sm text-warning font-medium">$850k</span>
+</div>
+<div class="kanban-column flex flex-col gap-3 bg-surface-container-lowest/30 rounded-2xl p-2 border border-dashed border-warning/30 transition-colors" data-stage="negotiation">
+<!-- Card 3 (Stuck) -->
+<div class="bg-surface-container border border-warning/50 rounded-xl p-4 cursor-grab hover:border-warning transition-colors shadow-sm relative overflow-hidden" draggable="true">
+<div class="absolute top-0 right-0 w-16 h-16 bg-warning/10 rounded-bl-full pointer-events-none"></div>
+<div class="flex justify-between items-start mb-3 relative z-10">
+<span class="bg-primary-container text-on-primary-container font-label-sm text-label-sm px-2 py-0.5 rounded-md">Enterprise</span>
+<span class="material-symbols-outlined text-warning text-[18px]">warning</span>
+</div>
+<h3 class="font-title-sm text-title-sm text-on-surface font-semibold mb-1">Springfield Unified</h3>
+<div class="font-body-sm text-body-sm text-on-surface-variant mb-4">Full district rollout (40 schools)</div>
+<div class="flex justify-between items-center mb-4">
+<div class="font-title-md text-title-md text-on-surface">$450,000</div>
+<div class="flex items-center gap-1 text-warning font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">psychology</span> 60%
+                                </div>
+</div>
+<div class="border-t border-outline-variant/50 pt-3 flex justify-between items-center">
+<div class="flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm bg-surface-container-high px-2 py-1 rounded-md">
+<span class="material-symbols-outlined text-[14px]">gavel</span>
+                                    Legal Review (14 days)
+                                </div>
+<div class="w-6 h-6 rounded-full bg-surface-container-highest border border-outline-variant flex items-center justify-center text-[10px] text-on-surface font-bold">JD</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column: Won -->
+<div class="w-[320px] flex-shrink-0 flex flex-col">
+<div class="flex justify-between items-center mb-3 px-1">
+<div class="flex items-center gap-2">
+<div class="w-2.5 h-2.5 rounded-full bg-secondary"></div>
+<h2 class="font-title-md text-title-md text-on-surface">Closed Won</h2>
+<span class="bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm px-2 py-0.5 rounded-full">12</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-medium">$2.1M</span>
+</div>
+<div class="kanban-column flex flex-col gap-3 bg-surface-container-lowest/30 rounded-2xl p-2 border border-dashed border-outline-variant/50 transition-colors" data-stage="won">
+<!-- Card 4 -->
+<div class="bg-surface-container border border-secondary/30 rounded-xl p-4 opacity-75 hover:opacity-100 transition-opacity" draggable="true">
+<div class="flex justify-between items-start mb-3">
+<span class="bg-secondary/20 text-secondary font-label-sm text-label-sm px-2 py-0.5 rounded-md border border-secondary/30">Won</span>
+<span class="material-symbols-outlined text-secondary text-[18px]">verified</span>
+</div>
+<h3 class="font-title-sm text-title-sm text-on-surface font-semibold mb-1">Metro Tech Charter</h3>
+<div class="flex justify-between items-center mt-4">
+<div class="font-title-md text-title-md text-on-surface">$75,000</div>
+<div class="text-on-surface-variant font-label-sm text-label-sm">
+                                    Oct 12
+                                </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script>
+        // Simple drag and drop logic for visual effect
+        const cards = document.querySelectorAll('[draggable="true"]');
+        const columns = document.querySelectorAll('.kanban-column');
+
+        cards.forEach(card => {
+            card.addEventListener('dragstart', (e) => {
+                card.classList.add('card-dragging');
+                e.dataTransfer.setData('text/plain', ''); // Required for Firefox
+            });
+            card.addEventListener('dragend', () => {
+                card.classList.remove('card-dragging');
+                columns.forEach(col => col.classList.remove('drag-over'));
+            });
+        });
+
+        columns.forEach(column => {
+            column.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                column.classList.add('drag-over');
+            });
+            column.addEventListener('dragleave', () => {
+                column.classList.remove('drag-over');
+            });
+            column.addEventListener('drop', (e) => {
+                e.preventDefault();
+                column.classList.remove('drag-over');
+                const draggingCard = document.querySelector('.card-dragging');
+                if (draggingCard) {
+                    column.appendChild(draggingCard);
+                }
+            });
+        });
+    </script>
+</body></html>

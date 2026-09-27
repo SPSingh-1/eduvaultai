@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EduVault AI Sales Hunter Command Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error": "#ffb4ab",
+                      "surface-container-highest": "#2d3449",
+                      "inverse-surface": "#dbe2fd",
+                      "primary-container": "#4d8eff",
+                      "surface-container-high": "#222a3e",
+                      "tertiary": "#4edea3",
+                      "on-secondary-container": "#c4abff",
+                      "inverse-primary": "#005ac2",
+                      "primary-fixed": "#d8e2ff",
+                      "surface-container-low": "#131b2e",
+                      "on-primary-fixed": "#001a42",
+                      "background": "#0b1326",
+                      "on-secondary-fixed-variant": "#5516be",
+                      "surface-tint": "#adc6ff",
+                      "secondary": "#d0bcff",
+                      "on-surface-variant": "#c2c6d6",
+                      "on-primary": "#002e6a",
+                      "outline": "#8c909f",
+                      "on-tertiary-fixed": "#002113",
+                      "surface-bright": "#31394e",
+                      "primary": "#adc6ff",
+                      "on-tertiary-fixed-variant": "#005236",
+                      "surface-container-lowest": "#060d20",
+                      "on-primary-container": "#00285d",
+                      "on-secondary-fixed": "#23005c",
+                      "surface-container": "#171f33",
+                      "secondary-fixed": "#e9ddff",
+                      "on-surface": "#dbe2fd",
+                      "on-primary-fixed-variant": "#004395",
+                      "secondary-fixed-dim": "#d0bcff",
+                      "on-error": "#690005",
+                      "tertiary-fixed": "#6ffbbe",
+                      "outline-variant": "#424754",
+                      "on-error-container": "#ffdad6",
+                      "on-tertiary": "#003824",
+                      "error-container": "#93000a",
+                      "inverse-on-surface": "#283044",
+                      "on-tertiary-container": "#00311f",
+                      "primary-fixed-dim": "#adc6ff",
+                      "surface-dim": "#0b1326",
+                      "surface-variant": "#2d3449",
+                      "on-secondary": "#3c0091",
+                      "surface": "#0b1326",
+                      "tertiary-container": "#00a572",
+                      "on-background": "#dbe2fd",
+                      "secondary-container": "#571bc1",
+                      "tertiary-fixed-dim": "#4edea3"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "grid-wide": "24px",
+                      "margin-page": "24px",
+                      "unit": "4px",
+                      "gutter": "16px",
+                      "grid-compact": "8px"
+              },
+              "fontFamily": {
+                      "grid-cell": [
+                              "Inter"
+                      ],
+                      "headline-sm": [
+                              "Inter"
+                      ],
+                      "kpi-md": [
+                              "Inter"
+                      ],
+                      "kpi-xl": [
+                              "Inter"
+                      ],
+                      "mono-label": [
+                              "Inter"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "grid-header": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "grid-cell": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-sm": [
+                              "18px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "kpi-md": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "kpi-xl": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "mono-label": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "grid-header": [
+                              "11px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        body {
+            background-color: #0b1326;
+            color: #dbe2fd;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .glass-panel-hover:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .glow-primary {
+            box-shadow: 0 0 20px rgba(173, 198, 255, 0.1);
+        }
+        .glow-tertiary {
+            box-shadow: 0 0 20px rgba(78, 222, 163, 0.1);
+        }
+        .sparkline-gradient {
+            background: linear-gradient(180deg, rgba(78, 222, 163, 0.2) 0%, rgba(78, 222, 163, 0) 100%);
+        }
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="font-body-sm text-body-sm h-screen overflow-hidden flex flex-col antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="bg-surface/40 backdrop-blur-xl fixed top-0 w-full z-50 border-b border-white/10 shadow-sm flex items-center justify-between px-margin-page h-16">
+<div class="flex items-center gap-grid-wide h-full">
+<span class="font-headline-sm text-headline-sm font-bold text-primary">EduVault AI Sales Hunter</span>
+<div class="hidden md:flex h-full gap-grid-wide">
+<a class="text-primary border-b-2 border-primary pb-1 flex items-center h-full hover:bg-white/5 transition-colors cursor-pointer active:scale-95 transition-transform font-grid-cell text-grid-cell" href="#">Dashboard</a>
+<a class="text-on-surface-variant hover:text-on-surface flex items-center h-full hover:bg-white/5 transition-colors cursor-pointer active:scale-95 transition-transform font-grid-cell text-grid-cell" href="#">Workforce</a>
+<a class="text-on-surface-variant hover:text-on-surface flex items-center h-full hover:bg-white/5 transition-colors cursor-pointer active:scale-95 transition-transform font-grid-cell text-grid-cell" href="#">Pipeline</a>
+<a class="text-on-surface-variant hover:text-on-surface flex items-center h-full hover:bg-white/5 transition-colors cursor-pointer active:scale-95 transition-transform font-grid-cell text-grid-cell" href="#">Analytics</a>
+</div>
+</div>
+<div class="flex items-center gap-gutter">
+<button class="bg-gradient-to-r from-primary to-secondary text-on-primary px-4 py-2 rounded-lg font-grid-cell text-grid-cell font-semibold hover:opacity-90 transition-opacity flex items-center gap-2 cursor-pointer active:scale-95 transition-transform">
+<span class="material-symbols-outlined" style="font-size: 18px;">smart_toy</span>
+                Deploy Hunter
+            </button>
+<div class="flex items-center gap-unit text-on-surface-variant">
+<button class="p-2 rounded-full hover:bg-white/5 transition-colors cursor-pointer active:scale-95 transition-transform">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 rounded-full hover:bg-white/5 transition-colors cursor-pointer active:scale-95 transition-transform">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<img alt="User profile" class="w-8 h-8 rounded-full border border-white/20 object-cover cursor-pointer active:scale-95 transition-transform" data-alt="A small, circular avatar portrait of a professional operator in a futuristic AI control room setting, illuminated by soft blue holographic light, conveying expertise and focus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCx60oJS-nKPewhVzlgUjTtxXWPRz4DupBxXTWe3o9IrnX0PE8ena7L6BioFwIeJQflE28ytWAHO61Ak3CbZh0iJqNQhVIQJco1V0R8XPJERz4-l7vwWgEWTO8W0GJy5phUJIcHz5NKEAzsF87TXxFWURre3qgH_iyCPr1kdQPJ8YQnEb3WVrGernvoF_evqqD5RhmTX1x9qwzRlbgvUnvPvIpvc51VjpjOTUnNA-ewhZQz7w8umvOoRw"/>
+</div>
+</nav>
+<!-- SideNavBar & Main Content Wrapper -->
+<div class="flex flex-1 pt-16 overflow-hidden">
+<!-- SideNavBar -->
+<aside class="bg-surface-container-low/40 backdrop-blur-2xl fixed left-0 top-16 bottom-0 w-64 z-40 border-r border-white/10 shadow-xl flex flex-col py-grid-wide space-y-grid-compact hidden md:flex transition-all">
+<div class="px-margin-page mb-gutter flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high border border-white/10 flex items-center justify-center shrink-0">
+<img alt="Workspace Icon" class="w-6 h-6 object-cover" data-alt="A stylized, minimalist 3D icon of an abstract glowing node or crystal, representing a high-tech AI workspace, rendered in deep blues and silvers." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSXCTJSOcoXeGQUR0uUHEFPHryxnx94yh8M5B6eqCx66GJO7Srxe3_NOYphDQza-pAQN5kgwWruMIItsTFGFx6WPqLdYE5AxazVOzMGCg8hUDzpz8Kfqsbj9krUgb3wJrTom_p3o8_nwVTwyX8fVeKZ58hq0snECKje8N2wXfe80I2_0f3w8C0Ny-xLQ9OGJfQKX0QephnOVEvqpokKRlnNYba55uhG00QyfgCbfrkIvJb2hCs1RpfYw"/>
+</div>
+<div>
+<h2 class="font-grid-cell text-grid-cell font-bold text-on-surface">Global Ops</h2>
+<p class="font-grid-header text-grid-header text-on-surface-variant">AI Node: Alpha-7</p>
+</div>
+</div>
+<button class="mx-margin-page bg-surface-container border border-white/10 text-on-surface px-4 py-2 rounded-lg font-grid-cell text-grid-cell hover:bg-white/5 transition-all mb-gutter flex items-center justify-center gap-2 hover:translate-x-1 transition-transform cursor-pointer">
+<span class="material-symbols-outlined" style="font-size: 18px;">add</span>
+                New Hunter
+            </button>
+<nav class="flex-1 flex flex-col px-margin-page gap-unit">
+<a class="text-primary font-bold hover:bg-white/5 transition-all rounded-lg px-3 py-2 flex items-center gap-3 hover:translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-grid-cell text-grid-cell">Command</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all rounded-lg px-3 py-2 flex items-center gap-3 hover:translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-grid-cell text-grid-cell">Prospects</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all rounded-lg px-3 py-2 flex items-center gap-3 hover:translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined">send</span>
+<span class="font-grid-cell text-grid-cell">Outreach</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all rounded-lg px-3 py-2 flex items-center gap-3 hover:translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined">auto_fix_high</span>
+<span class="font-grid-cell text-grid-cell">Automations</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all rounded-lg px-3 py-2 flex items-center gap-3 hover:translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-grid-cell text-grid-cell">Logs</span>
+</a>
+</nav>
+<div class="px-margin-page flex flex-col gap-unit mt-auto">
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all rounded-lg px-3 py-2 flex items-center gap-3 hover:translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-grid-cell text-grid-cell">Help</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface hover:bg-white/5 transition-all rounded-lg px-3 py-2 flex items-center gap-3 hover:translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined">sensors</span>
+<span class="font-grid-cell text-grid-cell">Status</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-1 md:ml-64 relative overflow-y-auto flex">
+<div class="flex-1 p-margin-page flex flex-col gap-grid-wide w-full max-w-[1600px] mx-auto pb-24">
+<!-- 1. Welcome Hero & Summary (Bento Top) -->
+<section class="grid grid-cols-12 gap-gutter relative rounded-[24px] overflow-hidden min-h-[300px]">
+<div class="absolute inset-0 z-0">
+<div class="bg-cover bg-center w-full h-full opacity-30" data-alt="A subtle, dark, futuristic abstract background featuring a stylized neural network mesh glowing faintly in deep blue and purple hues, conveying advanced AI computation in a high-tech control room setting." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDmPpXD7bVxGUwMcwt0UQVQfGpy-tpsdK_Chp_owNxNgaiZgD20GaGO8NXX1IjgjnNZk8hRrXHLtW5Dxe-fURAkUFqtfmsSM9AxHTwVQ2oEB5B6155J-mm4s9FZyDuVu4ZfxDdiaUdqHCSSHUkHaQopryQ-xKAVx3HLWE31_3eqZgt08tDHkkYvp-A2OsTXe3eiriJ6q6FIxP12zDNkS4QURJiH6pMehz8vz0xsnOG9TkXsMxmEDIUfeA')"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent"></div>
+</div>
+<div class="col-span-12 lg:col-span-4 z-10 flex flex-col justify-center p-grid-wide">
+<h1 class="font-headline-sm text-headline-sm text-on-surface mb-2">Good Morning, Rahul 👋</h1>
+<p class="font-grid-cell text-grid-cell text-on-surface-variant mb-6">EduVault AI is running at nominal capacity. Here is your operations summary for today.</p>
+<div class="flex items-center gap-3">
+<span class="flex h-3 w-3 rounded-full bg-tertiary shadow-[0_0_8px_rgba(78,222,163,0.6)]"></span>
+<span class="font-mono-label text-mono-label text-tertiary uppercase tracking-wider">System Optimal</span>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-8 z-10 grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-grid-compact p-grid-compact content-center">
+<!-- Summary Cards -->
+<div class="glass-panel rounded-xl p-4 flex flex-col gap-1 relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-16 h-16 bg-primary/10 rounded-full blur-xl -mr-8 -mt-8 group-hover:bg-primary/20 transition-all"></div>
+<span class="font-grid-header text-grid-header text-on-surface-variant uppercase">New Schools</span>
+<span class="font-kpi-md text-kpi-md text-on-surface">287</span>
+<div class="flex items-center gap-1 text-tertiary font-grid-cell text-grid-cell text-xs mt-2">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+                                +12%
+                            </div>
+</div>
+<div class="glass-panel rounded-xl p-4 flex flex-col gap-1 relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-16 h-16 bg-tertiary/10 rounded-full blur-xl -mr-8 -mt-8 group-hover:bg-tertiary/20 transition-all"></div>
+<span class="font-grid-header text-grid-header text-on-surface-variant uppercase">Qualified Leads</span>
+<span class="font-kpi-md text-kpi-md text-on-surface">96</span>
+<div class="flex items-center gap-1 text-tertiary font-grid-cell text-grid-cell text-xs mt-2">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+                                +5%
+                            </div>
+</div>
+<div class="glass-panel rounded-xl p-4 flex flex-col gap-1 relative overflow-hidden group">
+<span class="font-grid-header text-grid-header text-on-surface-variant uppercase">Emails Sent</span>
+<span class="font-kpi-md text-kpi-md text-on-surface">42k</span>
+<div class="w-full bg-surface-container h-1 rounded-full mt-2 overflow-hidden">
+<div class="bg-primary h-full w-[85%]"></div>
+</div>
+</div>
+<div class="glass-panel rounded-xl p-4 flex flex-col gap-1 relative overflow-hidden group hidden sm:flex">
+<div class="absolute top-0 right-0 w-16 h-16 bg-secondary/10 rounded-full blur-xl -mr-8 -mt-8 group-hover:bg-secondary/20 transition-all"></div>
+<span class="font-grid-header text-grid-header text-on-surface-variant uppercase">Demos Booked</span>
+<span class="font-kpi-md text-kpi-md text-secondary">7</span>
+<div class="flex items-center gap-1 text-secondary font-grid-cell text-grid-cell text-xs mt-2">
+<span class="material-symbols-outlined text-[14px]">event_available</span>
+                                Today
+                            </div>
+</div>
+<div class="glass-panel rounded-xl p-4 flex flex-col gap-1 relative overflow-hidden group hidden xl:flex">
+<div class="absolute inset-0 bg-gradient-to-br from-tertiary/5 to-transparent"></div>
+<span class="font-grid-header text-grid-header text-on-surface-variant uppercase">Est. Revenue</span>
+<span class="font-headline-sm text-headline-sm text-on-surface mt-1">₹18,40,000</span>
+<div class="h-6 w-full mt-auto flex items-end">
+<!-- Mock Sparkline -->
+<div class="w-full flex items-end gap-1 h-full opacity-60">
+<div class="w-full bg-tertiary/40 h-[30%] rounded-t-sm"></div>
+<div class="w-full bg-tertiary/40 h-[50%] rounded-t-sm"></div>
+<div class="w-full bg-tertiary/40 h-[40%] rounded-t-sm"></div>
+<div class="w-full bg-tertiary/60 h-[70%] rounded-t-sm"></div>
+<div class="w-full bg-tertiary h-[90%] rounded-t-sm"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<div class="grid grid-cols-12 gap-gutter">
+<!-- 2. AI Workforce Status (Left Column 8-col) -->
+<div class="col-span-12 lg:col-span-8 flex flex-col gap-gutter">
+<div class="flex items-center justify-between mb-2">
+<h3 class="font-grid-cell text-grid-cell font-bold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">memory</span>
+                                Active AI Workforce
+                            </h3>
+<button class="font-grid-header text-grid-header text-primary hover:text-primary-fixed transition-colors uppercase tracking-wider">Manage Agents</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-grid-compact">
+<!-- Agent Card 1 -->
+<div class="glass-panel rounded-xl p-4 flex flex-col gap-3 glow-tertiary relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-tertiary"></div>
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-tertiary/20 flex items-center justify-center relative">
+<div class="absolute inset-0 bg-tertiary rounded-full animate-ping opacity-20"></div>
+<span class="material-symbols-outlined text-tertiary text-[16px]">travel_explore</span>
+</div>
+<div>
+<h4 class="font-grid-cell text-grid-cell font-semibold text-on-surface">School Discovery</h4>
+<span class="font-grid-header text-grid-header text-tertiary">Scraping Web</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-1 mt-2">
+<div class="flex justify-between text-[10px] font-mono-label text-on-surface-variant">
+<span>Progress: 14k/20k URLs</span>
+<span>72%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full w-[72%] rounded-full shadow-[0_0_10px_rgba(78,222,163,0.8)]"></div>
+</div>
+</div>
+</div>
+<!-- Agent Card 2 -->
+<div class="glass-panel rounded-xl p-4 flex flex-col gap-3 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary"></div>
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center relative">
+<div class="absolute inset-0 bg-primary rounded-full animate-ping opacity-20" style="animation-delay: 0.5s;"></div>
+<span class="material-symbols-outlined text-primary text-[16px]">map</span>
+</div>
+<div>
+<h4 class="font-grid-cell text-grid-cell font-semibold text-on-surface">Maps Intelligence</h4>
+<span class="font-grid-header text-grid-header text-primary">Parsing GeoData</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-1 mt-2">
+<div class="flex justify-between text-[10px] font-mono-label text-on-surface-variant">
+<span>Processing Regions</span>
+<span>45%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[45%] rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Agent Card 3 -->
+<div class="glass-panel rounded-xl p-4 flex flex-col gap-3 relative overflow-hidden border-outline/30">
+<div class="absolute top-0 left-0 w-1 h-full bg-outline"></div>
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-outline text-[16px]">language</span>
+</div>
+<div>
+<h4 class="font-grid-cell text-grid-cell font-semibold text-on-surface">Website Analyzer</h4>
+<span class="font-grid-header text-grid-header text-outline">Standby</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-1 mt-2 opacity-50">
+<div class="flex justify-between text-[10px] font-mono-label text-on-surface-variant">
+<span>Awaiting Queue</span>
+<span>0%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-outline h-full w-[0%] rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Add more cards as needed to fill the 6 requested -->
+</div>
+<!-- 4. Interactive Live Map Placeholder & Activity Feed -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter mt-4">
+<!-- Live Map -->
+<div class="glass-panel rounded-[24px] p-1 flex flex-col h-[350px] relative overflow-hidden group">
+<div class="absolute top-4 left-4 z-10 glass-panel px-3 py-2 rounded-lg pointer-events-none">
+<h4 class="font-grid-header text-grid-header text-on-surface mb-1">Geographic Density</h4>
+<div class="flex gap-3 text-[10px] font-mono-label">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-tertiary"></span>Discovered</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-primary"></span>Qualified</span>
+</div>
+</div>
+<div class="w-full h-full bg-surface-container-lowest rounded-[20px] overflow-hidden relative">
+<!-- Map Visualization Placeholder -->
+<div class="absolute inset-0 flex items-center justify-center opacity-40">
+<img alt="Live Intelligence Map" class="w-full h-full object-cover mix-blend-screen" data-alt="A stylized, dark-mode futuristic map of India plotted with glowing neon dots in primary blue and vibrant green, representing AI data nodes in a high-tech command center interface." data-location="India" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDT2v-pudwGTX0qTjliiyqNw3cDF1vfBFbVii4W6bQYxwpnOR3K9375DarmfxdTARafAYjwXqn_4hAsuAzmx-yrPkwYNZ-HrRtZvn1wnoOsj0Cwm0gqecVH1gDTkXbSg3_RrixcKkaYGBspk2oU-siU9JOl6u9a9lJlocpn9a_XqmRusmkmyq8fChRn98MeCKWCFQA9YrOP7GyC4shnDiXrXweWRpwH91qZgjNu79UiNRpnQ1C7_7HStA"/>
+</div>
+<!-- Scanning line overlay -->
+<div class="absolute top-0 left-0 w-full h-[2px] bg-tertiary shadow-[0_0_15px_rgba(78,222,163,1)] opacity-50 z-20" style="animation: scan 4s linear infinite;"></div>
+</div>
+</div>
+<!-- 5. Real-Time Activity Feed -->
+<div class="glass-panel rounded-[24px] p-6 flex flex-col h-[350px]">
+<h3 class="font-grid-cell text-grid-cell font-bold text-on-surface mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">history</span>
+                                    Live Terminal
+                                </h3>
+<div class="flex-1 overflow-y-auto pr-2 space-y-3 font-mono-label text-[11px]">
+<div class="flex gap-3 items-start opacity-100">
+<span class="text-tertiary mt-0.5 whitespace-nowrap">[10:42:01]</span>
+<div class="flex-1 text-on-surface-variant">
+<span class="text-primary font-bold">SYS_MAPS:</span> AI located 'St. Marys High School' in Pune region. Coordinates plotted.
+                                        </div>
+</div>
+<div class="flex gap-3 items-start opacity-90">
+<span class="text-tertiary mt-0.5 whitespace-nowrap">[10:41:45]</span>
+<div class="flex-1 text-on-surface-variant">
+<span class="text-secondary font-bold">LEAD_SCORE:</span> Analyzed 'Delhi Public School' website. Score assigned: <span class="text-tertiary bg-tertiary/10 px-1 rounded">A+</span> (High Intent).
+                                        </div>
+</div>
+<div class="flex gap-3 items-start opacity-80">
+<span class="text-tertiary mt-0.5 whitespace-nowrap">[10:40:12]</span>
+<div class="flex-1 text-on-surface-variant">
+<span class="text-error font-bold">WARN_MAIL:</span> Rate limit approaching for SMTP node 3. Re-routing queue to node 4 automatically.
+                                        </div>
+</div>
+<div class="flex gap-3 items-start opacity-70">
+<span class="text-tertiary mt-0.5 whitespace-nowrap">[10:38:55]</span>
+<div class="flex-1 text-on-surface-variant">
+<span class="text-primary font-bold">SYS_WEB:</span> 145 schools processed in last hour. 12 domains unresponsive. Flagged for review.
+                                        </div>
+</div>
+<div class="flex gap-3 items-start opacity-60">
+<span class="text-tertiary mt-0.5 whitespace-nowrap">[10:35:20]</span>
+<div class="flex-1 text-on-surface-variant">
+<span class="text-tertiary font-bold">DEMO_SYNC:</span> Calendar sync successful. 2 new slots booked by 'Greenwood Academy'.
+                                        </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column (4-col) -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-gutter h-full">
+<!-- 6. Recommendations Bento -->
+<div class="glass-panel rounded-[24px] p-6 flex flex-col border-t-2 border-t-secondary/50">
+<h3 class="font-grid-cell text-grid-cell font-bold text-on-surface mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[18px]">lightbulb</span>
+                                AI Insights
+                            </h3>
+<div class="space-y-3">
+<div class="bg-surface-container-high/50 border border-white/5 rounded-xl p-4 hover:border-secondary/30 transition-colors cursor-pointer group">
+<p class="font-body-sm text-body-sm text-on-surface mb-3 leading-snug">
+<strong class="text-secondary">145 schools</strong> found with no active website in Maharashtra region.
+                                    </p>
+<button class="w-full py-2 bg-white/5 text-on-surface rounded-lg font-grid-cell text-grid-cell border border-white/10 group-hover:bg-secondary/10 group-hover:text-secondary group-hover:border-secondary/30 transition-all flex justify-center items-center gap-2">
+                                        Start Digital Presence Campaign
+                                        <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+<div class="bg-surface-container-high/50 border border-white/5 rounded-xl p-4 hover:border-primary/30 transition-colors cursor-pointer group">
+<p class="font-body-sm text-body-sm text-on-surface mb-3 leading-snug">
+                                        Reply rate from <strong class="text-primary">Tier 2 cities</strong> dropped by 4% this week.
+                                    </p>
+<button class="w-full py-2 bg-white/5 text-on-surface rounded-lg font-grid-cell text-grid-cell border border-white/10 group-hover:bg-primary/10 group-hover:text-primary group-hover:border-primary/30 transition-all flex justify-center items-center gap-2">
+                                        Analyze Draft Variations
+                                        <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 7. AI Copilot Chat -->
+<div class="glass-panel rounded-[24px] p-1 flex flex-col flex-1 min-h-[400px]">
+<div class="p-4 border-b border-white/10 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center p-0.5">
+<div class="w-full h-full bg-surface-container rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary text-[16px]">psychology</span>
+</div>
+</div>
+<div>
+<h4 class="font-grid-cell text-grid-cell font-bold text-on-surface">Hunter Copilot</h4>
+<span class="font-grid-header text-grid-header text-tertiary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+                                        Online &amp; Listening
+                                    </span>
+</div>
+</div>
+<div class="flex-1 p-4 overflow-y-auto flex flex-col gap-4">
+<!-- Chat Message -->
+<div class="flex gap-3 max-w-[90%]">
+<div class="w-6 h-6 rounded-full bg-surface-container-high flex items-center justify-center shrink-0 border border-white/10">
+<span class="material-symbols-outlined text-primary text-[12px]">robot_2</span>
+</div>
+<div class="bg-surface-container-high/50 border border-white/5 rounded-2xl rounded-tl-sm p-3 font-body-sm text-[13px] text-on-surface-variant leading-relaxed">
+                                        I've completed the morning scrape for the Southern sector. Found 32 high-probability targets. Would you like me to draft introduction emails?
+                                    </div>
+</div>
+<!-- Prompt Examples -->
+<div class="mt-auto flex flex-col gap-2 pt-4">
+<span class="font-grid-header text-[10px] text-outline uppercase ml-1">Suggested Commands</span>
+<button class="text-left p-2 rounded-lg bg-surface-container-lowest border border-white/5 hover:border-primary/30 font-body-sm text-[12px] text-on-surface-variant hover:text-on-surface transition-all">
+                                        "Draft emails using the 'EdTech Innovator' template."
+                                    </button>
+<button class="text-left p-2 rounded-lg bg-surface-container-lowest border border-white/5 hover:border-primary/30 font-body-sm text-[12px] text-on-surface-variant hover:text-on-surface transition-all">
+                                        "Show me the lead scores for the top 10 targets."
+                                    </button>
+</div>
+</div>
+<div class="p-3 border-t border-white/10 bg-surface-container-lowest/50 rounded-b-[24px]">
+<div class="relative">
+<input class="w-full bg-surface border-white/10 rounded-xl pl-4 pr-10 py-2.5 text-[13px] text-on-surface placeholder:text-outline focus:ring-1 focus:ring-primary focus:border-primary transition-all shadow-inner" placeholder="Command Hunter AI..." type="text"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 text-primary hover:text-primary-fixed p-1 rounded-md hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-[18px]">send</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- 8. Bottom System Health Strip -->
+<div class="fixed bottom-0 left-0 right-0 h-8 bg-surface-container-lowest/90 backdrop-blur-md border-t border-white/5 z-50 flex items-center justify-between px-margin-page md:pl-72 font-mono-label text-[10px] text-on-surface-variant">
+<div class="flex items-center gap-6">
+<span class="flex items-center gap-1.5 hover:text-on-surface cursor-pointer">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                API Health: 99.9%
+            </span>
+<span class="flex items-center gap-1.5 hidden sm:flex">
+<span class="material-symbols-outlined text-[14px]">memory</span>
+                Compute: 42% Load
+            </span>
+<span class="flex items-center gap-1.5 hidden md:flex">
+<span class="material-symbols-outlined text-[14px]">group_work</span>
+                Workers: 24/24 Active
+            </span>
+</div>
+<div class="flex items-center gap-4 text-outline">
+<span>Last Sync: 12s ago</span>
+<span>v2.4.1 (Stable)</span>
+</div>
+</div>
+<style>
+        @keyframes scan {
+            0% { top: 0; opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { top: 100%; opacity: 0; }
+        }
+    </style>
+</body></html>

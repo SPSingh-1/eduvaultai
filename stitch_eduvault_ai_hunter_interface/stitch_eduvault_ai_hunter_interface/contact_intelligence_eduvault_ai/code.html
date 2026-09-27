@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Contact Intelligence - EduVault AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline": "#8d90a1",
+                        "primary-fixed": "#dce1ff",
+                        "primary-fixed-dim": "#b7c4ff",
+                        "secondary-container": "#00f4fe",
+                        "tertiary": "#ffba20",
+                        "on-tertiary-fixed": "#271900",
+                        "on-tertiary": "#412d00",
+                        "surface-bright": "#31394e",
+                        "on-background": "#dbe2fd",
+                        "on-tertiary-fixed-variant": "#5e4200",
+                        "on-secondary": "#003739",
+                        "surface-container": "#171f33",
+                        "on-tertiary-container": "#fff6ee",
+                        "surface-variant": "#2d3449",
+                        "secondary-fixed-dim": "#00dce5",
+                        "inverse-on-surface": "#283044",
+                        "tertiary-fixed": "#ffdea8",
+                        "secondary-fixed": "#63f7ff",
+                        "on-secondary-fixed": "#002021",
+                        "surface-container-highest": "#2d3449",
+                        "primary-container": "#2d63ff",
+                        "on-primary-fixed": "#001551",
+                        "on-surface-variant": "#c3c5d8",
+                        "surface-container-high": "#222a3e",
+                        "tertiary-fixed-dim": "#ffba20",
+                        "surface-container-lowest": "#060d20",
+                        "on-primary": "#002780",
+                        "primary": "#b7c4ff",
+                        "surface-tint": "#b7c4ff",
+                        "surface-container-low": "#131b2e",
+                        "outline-variant": "#434656",
+                        "on-secondary-container": "#006c71",
+                        "surface": "#0b1326",
+                        "background": "#0b1326",
+                        "surface-dim": "#0b1326",
+                        "tertiary-container": "#956a00",
+                        "error-container": "#93000a",
+                        "on-primary-fixed-variant": "#0039b4",
+                        "inverse-primary": "#004dea",
+                        "on-error": "#690005",
+                        "on-surface": "#dbe2fd",
+                        "on-secondary-fixed-variant": "#004f53",
+                        "on-primary-container": "#f9f7ff",
+                        "secondary": "#e6feff",
+                        "on-error-container": "#ffdad6",
+                        "inverse-surface": "#dbe2fd",
+                        "error": "#ffb4ab"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "module-gap": "24px",
+                        "element-padding-md": "12px 16px",
+                        "gutter": "16px",
+                        "container-padding": "32px",
+                        "element-padding-sm": "8px 12px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Inter"],
+                        "mono-label": ["JetBrains Mono"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "mono-label": ["12px", { "lineHeight": "16px", "letterSpacing": "0", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0", "fontWeight": "400" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        .glass-panel { background: rgba(21, 30, 45, 0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .glass-panel-hover:hover { background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .ai-glow-running { box-shadow: 0 0 8px rgba(0, 244, 254, 0.6); }
+        .ai-pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: theme('colors.surface-variant'); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: theme('colors.outline'); }
+    </style>
+</head>
+<body class="font-body-md antialiased overflow-hidden">
+<!-- App Shell -->
+<div class="flex h-screen w-full">
+<!-- SideNavBar -->
+<nav class="hidden md:flex w-72 h-screen overflow-y-auto flex-shrink-0 border-r border-white/10 bg-surface/60 backdrop-blur-xl flex-col shadow-md z-40">
+<div class="p-6 border-b border-white/5 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center ai-glow-running">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div>
+<h1 class="font-display-lg text-display-lg font-bold text-primary tracking-tighter" style="font-size: 20px; line-height: 24px;">EduVault AI</h1>
+<p class="font-label-sm text-label-sm text-secondary-container ai-pulse flex items-center gap-1 mt-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span> System Status: Active
+                    </p>
+</div>
+</div>
+<div class="flex-1 py-4 overflow-y-auto px-3 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant font-body-md hover:bg-surface-variant/40 hover:text-on-surface transition-colors hover:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span> Dashboard
+                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant font-body-md hover:bg-surface-variant/40 hover:text-on-surface transition-colors hover:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">school</span> School Discovery
+                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant font-body-md hover:bg-surface-variant/40 hover:text-on-surface transition-colors hover:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">insights</span> Lead Intelligence
+                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant font-body-md hover:bg-surface-variant/40 hover:text-on-surface transition-colors hover:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">campaign</span> Campaigns
+                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant font-body-md hover:bg-surface-variant/40 hover:text-on-surface transition-colors hover:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">smart_toy</span> Agent Command Center
+                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant font-body-md hover:bg-surface-variant/40 hover:text-on-surface transition-colors hover:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">travel_explore</span> Scout AI
+                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant font-body-md hover:bg-surface-variant/40 hover:text-on-surface transition-colors hover:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">map</span> Maps Intelligence
+                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant font-body-md hover:bg-surface-variant/40 hover:text-on-surface transition-colors hover:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">visibility</span> Website Vision AI
+                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-primary font-bold border-r-2 border-primary bg-surface-variant/20 hover:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">contact_phone</span> Contact Intelligence
+                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant font-body-md hover:bg-surface-variant/40 hover:text-on-surface transition-colors hover:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined text-[20px]">leaderboard</span> Lead Scoring
+                </a>
+</div>
+<div class="p-4 border-t border-white/5">
+<button class="w-full bg-primary-container text-on-primary-container font-label-md text-label-md py-2.5 rounded-lg hover:brightness-110 transition-all flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span> Deploy New Agent
+                </button>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col relative h-screen overflow-hidden">
+<!-- TopNavBar -->
+<header class="w-full h-16 border-b border-white/5 bg-surface/60 backdrop-blur-xl shadow-sm flex items-center justify-between px-6 z-30 shrink-0">
+<div class="flex items-center gap-4">
+<div class="md:hidden">
+<span class="material-symbols-outlined text-primary text-[24px]">contact_phone</span>
+</div>
+<div class="font-headline-md text-headline-md font-bold text-on-surface hidden md:block">EduVault AI</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center gap-4">
+<span class="text-on-surface-variant font-label-md text-label-md hover:text-primary transition-all duration-300 cursor-pointer">Credits: 1,250</span>
+<span class="text-on-surface-variant font-label-md text-label-md hover:text-primary transition-all duration-300 cursor-pointer">Tasks</span>
+</div>
+<div class="flex items-center gap-3 border-l border-white/10 pl-6 ml-2">
+<button class="text-primary font-label-md text-label-md hover:brightness-125 transition-all bg-primary/10 px-3 py-1.5 rounded">AI Usage</button>
+<button class="text-on-surface-variant font-label-md text-label-md hover:text-primary transition-all">Notifications</button>
+<button class="text-on-surface-variant hover:text-primary transition-all flex items-center">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<div class="flex-1 overflow-y-auto p-container-padding">
+<div class="max-w-7xl mx-auto h-full flex flex-col gap-module-gap">
+<!-- Search Header -->
+<div class="glass-panel rounded-xl p-6 flex flex-col md:flex-row gap-4 justify-between items-start md:items-center">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface flex items-center gap-2">
+                                ABC Public School
+                                <span class="material-symbols-outlined text-secondary-container text-[20px]" title="Verified Entity">verified</span>
+</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">location_on</span> Austin, TX Independent School District
+                            </p>
+</div>
+<div class="flex gap-3 w-full md:w-auto">
+<div class="relative flex-1 md:w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+<input class="w-full bg-surface-container border border-outline-variant rounded-lg py-2 pl-9 pr-3 text-body-md focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none transition-all placeholder:text-outline-variant" placeholder="Search contacts..." type="text"/>
+</div>
+<button class="bg-surface-container border border-outline-variant rounded-lg p-2 hover:bg-surface-variant transition-colors flex items-center justify-center" title="Filter">
+<span class="material-symbols-outlined text-on-surface">tune</span>
+</button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-module-gap flex-1">
+<!-- Main Contact List (Left 8 cols) -->
+<div class="lg:col-span-8 flex flex-col gap-4">
+<div class="flex items-center justify-between px-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Discovered Contacts</h3>
+<span class="font-mono-label text-mono-label text-outline bg-surface-container px-2 py-1 rounded">12 Found</span>
+</div>
+<!-- Primary Decision Maker Card -->
+<div class="glass-panel rounded-xl p-5 border-l-2 border-l-secondary-container glass-panel-hover transition-all cursor-pointer relative overflow-hidden">
+<div class="absolute top-0 right-0 bg-secondary-container/10 text-secondary-container px-3 py-1 rounded-bl-lg font-label-sm text-label-sm flex items-center gap-1 border-b border-l border-secondary-container/20">
+<span class="material-symbols-outlined text-[14px]">stars</span> Primary Decision Maker
+                                </div>
+<div class="flex items-start gap-4 mt-2">
+<div class="w-12 h-12 rounded-full bg-surface-container border border-outline-variant flex items-center justify-center shrink-0">
+<span class="font-headline-sm text-headline-sm text-on-surface">DR</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2">
+<h4 class="font-headline-md text-headline-md text-on-surface">Dr. Sarah Jenkins</h4>
+<span class="bg-surface-container px-2 py-0.5 rounded-full border border-outline-variant font-mono-label text-mono-label text-on-surface-variant flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span> 98% Match
+                                            </span>
+</div>
+<p class="font-body-md text-body-md text-primary-fixed-dim">Superintendent</p>
+<div class="flex gap-6 mt-4">
+<div class="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-[16px] text-outline">mail</span>
+                                                s.jenkins@abcpublic.edu
+                                                <span class="material-symbols-outlined text-[14px] text-tertiary-fixed ml-1" title="Likely Valid">check_circle</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-[16px] text-outline">phone</span>
+                                                +1 (512) 555-0192
+                                                <span class="material-symbols-outlined text-[14px] text-secondary-container ml-1" title="Verified">verified</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<button class="w-8 h-8 rounded bg-primary-container/10 text-primary-container flex items-center justify-center hover:bg-primary-container/20 transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+<button class="w-8 h-8 rounded bg-surface-container text-on-surface flex items-center justify-center hover:bg-surface-variant transition-colors border border-outline-variant">
+<span class="material-symbols-outlined text-[18px]">open_in_new</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Influencer Card -->
+<div class="glass-panel rounded-xl p-5 border-l-2 border-l-tertiary-fixed-dim glass-panel-hover transition-all cursor-pointer">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container border border-outline-variant flex items-center justify-center shrink-0">
+<span class="font-headline-sm text-headline-sm text-on-surface">MT</span>
+</div>
+<div class="flex-1">
+<div class="flex flex-wrap items-center gap-2 mb-1">
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Michael Torres</h4>
+<span class="text-tertiary-fixed-dim font-label-sm text-label-sm border border-tertiary-fixed-dim/30 px-2 py-0.5 rounded bg-tertiary-fixed-dim/10">Key Influencer</span>
+<span class="bg-surface-container px-2 py-0.5 rounded-full border border-outline-variant font-mono-label text-mono-label text-on-surface-variant flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed-dim"></span> 85% Match
+                                            </span>
+</div>
+<p class="font-body-md text-body-md text-primary-fixed-dim">Director of IT Integration</p>
+<div class="flex flex-wrap gap-4 mt-3">
+<div class="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-[16px] text-outline">mail</span>
+                                                m.torres@abcpublic.edu
+                                                <span class="material-symbols-outlined text-[14px] text-secondary-container ml-1" title="Verified">verified</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md opacity-50">
+<span class="material-symbols-outlined text-[16px] text-outline">phone</span>
+                                                No direct line found
+                                            </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Standard Contact Card -->
+<div class="glass-panel rounded-xl p-5 border-l-2 border-l-outline-variant glass-panel-hover transition-all cursor-pointer opacity-80 hover:opacity-100">
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container border border-outline-variant flex items-center justify-center shrink-0">
+<span class="font-body-md text-body-md text-on-surface">AW</span>
+</div>
+<div class="flex-1">
+<div class="flex flex-wrap items-center gap-2">
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Amanda Wright</h4>
+<span class="bg-surface-container px-2 py-0.5 rounded-full border border-outline-variant font-mono-label text-mono-label text-on-surface-variant flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span> 42% Match
+                                            </span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Procurement Specialist</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar (Right 4 cols) -->
+<div class="lg:col-span-4 flex flex-col gap-module-gap">
+<!-- AI Recommendation -->
+<div class="glass-panel rounded-xl overflow-hidden border border-secondary-container/20">
+<div class="bg-secondary-container/10 p-3 border-b border-secondary-container/20 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-container text-[18px]">psychology</span>
+<span class="font-label-md text-label-md text-secondary-container uppercase tracking-wider">AI Strategy</span>
+</div>
+<div class="p-4 flex flex-col gap-3">
+<p class="font-body-md text-body-md text-on-surface">Based on past successful deployments in Texas ISDs, target the <span class="text-secondary-container font-medium">Superintendent</span> first for budget approval, while CCing the <span class="text-tertiary-fixed-dim font-medium">Director of IT</span> to handle technical objections.</p>
+<button class="mt-2 w-full bg-primary-container text-on-primary-container font-label-md text-label-md py-2 rounded flex items-center justify-center gap-2 hover:brightness-110 transition-all">
+<span class="material-symbols-outlined text-[16px]">draw</span> Draft Intro Email
+                                    </button>
+</div>
+</div>
+<!-- Verification Engine -->
+<div class="glass-panel rounded-xl p-4">
+<h3 class="font-label-md text-label-md text-outline uppercase tracking-wider mb-4">Verification Engine</h3>
+<div class="flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<span class="font-body-md text-body-md text-on-surface-variant flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-secondary-container">verified</span> Verified</span>
+<span class="font-mono-label text-mono-label text-on-surface">1</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-body-md text-body-md text-on-surface-variant flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-tertiary-fixed">check_circle</span> Likely</span>
+<span class="font-mono-label text-mono-label text-on-surface">1</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-body-md text-body-md text-on-surface-variant flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-outline">help</span> Unverified</span>
+<span class="font-mono-label text-mono-label text-on-surface">10</span>
+</div>
+</div>
+</div>
+<!-- Contact History Timeline -->
+<div class="glass-panel rounded-xl p-4 flex-1">
+<h3 class="font-label-md text-label-md text-outline uppercase tracking-wider mb-4">Interaction History</h3>
+<div class="relative border-l border-outline-variant/30 ml-2 pl-4 py-2 flex flex-col gap-6">
+<div class="relative">
+<div class="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-surface border border-outline-variant"></div>
+<p class="font-mono-label text-mono-label text-outline mb-1">Oct 12, 2023 - 14:30</p>
+<p class="font-body-md text-body-md text-on-surface"><span class="text-primary-fixed">Email Sent</span> to Dr. Sarah Jenkins.</p>
+<a class="font-label-sm text-label-sm text-primary-container hover:underline mt-1 inline-block" href="#">View Email</a>
+</div>
+<div class="relative">
+<div class="absolute -left-[21px] top-1 w-2.5 h-2.5 rounded-full bg-surface border border-outline-variant"></div>
+<p class="font-mono-label text-mono-label text-outline mb-1">Sep 28, 2023 - 09:15</p>
+<p class="font-body-md text-body-md text-on-surface"><span class="text-tertiary-fixed-dim">Website Visit</span> by Michael Torres.</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Viewed Pricing Page.</p>
+</div>
+</div>
+</div>
+<!-- Privacy Status -->
+<div class="flex items-center justify-center gap-2 py-2">
+<span class="material-symbols-outlined text-[14px] text-outline">policy</span>
+<span class="font-label-sm text-label-sm text-outline">CCPA Compliant Data Sourcing</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

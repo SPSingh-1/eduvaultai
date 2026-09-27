@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Customer 360 - ABC Public School | EduVault AI</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-container": "#bdffdb",
+                      "outline-variant": "#434655",
+                      "tertiary-fixed": "#6ffbbe",
+                      "on-tertiary-fixed": "#002113",
+                      "on-surface": "#dbe2fd",
+                      "outline": "#8d90a0",
+                      "surface-tint": "#b4c5ff",
+                      "surface-container-lowest": "#060d20",
+                      "primary-fixed-dim": "#b4c5ff",
+                      "on-primary-container": "#eeefff",
+                      "on-error": "#690005",
+                      "on-secondary": "#00344d",
+                      "error": "#ffb4ab",
+                      "on-secondary-fixed": "#001e2f",
+                      "surface": "#0b1326",
+                      "on-surface-variant": "#c3c6d7",
+                      "surface-dim": "#0b1326",
+                      "surface-container": "#171f33",
+                      "inverse-surface": "#dbe2fd",
+                      "tertiary": "#4edea3",
+                      "primary": "#b4c5ff",
+                      "secondary": "#89ceff",
+                      "inverse-primary": "#0053db",
+                      "on-secondary-container": "#00344e",
+                      "surface-container-high": "#222a3e",
+                      "secondary-fixed": "#c9e6ff",
+                      "primary-fixed": "#dbe1ff",
+                      "on-tertiary": "#003824",
+                      "tertiary-fixed-dim": "#4edea3",
+                      "on-background": "#dbe2fd",
+                      "on-primary": "#002a78",
+                      "on-secondary-fixed-variant": "#004c6e",
+                      "primary-container": "#2563eb",
+                      "error-container": "#93000a",
+                      "secondary-fixed-dim": "#89ceff",
+                      "on-error-container": "#ffdad6",
+                      "on-primary-fixed": "#00174b",
+                      "surface-bright": "#31394e",
+                      "surface-variant": "#2d3449",
+                      "tertiary-container": "#007d55",
+                      "on-tertiary-fixed-variant": "#005236",
+                      "background": "#0b1326",
+                      "inverse-on-surface": "#283044",
+                      "surface-container-low": "#131b2e",
+                      "secondary-container": "#00a2e6",
+                      "surface-container-highest": "#2d3449",
+                      "on-primary-fixed-variant": "#003ea8"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "margin-md": "24px",
+                      "panel-gap": "12px",
+                      "unit": "4px",
+                      "gutter": "16px",
+                      "margin-sm": "16px",
+                      "margin-lg": "40px"
+              },
+              "fontFamily": {
+                      "body-lg": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "display-lg": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "data-mono": ["JetBrains Mono"],
+                      "headline-sm": ["Inter"],
+                      "label-caps": ["JetBrains Mono"]
+              },
+              "fontSize": {
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "data-mono": ["13px", {"lineHeight": "18px", "fontWeight": "500"}],
+                      "headline-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        /* Pulse Animation for Status Indicators */
+        @keyframes pulse-status {
+            0% { box-shadow: 0 0 0 0 rgba(78, 222, 163, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(78, 222, 163, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(78, 222, 163, 0); }
+        }
+        .status-pulse-green {
+            animation: pulse-status 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-lg text-body-lg antialiased overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- SideNavBar (from JSON) -->
+<nav class="bg-surface border-r border-outline-variant/20 backdrop-blur-xl w-[280px] h-full fixed left-0 top-0 flex flex-col py-6 z-50">
+<!-- Brand Header -->
+<div class="px-margin-sm mb-8 flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">EduVault AI</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Sales Hunter Suite</p>
+</div>
+</div>
+<!-- Main Navigation -->
+<div class="flex-1 overflow-y-auto px-3 space-y-1">
+<!-- Active State Logic: Customer 360 Maps best to CRM -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-sm text-body-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-body-sm text-body-sm">Discovery</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined">radar</span>
+<span class="font-body-sm text-body-sm">Lead Intel</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined">campaign</span>
+<span class="font-body-sm text-body-sm">Campaigns</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined">smart_toy</span>
+<span class="font-body-sm text-body-sm">AI Workforce</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined">forum</span>
+<span class="font-body-sm text-body-sm">Communication</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined">monetization_on</span>
+<span class="font-body-sm text-body-sm">Sales</span>
+</a>
+<!-- ACTIVE TAB -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-primary bg-primary/10 border-r-2 border-primary scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">groups</span>
+<span class="font-body-sm text-body-sm">CRM</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-body-sm text-body-sm">Revenue</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined">settings_input_component</span>
+<span class="font-body-sm text-body-sm">Automation</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-body-sm text-body-sm">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined">storefront</span>
+<span class="font-body-sm text-body-sm">Marketplace</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined">extension</span>
+<span class="font-body-sm text-body-sm">Integrations</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors scale-[0.98] duration-150" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-sm text-body-sm">Settings</span>
+</a>
+</div>
+<!-- Footer Actions -->
+<div class="mt-auto px-margin-sm pt-4 border-t border-outline-variant/20">
+<button class="w-full bg-primary-container text-on-primary-container font-body-sm text-body-sm font-semibold py-2 rounded-lg shadow-[0_0_10px_rgba(37,99,235,0.3)] hover:bg-primary-container/90 transition-colors mb-4">
+                Deploy Agent
+            </button>
+<div class="flex flex-col space-y-2">
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">help</span>
+<span class="font-body-sm text-body-sm">Support</span>
+</a>
+<a class="flex items-center gap-3 text-on-surface-variant hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">account_circle</span>
+<span class="font-body-sm text-body-sm">Account</span>
+</a>
+</div>
+</div>
+</nav>
+<!-- TopNavBar (from JSON) -->
+<header class="fixed top-0 right-0 w-[calc(100%-280px)] h-16 bg-surface/80 border-b border-outline-variant/20 backdrop-blur-md flex justify-between items-center px-margin-md z-40">
+<!-- Navigation Links -->
+<div class="flex items-center gap-6">
+<a class="font-label-caps text-label-caps text-primary font-bold hover:text-primary transition-all" href="#">AI Command Center</a>
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-4">
+<button class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-all px-3 py-1.5 rounded border border-outline-variant/30 hover:border-primary/50">Tasks</button>
+<button class="font-label-caps text-label-caps text-on-primary-container bg-primary-container hover:bg-primary-container/90 transition-all px-4 py-1.5 rounded shadow-[0_0_8px_rgba(37,99,235,0.2)]">Upgrade Credits</button>
+<div class="w-px h-6 bg-outline-variant/30 mx-2"></div>
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined">bolt</span>
+</button>
+<button class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant/30 hover:border-primary transition-colors">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a corporate user in a modern office setting with cool lighting, optimized for a small UI avatar." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBs_jQ2R3Fo114KtPGe5GyGaHl0vTNJbLdIklSJnSRhoDUIkEIvFFmXvrYZ5crscKsA2R_cFXa8oMMLoIe1ui3waZY5PkuXpBO3yOnhnZflbJmHpKYLMF4vC2FpzjzahGdFrnTrkRqvkbXaYcE7UOZx753db89FPjBqZFYId2m7faqsonzmkgLZcBjKLE2NxQ5fZBiWUwyNODzH2cS0m9LQY5excTSSumsGzsqEEsDMjk8mIkoFdXMYtw"/>
+</button>
+</div>
+</header>
+<!-- Main Mission Control Canvas -->
+<main class="ml-[280px] mt-16 p-margin-md min-h-[calc(100vh-64px)] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-surface-container-high/20 to-surface">
+<!-- Customer Hero Banner -->
+<div class="bg-surface-container/40 border border-outline-variant/20 backdrop-blur-[12px] rounded-xl p-margin-md mb-margin-md flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative overflow-hidden group">
+<!-- Subtle Rim Light Effect on Hover -->
+<div class="absolute inset-0 border border-transparent group-hover:border-primary/30 rounded-xl transition-colors duration-500 pointer-events-none"></div>
+<!-- Left: Identity -->
+<div class="flex items-center gap-4 relative z-10">
+<div class="w-14 h-14 rounded-lg bg-surface-container-highest border border-outline-variant/30 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[32px] text-on-surface">school</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-1">ABC Public School</h2>
+<div class="flex items-center gap-3">
+<span class="font-data-mono text-data-mono text-on-surface-variant">ID: SCH-8924</span>
+<div class="w-1 h-1 rounded-full bg-outline-variant/50"></div>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">K-12 Institution</span>
+</div>
+</div>
+</div>
+<!-- Right: Critical Metrics -->
+<div class="flex items-center gap-8 relative z-10">
+<!-- Status -->
+<div class="flex flex-col items-end">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-1">System Status</span>
+<div class="flex items-center gap-2">
+<div class="w-2.5 h-2.5 rounded-full bg-tertiary status-pulse-green"></div>
+<span class="font-data-mono text-data-mono text-tertiary">Active</span>
+</div>
+</div>
+<div class="w-px h-10 bg-outline-variant/30"></div>
+<!-- Health Score -->
+<div class="flex flex-col items-end">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-1">Health Score</span>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-[20px]">monitor_heart</span>
+<span class="font-headline-sm text-headline-sm text-tertiary">94<span class="text-on-surface-variant text-body-sm font-normal">/100</span></span>
+</div>
+</div>
+<div class="w-px h-10 bg-outline-variant/30"></div>
+<!-- Revenue -->
+<div class="flex flex-col items-end">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-1">ARR Impact</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">₹4.8 <span class="text-on-surface-variant text-body-sm font-normal">Lakhs</span></span>
+</div>
+</div>
+</div>
+<!-- AI Insights Prominent Callout -->
+<div class="w-full bg-primary-container/10 border border-primary/20 rounded-xl p-margin-sm mb-margin-md flex items-start gap-4 relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="mt-1 shrink-0">
+<span class="material-symbols-outlined text-primary text-[24px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div>
+<h3 class="font-label-caps text-label-caps text-primary mb-1 tracking-wider">AI Customer Intelligence Engine</h3>
+<p class="font-body-lg text-body-lg text-on-surface">Customer is highly engaged with the <span class="text-primary font-semibold">Fees module</span> (92% utilization) but has not activated the <span class="text-secondary font-semibold">Transport module</span> despite configuring fleet details. <strong class="text-tertiary">High-probability upsell opportunity detected.</strong></p>
+</div>
+<div class="ml-auto shrink-0 flex items-center">
+<button class="bg-surface/50 hover:bg-surface border border-outline-variant/30 font-label-caps text-label-caps px-4 py-2 rounded-lg text-on-surface transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">add_task</span>
+                    Create Task
+                </button>
+</div>
+</div>
+<!-- Grid Layout (12 Column) -->
+<div class="grid grid-cols-12 gap-margin-md">
+<!-- Product Adoption Grid (Col Span 8) -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container/40 border border-outline-variant/20 backdrop-blur-[12px] rounded-xl p-6 flex flex-col h-full">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant">grid_view</span>
+                        Product Adoption
+                    </h3>
+<button class="text-primary font-label-caps text-label-caps hover:underline">View Licenses</button>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 flex-1">
+<!-- Module: ERP -->
+<div class="bg-surface-container-high/50 border border-outline-variant/10 rounded-lg p-4 flex flex-col justify-between hover:border-outline-variant/30 transition-colors">
+<div class="flex justify-between items-start mb-4">
+<div class="w-8 h-8 rounded bg-surface-bright flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface text-[18px]">account_tree</span>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold tracking-wider bg-tertiary/10 text-tertiary uppercase">Core</span>
+</div>
+<div>
+<p class="font-body-sm text-body-sm text-on-surface font-semibold mb-1">Core ERP</p>
+<p class="font-data-mono text-data-mono text-on-surface-variant text-[11px]">100% Implemented</p>
+</div>
+</div>
+<!-- Module: Fees -->
+<div class="bg-surface-container-high/50 border border-outline-variant/10 rounded-lg p-4 flex flex-col justify-between hover:border-outline-variant/30 transition-colors">
+<div class="flex justify-between items-start mb-4">
+<div class="w-8 h-8 rounded bg-surface-bright flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface text-[18px]">payments</span>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold tracking-wider bg-tertiary/10 text-tertiary uppercase">Active</span>
+</div>
+<div>
+<p class="font-body-sm text-body-sm text-on-surface font-semibold mb-1">Fee Management</p>
+<div class="w-full bg-surface-container-highest rounded-full h-1.5 mt-2 overflow-hidden">
+<div class="bg-primary h-1.5 rounded-full w-[92%] shadow-[0_0_8px_rgba(37,99,235,0.8)]"></div>
+</div>
+</div>
+</div>
+<!-- Module: Attendance -->
+<div class="bg-surface-container-high/50 border border-outline-variant/10 rounded-lg p-4 flex flex-col justify-between hover:border-outline-variant/30 transition-colors">
+<div class="flex justify-between items-start mb-4">
+<div class="w-8 h-8 rounded bg-surface-bright flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface text-[18px]">fact_check</span>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold tracking-wider bg-tertiary/10 text-tertiary uppercase">Active</span>
+</div>
+<div>
+<p class="font-body-sm text-body-sm text-on-surface font-semibold mb-1">Attendance Biometrics</p>
+<div class="w-full bg-surface-container-highest rounded-full h-1.5 mt-2 overflow-hidden">
+<div class="bg-primary h-1.5 rounded-full w-[65%]"></div>
+</div>
+</div>
+</div>
+<!-- Module: Transport -->
+<div class="bg-surface-container-high/20 border border-outline-variant/10 border-dashed rounded-lg p-4 flex flex-col justify-between hover:border-outline-variant/30 transition-colors relative">
+<div class="absolute inset-0 bg-surface-container-lowest/20 backdrop-blur-[1px] rounded-lg z-0 pointer-events-none"></div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<div class="w-8 h-8 rounded bg-surface-container flex items-center justify-center opacity-50">
+<span class="material-symbols-outlined text-on-surface text-[18px]">directions_bus</span>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold tracking-wider bg-outline-variant/20 text-on-surface-variant uppercase">Setup phase</span>
+</div>
+<div class="relative z-10">
+<p class="font-body-sm text-body-sm text-on-surface-variant font-semibold mb-1">Transport</p>
+<p class="font-data-mono text-data-mono text-on-surface-variant/50 text-[11px]">0% Usage</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Detailed Health Visualization (Col Span 4) -->
+<div class="col-span-12 lg:col-span-4 bg-surface-container/40 border border-outline-variant/20 backdrop-blur-[12px] rounded-xl p-6 flex flex-col h-full">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant">vital_signs</span>
+                    Health Diagnostics
+                </h3>
+<div class="space-y-6 flex-1">
+<!-- Engagement -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<span class="font-body-sm text-body-sm text-on-surface-variant">User Engagement</span>
+<span class="font-data-mono text-data-mono text-on-surface">88%</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-secondary rounded-full h-2 w-[88%] shadow-[0_0_8px_rgba(137,206,255,0.4)]"></div>
+</div>
+</div>
+<!-- Product Usage -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Module Utilization</span>
+<span class="font-data-mono text-data-mono text-on-surface">75%</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-primary rounded-full h-2 w-[75%]"></div>
+</div>
+</div>
+<!-- Payment History -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Payment Reliability</span>
+<span class="font-data-mono text-data-mono text-tertiary">100%</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2">
+<div class="bg-tertiary rounded-full h-2 w-[100%] shadow-[0_0_8px_rgba(78,222,163,0.5)]"></div>
+</div>
+</div>
+<!-- Support Tickets -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Support Load (Low is better)</span>
+<span class="font-data-mono text-data-mono text-tertiary">Low</span>
+</div>
+<div class="flex gap-1 h-2">
+<div class="flex-1 bg-tertiary rounded-l-full opacity-30"></div>
+<div class="flex-1 bg-surface-container-highest"></div>
+<div class="flex-1 bg-surface-container-highest rounded-r-full"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Decision Makers (Col Span 7) -->
+<div class="col-span-12 lg:col-span-7 bg-surface-container/40 border border-outline-variant/20 backdrop-blur-[12px] rounded-xl p-6">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant">groups</span>
+                    Key Decision Makers
+                </h3>
+<div class="space-y-4">
+<!-- Person 1 -->
+<div class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container-high/50 transition-colors border border-transparent hover:border-outline-variant/20">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant/30">
+<img class="w-full h-full object-cover" data-alt="Professional headshot of a middle-aged male school principal in a dark suit with a modern dark corporate background. High quality, well lit." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfybRgVzuTb5OrcemG6mf6jbIfaAs30ZC5X3IwguqOt8AuymUW1WB_9x1V46xJNm7eQ_a6EC099hhre3XgTNiuviqXC_ZDP6zasoloxesiRbySJlpkqDYh9XbLEJ4jH0CbbiU-v0ye5PgT_akvND7LgZCf5JbLuEdsxSaxAIu85zHsDro8ILIOAPTU2frpfRjGe1xCk3rjLZSw172QpvwpzNW5oeg05hsjmQM2uDdZXG8uQvZhIlC0YA"/>
+</div>
+<div>
+<p class="font-body-sm text-body-sm text-on-surface font-semibold">Dr. Arvind Sharma</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Principal / Director</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex gap-1">
+<div class="w-2 h-6 bg-tertiary rounded-sm"></div>
+<div class="w-2 h-6 bg-tertiary rounded-sm"></div>
+<div class="w-2 h-6 bg-tertiary rounded-sm"></div>
+<div class="w-2 h-6 bg-surface-container-highest rounded-sm"></div>
+</div>
+<span class="font-data-mono text-data-mono text-on-surface-variant w-16 text-right">Strong</span>
+<button class="w-8 h-8 rounded flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-bright transition-colors">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+</button>
+</div>
+</div>
+<!-- Person 2 -->
+<div class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container-high/50 transition-colors border border-transparent hover:border-outline-variant/20">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant/30">
+<img class="w-full h-full object-cover" data-alt="Professional headshot of an adult female school administrator in a business formal outfit, set against a dark glassmorphism background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaiUBfIJCGGTNpuQmZn88spuuNSkh09lUf7g32k4SeXefoef2moGU_WWbDmoZyNUuyBVJaaMZz45iQ9lrCv-6o2V9fO05ua5S9BaELL1TslFsxoLU40QppmxDnENutsXRpLITJOBGqq9Ak_g5BQ17rlvmCoBMp6khv3OyijHlHPASTKAJMhHcwv-_hoqmRWf4naAHep_X-UJNFR9ASS-b02G76fwy6bQTmT4u5jm-MP2yog6pLOqSi1Q"/>
+</div>
+<div>
+<p class="font-body-sm text-body-sm text-on-surface font-semibold">Meera Desai</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Head of Operations</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex gap-1">
+<div class="w-2 h-6 bg-tertiary rounded-sm"></div>
+<div class="w-2 h-6 bg-tertiary rounded-sm"></div>
+<div class="w-2 h-6 bg-surface-container-highest rounded-sm"></div>
+<div class="w-2 h-6 bg-surface-container-highest rounded-sm"></div>
+</div>
+<span class="font-data-mono text-data-mono text-on-surface-variant w-16 text-right">Warm</span>
+<button class="w-8 h-8 rounded flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-bright transition-colors">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Renewal Intelligence (Col Span 5) -->
+<div class="col-span-12 lg:col-span-5 bg-surface-container/40 border border-outline-variant/20 backdrop-blur-[12px] rounded-xl p-6 relative overflow-hidden">
+<!-- Decorative background element for the card -->
+<div class="absolute -right-10 -bottom-10 w-40 h-40 bg-primary/5 rounded-full blur-[40px] pointer-events-none"></div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant">update</span>
+                    Renewal Intelligence
+                </h3>
+<div class="grid grid-cols-2 gap-4 mb-6">
+<div class="bg-surface-container-high/40 rounded-lg p-4 border border-outline-variant/10">
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-2">Next Renewal</span>
+<span class="font-data-mono text-data-mono text-on-surface text-[16px]">Oct 15, 2024</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant block mt-1">in 45 days</span>
+</div>
+<div class="bg-surface-container-high/40 rounded-lg p-4 border border-outline-variant/10">
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-2">Probability</span>
+<div class="flex items-end gap-1">
+<span class="font-headline-md text-headline-md text-tertiary leading-none">92</span>
+<span class="font-data-mono text-data-mono text-tertiary/70 pb-1">%</span>
+</div>
+</div>
+</div>
+<div class="border-t border-outline-variant/20 pt-4">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Churn Risk Factor</span>
+<span class="font-label-caps text-label-caps text-tertiary bg-tertiary/10 px-2 py-0.5 rounded">LOW</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Historical data and current engagement suggest a seamless auto-renewal. Upsell conversation recommended prior to contract generation.</p>
+</div>
+</div>
+</div>
+</main>
+</body></html>

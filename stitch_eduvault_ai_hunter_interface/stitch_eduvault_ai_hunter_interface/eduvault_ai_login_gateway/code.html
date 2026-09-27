@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login - EduVault AI Sales Hunter</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        /* Glassmorphism Utilities */
+        .glass-panel {
+            background: rgba(11, 19, 38, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 24px 64px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .glass-card {
+            background: rgba(19, 27, 46, 0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            background: rgba(19, 27, 46, 0.7);
+            border: 1px solid rgba(180, 197, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Form Inputs */
+        .premium-input {
+            background: rgba(23, 31, 51, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #dae2fd;
+            transition: all 0.3s ease;
+        }
+
+        .premium-input:focus {
+            background: rgba(23, 31, 51, 0.8);
+            border-color: #2563eb;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+            outline: none;
+        }
+
+        .premium-input::placeholder {
+            color: #8d90a0;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(37, 99, 235, 0.4);
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        }
+
+        .btn-social {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .btn-social:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b1326;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2d3449;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #434655;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "outline-variant": "#434655",
+                        "on-tertiary-container": "#f6edff",
+                        "tertiary": "#d0bcff",
+                        "tertiary-fixed": "#e9ddff",
+                        "on-tertiary": "#3c0091",
+                        "surface": "#0b1326",
+                        "surface-container-lowest": "#060e20",
+                        "on-secondary-container": "#00311f",
+                        "on-secondary-fixed-variant": "#005236",
+                        "secondary-fixed-dim": "#4edea3",
+                        "tertiary-fixed-dim": "#d0bcff",
+                        "surface-container": "#171f33",
+                        "surface-container-low": "#131b2e",
+                        "surface-dim": "#0b1326",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-secondary-fixed": "#002113",
+                        "surface-container-high": "#222a3d",
+                        "on-tertiary-fixed": "#23005c",
+                        "error": "#ffb4ab",
+                        "on-background": "#dae2fd",
+                        "inverse-primary": "#0053db",
+                        "on-surface": "#dae2fd",
+                        "on-tertiary-fixed-variant": "#5516be",
+                        "inverse-surface": "#dae2fd",
+                        "on-surface-variant": "#c3c6d7",
+                        "on-error-container": "#ffdad6",
+                        "on-error": "#690005",
+                        "secondary-fixed": "#6ffbbe",
+                        "surface-tint": "#b4c5ff",
+                        "error-container": "#93000a",
+                        "surface-variant": "#2d3449",
+                        "background": "#0b1326",
+                        "inverse-on-surface": "#283044",
+                        "primary-fixed": "#dbe1ff",
+                        "outline": "#8d90a0",
+                        "surface-container-highest": "#2d3449",
+                        "on-secondary": "#003824",
+                        "surface-bright": "#31394d",
+                        "on-primary-fixed": "#00174b",
+                        "secondary": "#4edea3",
+                        "primary": "#b4c5ff",
+                        "on-primary-container": "#eeefff",
+                        "secondary-container": "#00a572",
+                        "tertiary-container": "#7d4ce7",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-primary": "#002a78",
+                        "primary-container": "#2563eb"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px",
+                        '24': "24px"
+                    },
+                    spacing: {
+                        unit: "8px",
+                        "container-padding": "24px",
+                        "max-width": "1440px",
+                        gutter: "16px"
+                    },
+                    fontFamily: {
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "display-md": ["Inter"],
+                        "display-lg-mobile": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    fontSize: {
+                        "body-lg": ["18px", { lineHeight: "1.6", fontWeight: "400" }],
+                        "display-lg": ["48px", { lineHeight: "1.1", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "display-md": ["32px", { lineHeight: "1.2", fontWeight: "600" }],
+                        "display-lg-mobile": ["28px", { lineHeight: "1.2", letterSpacing: "-0.01em", fontWeight: "700" }],
+                        "label-sm": ["13px", { lineHeight: "1", letterSpacing: "0.05em", fontWeight: "500" }],
+                        "body-md": ["16px", { lineHeight: "1.5", fontWeight: "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex overflow-hidden">
+<!-- Left Panel (45%) -->
+<div class="hidden lg:flex w-[45%] relative flex-col justify-between p-12 overflow-hidden border-r border-white/5">
+<!-- Shader Background -->
+<!-- STITCH_SHADER_START:ANIMATION_7 class="absolute inset-0 w-full h-full z-0 opacity-80 mix-blend-screen" -->
+<div class="absolute inset-0 w-full h-full z-0 opacity-80 mix-blend-screen" style="display:block;">
+<canvas id="shader-canvas-ANIMATION_7" style="display:block;width:100%;height:100%"></canvas>
+<script>
+(function() {
+  const canvas = document.getElementById('shader-canvas-ANIMATION_7');
+
+  // Sync the WebGL drawing-buffer size with the CSS-driven layout size.
+  // This fires on initial layout and whenever the element is resized.
+  function syncSize() {
+    const w = canvas.clientWidth  || 1280;
+    const h = canvas.clientHeight || 720;
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width  = w;
+      canvas.height = h;
+    }
+  }
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(syncSize).observe(canvas);
+  }
+  syncSize();
+
+  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
+  const vs = `attribute vec2 a_position;
+varying vec2 v_texCoord;
+void main() {
+  v_texCoord = a_position * 0.5 + 0.5;
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+  const fs = `precision highp float;
+uniform float u_time;
+uniform vec2 u_resolution;
+varying vec2 v_texCoord;
+
+// Simplex 2D noise
+vec3 permute(vec3 x) { return mod(((x*34.0)+1.0)*x, 289.0); }
+float snoise(vec2 v){
+  const vec4 C = vec4(0.211324865405187, 0.366025403784439,
+           -0.577350269189626, 0.024390243902439);
+  vec2 i  = floor(v + dot(v, C.yy) );
+  vec2 x0 = v -   i + dot(i, C.xx);
+  vec2 i1;
+  i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+  vec4 x12 = x0.xyxy + C.xxzz;
+  x12.xy -= i1;
+  i = mod(i, 289.0);
+  vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 ))
+  + i.x + vec3(0.0, i1.x, 1.0 ));
+  vec3 m = max(0.5 - vec4(dot(x0,x0), dot(x12.xy,x12.xy),
+    dot(x12.zw,x12.zw), 0.0), 0.0);
+  m = m*m ;
+  m = m*m ;
+  vec3 x = 2.0 * fract(p * C.www) - 1.0;
+  vec3 h = abs(x) - 0.5;
+  vec3 ox = floor(x + 0.5);
+  vec3 a0 = x - ox;
+  m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
+  vec3 g;
+  g.x  = a0.x  * x0.x  + h.x  * x0.y;
+  g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+  return 130.0 * dot(m, g);
+}
+
+void main() {
+    vec2 uv = v_texCoord;
+    float noise = snoise(uv * 1.5 + u_time * 0.04);
+    
+    // Theme colors extracted from DESIGN_SYSTEM_6
+    vec3 background = vec3(0.043, 0.075, 0.149); // #0B1326
+    vec3 primary = vec3(0.145, 0.388, 0.922);    // #2563EB
+    vec3 accent = vec3(0.545, 0.361, 0.965);     // #8B5CF6
+    
+    float m1 = snoise(uv * 1.2 + u_time * 0.05) * 0.5 + 0.5;
+    float m2 = snoise(uv * 0.8 - u_time * 0.03) * 0.5 + 0.5;
+    
+    vec3 color = mix(background, primary, m1 * 0.25);
+    color = mix(color, accent, m2 * 0.15);
+    
+    // Add glowing neural nodes
+    float nodes = pow(max(0.0, snoise(uv * 8.0 + u_time * 0.1)), 12.0);
+    color += nodes * primary * 0.6;
+    
+    gl_FragColor = vec4(color, 1.0);
+}`;
+  function cs(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+  gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  const pos = gl.getAttribLocation(prog, 'a_position');
+  gl.enableVertexAttribArray(pos);
+  gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+  const uTime = gl.getUniformLocation(prog, 'u_time');
+  const uRes = gl.getUniformLocation(prog, 'u_resolution');
+  const uMouse = gl.getUniformLocation(prog, 'u_mouse');
+
+  // u_mouse is in pixel coordinates matching u_resolution (ShaderToy convention).
+  // Shaders that need normalized coords should use: u_mouse / u_resolution.
+  let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+  window.addEventListener('mousemove', (event) => {
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width && rect.height) {
+      const nx = (event.clientX - rect.left) / rect.width;
+      const ny = 1.0 - (event.clientY - rect.top) / rect.height;
+      mouse.x = nx * canvas.width;
+      mouse.y = ny * canvas.height;
+    }
+  });
+
+  function render(t) {
+    if (typeof ResizeObserver === 'undefined') syncSize();
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    if (uTime) gl.uniform1f(uTime, t * 0.001);
+    if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+    if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(render);
+  }
+  render(0);
+})();
+</script>
+</div>
+<!-- STITCH_SHADER_END:ANIMATION_7 -->
+<!-- Overlay Gradient for Readability -->
+<div class="absolute inset-0 bg-gradient-to-b from-surface/40 via-surface/20 to-surface/90 z-10"></div>
+<!-- Content Front -->
+<div class="relative z-20 flex flex-col h-full fade-up">
+<!-- Brand Mark (Optional/Subtle) -->
+<div class="flex items-center gap-2 mb-16">
+<span class="material-symbols-outlined text-primary text-2xl" data-weight="fill">shield</span>
+<span class="font-body-md text-primary font-semibold tracking-wide uppercase text-xs">Intelligence Engine</span>
+</div>
+<!-- Hero Typography -->
+<div class="max-w-md">
+<h1 class="font-display-lg text-display-lg text-white mb-6 leading-tight">Sell Smarter.<br/>Grow Faster.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-12">
+                    Your autonomous AI sales platform for discovering schools, generating qualified leads, and growing EduVault automatically.
+                </p>
+</div>
+<!-- Feature Cards (Glassmorphism) -->
+<div class="space-y-4 max-w-md mt-auto mb-16">
+<!-- Card 1 -->
+<div class="glass-card p-6 rounded-xl flex items-start gap-4 fade-up delay-100">
+<div class="w-10 h-10 rounded-lg bg-primary-container/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary" data-icon="travel_explore">travel_explore</span>
+</div>
+<div>
+<h3 class="font-label-sm text-label-sm text-white mb-1">AI School Discovery</h3>
+<p class="font-body-md text-sm text-on-surface-variant leading-snug">Automatically discovers schools from search engines, maps, and directories.</p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="glass-card p-6 rounded-xl flex items-start gap-4 fade-up delay-200">
+<div class="w-10 h-10 rounded-lg bg-tertiary-container/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-tertiary" data-icon="bar_chart">bar_chart</span>
+</div>
+<div>
+<h3 class="font-label-sm text-label-sm text-white mb-1">AI Lead Intelligence</h3>
+<p class="font-body-md text-sm text-on-surface-variant leading-snug">Scores every school based on buying potential.</p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="glass-card p-6 rounded-xl flex items-start gap-4 fade-up delay-300">
+<div class="w-10 h-10 rounded-lg bg-secondary-container/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary" data-icon="mail">mail</span>
+</div>
+<div>
+<h3 class="font-label-sm text-label-sm text-white mb-1">AI Personalized Outreach</h3>
+<p class="font-body-md text-sm text-on-surface-variant leading-snug">Creates unique emails for every school automatically.</p>
+</div>
+</div>
+</div>
+<!-- Footer Logos -->
+<div class="pt-8 border-t border-white/10 flex items-center gap-6 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+<span class="font-label-sm text-[10px] text-outline uppercase tracking-widest mr-4">Trusted By</span>
+<!-- Logo Placeholders (CSS rendering) -->
+<div class="h-6 w-24 bg-surface-variant rounded animate-pulse"></div>
+<div class="h-6 w-20 bg-surface-variant rounded animate-pulse"></div>
+<div class="h-6 w-28 bg-surface-variant rounded animate-pulse"></div>
+</div>
+</div>
+</div>
+<!-- Right Panel (55%) -->
+<div class="w-full lg:w-[55%] flex items-center justify-center p-6 sm:p-12 lg:p-24 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-surface-container-high via-background to-background relative">
+<!-- Ambient Glows -->
+<div class="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="absolute bottom-0 left-0 w-96 h-96 bg-tertiary/5 rounded-full blur-[100px] pointer-events-none"></div>
+<!-- Login Card -->
+<div class="glass-panel w-full max-w-[480px] rounded-24 p-8 sm:p-12 relative z-10 fade-up">
+<!-- Header -->
+<div class="text-center mb-10">
+<div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-surface-container border border-white/5 shadow-inner mb-6 relative group">
+<div class="absolute inset-0 bg-primary/20 rounded-2xl blur-md group-hover:bg-primary/30 transition-all"></div>
+<span class="material-symbols-outlined text-3xl text-primary relative z-10" data-icon="school" data-weight="fill">school</span>
+<span class="material-symbols-outlined text-xl text-white absolute bottom-2 right-2 z-10" data-icon="shield" data-weight="fill">shield</span>
+</div>
+<h2 class="font-display-md text-display-md text-white mb-2">EduVault AI Sales Hunter</h2>
+<p class="font-body-md text-on-surface-variant">Welcome back. Sign in to continue your AI workspace.</p>
+</div>
+<!-- Form -->
+<form class="space-y-6">
+<!-- Email -->
+<div class="space-y-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant">Email Address</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline" data-icon="mail">mail</span>
+<input class="premium-input w-full h-12 pl-12 pr-4 rounded-xl font-body-md text-sm focus:ring-0" placeholder="you@eduvault.com" type="email"/>
+</div>
+</div>
+<!-- Password -->
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="font-label-sm text-label-sm text-on-surface-variant">Password</label>
+<a class="font-label-sm text-label-sm text-primary hover:text-primary-fixed transition-colors" href="#">Forgot Password?</a>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline" data-icon="lock">lock</span>
+<input class="premium-input w-full h-12 pl-12 pr-12 rounded-xl font-body-md text-sm focus:ring-0" placeholder="••••••••" type="password"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-white transition-colors" type="button">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+<!-- Remember Me -->
+<div class="flex items-center">
+<input class="w-4 h-4 rounded border-outline-variant bg-surface-container-low text-primary focus:ring-primary focus:ring-offset-background cursor-pointer" id="remember" type="checkbox"/>
+<label class="ml-2 font-body-md text-sm text-on-surface-variant cursor-pointer" for="remember">Remember me</label>
+</div>
+<!-- Submit Button -->
+<button class="btn-primary w-full h-[56px] rounded-xl font-label-sm text-label-sm text-white uppercase tracking-wider flex items-center justify-center gap-2 mt-4" type="submit">
+                    Sign In
+                    <span class="material-symbols-outlined text-lg" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</form>
+<!-- Divider -->
+<div class="my-8 flex items-center text-outline text-xs uppercase font-label-sm tracking-widest">
+<div class="flex-1 border-t border-white/10"></div>
+<span class="px-4">Or continue with</span>
+<div class="flex-1 border-t border-white/10"></div>
+</div>
+<!-- Social Auth -->
+<div class="grid grid-cols-3 gap-4 mb-8">
+<button class="btn-social h-12 rounded-xl flex items-center justify-center text-on-surface-variant hover:text-white">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span> <!-- G Logo placeholder -->
+</button>
+<button class="btn-social h-12 rounded-xl flex items-center justify-center text-on-surface-variant hover:text-white">
+<span class="material-symbols-outlined" data-icon="window">window</span> <!-- MS Logo placeholder -->
+</button>
+<button class="btn-social h-12 rounded-xl flex items-center justify-center text-on-surface-variant hover:text-white">
+<span class="material-symbols-outlined" data-icon="code">code</span> <!-- GH Logo placeholder -->
+</button>
+</div>
+<!-- Workspace Indicator -->
+<div class="p-4 rounded-xl bg-surface-container-low border border-white/5 flex items-center justify-between group cursor-pointer hover:bg-surface-container transition-colors mb-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary/20 flex items-center justify-center text-primary font-bold text-xs">
+                        ED
+                    </div>
+<div>
+<p class="font-label-sm text-[10px] text-outline uppercase tracking-wider mb-0.5">Recently Used Workspace</p>
+<p class="font-body-md text-sm text-white">EduVault Demo</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-white transition-colors" data-icon="swap_vert">swap_vert</span>
+</div>
+<!-- Security Note -->
+<div class="flex items-center justify-center gap-2 text-outline">
+<span class="material-symbols-outlined text-sm" data-icon="verified_user">verified_user</span>
+<p class="font-body-md text-xs">Protected with enterprise-grade encryption.</p>
+</div>
+</div>
+</div>
+</body></html>

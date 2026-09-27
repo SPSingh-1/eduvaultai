@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EduVault - Renewal &amp; Expansion Center</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts for Design System -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config injected from Style Guidance -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-container": "#3e495d",
+                    "primary": "#8ed5ff",
+                    "tertiary-fixed": "#ffddb8",
+                    "surface-container-highest": "#2d3449",
+                    "error-container": "#93000a",
+                    "surface-tint": "#7bd0ff",
+                    "surface-variant": "#2d3449",
+                    "tertiary-fixed-dim": "#ffb960",
+                    "on-primary-fixed": "#001e2c",
+                    "on-error": "#690005",
+                    "surface-container-lowest": "#060d20",
+                    "on-secondary": "#263143",
+                    "error": "#ffb4ab",
+                    "on-tertiary-fixed": "#2a1700",
+                    "surface": "#0b1326",
+                    "surface-dim": "#0b1326",
+                    "primary-fixed": "#c4e7ff",
+                    "on-secondary-fixed-variant": "#3c475a",
+                    "primary-container": "#38bdf8",
+                    "secondary": "#bcc7de",
+                    "on-error-container": "#ffdad6",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "on-surface": "#dbe2fd",
+                    "on-primary-container": "#004965",
+                    "surface-container-high": "#222a3e",
+                    "tertiary-container": "#f1a02b",
+                    "inverse-primary": "#00668a",
+                    "on-surface-variant": "#bdc8d1",
+                    "surface-bright": "#31394e",
+                    "outline": "#87929a",
+                    "primary-fixed-dim": "#7bd0ff",
+                    "on-tertiary-container": "#613b00",
+                    "surface-container": "#171f33",
+                    "on-secondary-fixed": "#111c2d",
+                    "tertiary": "#ffc176",
+                    "secondary-fixed": "#d8e3fb",
+                    "on-background": "#dbe2fd",
+                    "secondary-fixed-dim": "#bcc7de",
+                    "surface-container-low": "#131b2e",
+                    "inverse-on-surface": "#283044",
+                    "on-primary": "#00354a",
+                    "background": "#0b1326",
+                    "on-primary-fixed-variant": "#004c69",
+                    "inverse-surface": "#dbe2fd",
+                    "on-secondary-container": "#aeb9d0",
+                    "outline-variant": "#3e484f",
+                    "on-tertiary": "#472a00"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "max-width": "1600px",
+                    "margin-desktop": "32px",
+                    "gutter": "16px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "data-mono": [
+                            "JetBrains Mono"
+                    ],
+                    "headline-lg": [
+                            "Inter"
+                    ],
+                    "body-lg": [
+                            "Inter"
+                    ],
+                    "body-sm": [
+                            "Inter"
+                    ],
+                    "display": [
+                            "Inter"
+                    ],
+                    "label-caps": [
+                            "JetBrains Mono"
+                    ],
+                    "headline-md": [
+                            "Inter"
+                    ]
+            },
+            "fontSize": {
+                    "data-mono": [
+                            "13px",
+                            {
+                                    "lineHeight": "18px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-lg": [
+                            "32px",
+                            {
+                                    "lineHeight": "40px",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-lg": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "body-sm": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "display": [
+                            "48px",
+                            {
+                                    "lineHeight": "56px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "label-caps": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "600"
+                            }
+                    ]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        /* Custom scrollbar for Kanban board */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1); 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2); 
+        }
+        
+        /* Subtle glow for selected card */
+        .card-selected {
+            box-shadow: inset 0 0 0 1px #8ed5ff, 0 8px 32px rgba(0,0,0,0.5);
+            background-color: rgba(34, 42, 62, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-lg min-h-screen overflow-x-hidden antialiased">
+<!-- Shared Component: SideNavBar -->
+<nav class="fixed left-0 top-0 h-full w-64 rounded-r-xl bg-surface/70 backdrop-blur-xl border-r border-white/10 shadow-xl flex flex-col py-margin-desktop px-4 z-50">
+<div class="mb-8 px-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary flex items-center justify-center text-on-primary font-bold">E</div>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-primary">EduVault</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest text-[10px]">AI Operating System</p>
+</div>
+</div>
+<ul class="flex-1 space-y-2">
+<!-- Active state semantic logic: This is a renewals/revenue screen. "Sales" is the closest intent match in the given JSON. -->
+<li><a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high/50 hover:text-on-surface transition-all scale-95 duration-200 font-body-sm text-body-sm" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span> Dashboard</a></li>
+<li><a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high/50 hover:text-on-surface transition-all scale-95 duration-200 font-body-sm text-body-sm" href="#"><span class="material-symbols-outlined text-[20px]">explore</span> School Discovery</a></li>
+<li><a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high/50 hover:text-on-surface transition-all scale-95 duration-200 font-body-sm text-body-sm" href="#"><span class="material-symbols-outlined text-[20px]">psychology</span> Lead Intelligence</a></li>
+<li><a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high/50 hover:text-on-surface transition-all scale-95 duration-200 font-body-sm text-body-sm" href="#"><span class="material-symbols-outlined text-[20px]">campaign</span> Campaigns</a></li>
+<li><a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high/50 hover:text-on-surface transition-all scale-95 duration-200 font-body-sm text-body-sm" href="#"><span class="material-symbols-outlined text-[20px]">smart_toy</span> AI Workforce</a></li>
+<li><a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high/50 hover:text-on-surface transition-all scale-95 duration-200 font-body-sm text-body-sm" href="#"><span class="material-symbols-outlined text-[20px]">forum</span> Communication</a></li>
+<!-- ACTIVE TAB: Sales -->
+<li><a class="flex items-center gap-3 px-4 py-3 rounded-lg text-primary font-bold border-r-2 border-primary bg-surface-container-high/30 font-body-sm text-body-sm" href="#"><span class="material-symbols-outlined text-[20px] text-primary" style="font-variation-settings: 'FILL' 1;">payments</span> Sales</a></li>
+<li><a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high/50 hover:text-on-surface transition-all scale-95 duration-200 font-body-sm text-body-sm" href="#"><span class="material-symbols-outlined text-[20px]">hub</span> CRM</a></li>
+<li><a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high/50 hover:text-on-surface transition-all scale-95 duration-200 font-body-sm text-body-sm" href="#"><span class="material-symbols-outlined text-[20px]">groups</span> Customers</a></li>
+<li><a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high/50 hover:text-on-surface transition-all scale-95 duration-200 font-body-sm text-body-sm" href="#"><span class="material-symbols-outlined text-[20px]">analytics</span> Analytics</a></li>
+</ul>
+<div class="mt-auto pt-4 border-t border-white/10 space-y-2">
+<div class="px-4 py-2 mb-2 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="font-label-caps text-label-caps text-primary uppercase">Agent Status: Active</span>
+</div>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high/50 hover:text-on-surface transition-all font-body-sm text-body-sm" href="#"><span class="material-symbols-outlined text-[20px]">settings</span> Settings</a>
+<a class="flex items-center gap-3 px-4 py-2 rounded-lg text-on-surface-variant font-medium hover:bg-surface-container-high/50 hover:text-on-surface transition-all font-body-sm text-body-sm" href="#"><span class="material-symbols-outlined text-[20px]">help_outline</span> Help</a>
+</div>
+</nav>
+<!-- Shared Component: TopNavBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] h-16 bg-surface/60 backdrop-blur-lg border-b border-white/10 flex justify-between items-center px-margin-desktop z-40">
+<!-- Search left -->
+<div class="flex-1 flex items-center gap-4">
+<div class="relative w-64 group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full bg-surface-container-high/50 border border-white/10 rounded-full py-1.5 pl-10 pr-4 font-body-sm text-body-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-primary/50 focus:bg-surface-container-high transition-all" placeholder="Search accounts, contracts..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex items-center gap-6">
+<!-- Top Nav Active Logic: Specific sub-area for this screen -->
+<a class="font-body-lg text-body-lg text-primary border-b-2 border-primary pb-1" href="#">AI Strategy</a>
+</nav>
+<div class="flex items-center gap-4 border-l border-white/10 pl-6">
+<button class="text-on-surface-variant hover:text-primary transition-colors hover:opacity-80"><span class="material-symbols-outlined">notifications</span></button>
+<button class="text-on-surface-variant hover:text-primary transition-colors hover:opacity-80"><span class="material-symbols-outlined">task_alt</span></button>
+<button class="text-on-surface-variant hover:text-primary transition-colors hover:opacity-80"><span class="material-symbols-outlined">warning</span></button>
+<button class="text-on-surface-variant hover:text-primary transition-colors hover:opacity-80"><span class="material-symbols-outlined">account_circle</span></button>
+</div>
+</div>
+</header>
+<!-- Main Application Canvas -->
+<main class="ml-64 pt-16 min-h-screen flex flex-col bg-[#0b1326]">
+<!-- Header Section -->
+<div class="px-margin-desktop py-6 border-b border-white/5 flex items-end justify-between bg-surface-container-low/30">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-1">Renewal &amp; Expansion Center</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary">auto_awesome</span>
+                    AI analyzing Q3 contract health and expansion readiness.
+                </p>
+</div>
+<!-- Key Metrics -->
+<div class="flex gap-4">
+<div class="bg-surface-container-high/40 backdrop-blur-md border border-white/10 rounded-lg px-4 py-3 min-w-[140px]">
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-1">Total Pipeline</p>
+<p class="font-headline-md text-headline-md text-on-surface">$1.24M</p>
+</div>
+<div class="bg-surface-container-high/40 backdrop-blur-md border border-white/10 rounded-lg px-4 py-3 min-w-[140px]">
+<p class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-1">Expected ARR</p>
+<p class="font-headline-md text-headline-md text-primary">+$340k</p>
+</div>
+<div class="bg-error-container/20 backdrop-blur-md border border-error/20 rounded-lg px-4 py-3 min-w-[140px]">
+<p class="font-label-caps text-label-caps text-error uppercase mb-1 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">warning</span> At Risk</p>
+<p class="font-headline-md text-headline-md text-error">$85k</p>
+</div>
+</div>
+</div>
+<!-- Dynamic Grid Layout -->
+<div class="flex-1 flex overflow-hidden">
+<!-- LEFT: Kanban Board (Span 8/12 roughly) -->
+<div class="flex-1 overflow-x-auto p-6 flex gap-4">
+<!-- Column 1: Upcoming -->
+<div class="w-80 flex-shrink-0 flex flex-col">
+<div class="flex justify-between items-center mb-4 px-1">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant uppercase">Upcoming (14)</h3>
+<span class="font-data-mono text-data-mono text-on-surface-variant bg-surface-container py-0.5 px-2 rounded">$450k</span>
+</div>
+<div class="flex-1 overflow-y-auto space-y-3 pb-8 pr-2">
+<!-- Card: Standard -->
+<div class="bg-surface-container-high/60 backdrop-blur-lg border border-white/10 rounded-xl p-4 cursor-pointer hover:bg-surface-container-highest transition-colors relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-surface-variant"></div>
+<div class="flex justify-between items-start mb-3">
+<div>
+<h4 class="font-body-lg text-body-lg font-medium text-on-surface">Pinnacle Academy</h4>
+<p class="font-data-mono text-data-mono text-on-surface-variant">RNWL-8291</p>
+</div>
+<img class="w-8 h-8 rounded bg-surface-container object-cover border border-white/5" data-alt="A small, professional corporate logo for a fictional educational institution called Pinnacle Academy, minimalist geometric design, dark background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMO0ArGAfUgnHZ-TytoPZBDnI-bB5Is2AnEGE8xOHuf-DOVqYdQvar59NqaSE_BEw3-QEc41P2ULKplvDBbwT6D8GpMcrRiKKOA91ApfqZeGrl8Ze25hMwf4aI3Pey8xGyUy5tPJjrFxKAC2anYEKkdid-EpsPrQnzPIXnCokPVo4LoVwQtW7ew5FFxyPLdlpVL32ZlDj4qJltdW3LX1Qwd2F68KSOow02gUY7qvBDlCobCfL07j1t6g"/>
+</div>
+<div class="flex items-center gap-2 mb-4">
+<span class="bg-surface-container-low px-2 py-1 rounded font-data-mono text-data-mono text-on-surface">$45,000 ARR</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">event</span> Oct 12</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[16px]">psychology</span>
+<span class="font-body-sm text-body-sm text-primary">High Expansion Probability</span>
+</div>
+</div>
+<!-- Card: Amber Risk -->
+<div class="bg-surface-container-high/60 backdrop-blur-lg border border-tertiary/20 rounded-xl p-4 cursor-pointer hover:bg-surface-container-highest transition-colors relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-tertiary"></div>
+<div class="flex justify-between items-start mb-3">
+<div>
+<h4 class="font-body-lg text-body-lg font-medium text-on-surface">Global EduTech</h4>
+<p class="font-data-mono text-data-mono text-on-surface-variant">RNWL-8244</p>
+</div>
+</div>
+<div class="flex items-center gap-2 mb-4">
+<span class="bg-surface-container-low px-2 py-1 rounded font-data-mono text-data-mono text-on-surface">$120,000 ARR</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">event</span> Oct 18</span>
+</div>
+<div class="bg-tertiary/10 border border-tertiary/20 rounded px-2 py-1.5 flex items-start gap-2">
+<span class="material-symbols-outlined text-tertiary text-[16px] mt-0.5">warning</span>
+<span class="font-body-sm text-body-sm text-tertiary-fixed-dim leading-tight">Low platform engagement in last 30 days. Action required.</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 2: Contacted (Selected State) -->
+<div class="w-80 flex-shrink-0 flex flex-col">
+<div class="flex justify-between items-center mb-4 px-1">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant uppercase">Contacted (8)</h3>
+<span class="font-data-mono text-data-mono text-on-surface-variant bg-surface-container py-0.5 px-2 rounded">$310k</span>
+</div>
+<div class="flex-1 overflow-y-auto space-y-3 pb-8 pr-2">
+<!-- Card: Selected State (Active Focus) -->
+<div class="card-selected backdrop-blur-xl rounded-xl p-4 cursor-pointer relative overflow-hidden border border-primary/30">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="flex justify-between items-start mb-3">
+<div>
+<h4 class="font-body-lg text-body-lg font-medium text-on-surface">Metro Charter Schools</h4>
+<p class="font-data-mono text-data-mono text-primary">RNWL-8102</p>
+</div>
+</div>
+<div class="flex items-center gap-2 mb-4">
+<span class="bg-surface-container px-2 py-1 rounded font-data-mono text-data-mono text-on-surface">$85,000 ARR</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">event</span> Sep 30</span>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="bg-primary/10 text-primary border border-primary/20 px-2 py-0.5 rounded font-label-caps text-[10px] uppercase tracking-wider">AI Insight Ready</span>
+<span class="bg-surface-bright text-on-surface-variant px-2 py-0.5 rounded font-label-caps text-[10px] uppercase tracking-wider">Proposal Sent</span>
+</div>
+</div>
+<!-- Card: Red Risk -->
+<div class="bg-surface-container-high/60 backdrop-blur-lg border border-error/20 rounded-xl p-4 cursor-pointer hover:bg-surface-container-highest transition-colors relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-error"></div>
+<div class="flex justify-between items-start mb-3">
+<div>
+<h4 class="font-body-lg text-body-lg font-medium text-on-surface">St. Jude's Academy</h4>
+<p class="font-data-mono text-data-mono text-on-surface-variant">RNWL-8099</p>
+</div>
+</div>
+<div class="flex items-center gap-2 mb-4">
+<span class="bg-surface-container-low px-2 py-1 rounded font-data-mono text-data-mono text-on-surface">$22,000 ARR</span>
+</div>
+<div class="bg-error-container/20 border border-error/20 rounded px-2 py-1.5 flex items-start gap-2">
+<span class="material-symbols-outlined text-error text-[16px] mt-0.5">error</span>
+<span class="font-body-sm text-body-sm text-error leading-tight">3 open critical support tickets. Churn risk high.</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 3: Negotiation -->
+<div class="w-80 flex-shrink-0 flex flex-col opacity-60 hover:opacity-100 transition-opacity">
+<div class="flex justify-between items-center mb-4 px-1">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant uppercase">Negotiation (3)</h3>
+</div>
+<div class="flex-1 overflow-y-auto space-y-3 pb-8 pr-2">
+<div class="bg-surface-container-high/60 border border-white/5 rounded-xl p-4 border-dashed text-center flex flex-col items-center justify-center py-8">
+<span class="material-symbols-outlined text-on-surface-variant mb-2">drag_indicator</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Drop cards here</p>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT RAIL: AI Insights & Value Report (Span 4/12) -->
+<div class="w-[420px] flex-shrink-0 border-l border-white/10 bg-surface-container-low/50 backdrop-blur-xl flex flex-col h-[calc(100vh-140px)]">
+<!-- Selected Context Header -->
+<div class="p-6 border-b border-white/5 bg-surface/40">
+<div class="flex items-start justify-between mb-2">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Metro Charter Schools</h3>
+<a class="font-data-mono text-data-mono text-primary hover:underline flex items-center gap-1 mt-1" href="#">View Full Profile <span class="material-symbols-outlined text-[14px]">arrow_outward</span></a>
+</div>
+<span class="material-symbols-outlined text-primary text-[24px]">workspace_premium</span>
+</div>
+<div class="flex gap-4 mt-6">
+<button class="flex-1 bg-primary text-on-primary font-body-sm text-body-sm font-semibold py-2 rounded-lg hover:bg-primary-fixed transition-colors">
+                            Generate Proposal
+                        </button>
+<button class="flex-1 bg-transparent border border-white/15 text-on-surface font-body-sm text-body-sm py-2 rounded-lg hover:bg-white/5 transition-colors">
+                            Log Activity
+                        </button>
+</div>
+</div>
+<!-- Scrollable Insights Content -->
+<div class="flex-1 overflow-y-auto p-6 space-y-6">
+<!-- Customer Value Report (Auto-generated) -->
+<div>
+<h4 class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">bar_chart</span>
+                            Q3 Value Realized
+                        </h4>
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-surface-container/60 border border-white/5 rounded-lg p-3">
+<span class="material-symbols-outlined text-secondary text-[18px] mb-2">timer</span>
+<p class="font-data-mono text-data-mono text-on-surface-variant text-[11px] uppercase">Admin Time Saved</p>
+<p class="font-headline-md text-headline-md text-on-surface">342 hrs</p>
+</div>
+<div class="bg-surface-container/60 border border-white/5 rounded-lg p-3">
+<span class="material-symbols-outlined text-primary text-[18px] mb-2">trending_up</span>
+<p class="font-data-mono text-data-mono text-on-surface-variant text-[11px] uppercase">Product Adoption</p>
+<p class="font-headline-md text-headline-md text-on-surface">84%</p>
+</div>
+<div class="col-span-2 bg-surface-container/60 border border-white/5 rounded-lg p-3 flex items-center justify-between">
+<div>
+<p class="font-data-mono text-data-mono text-on-surface-variant text-[11px] uppercase mb-1">Operational Improvement</p>
+<p class="font-body-sm text-body-sm text-on-surface">Student on-boarding accelerated by 12 days.</p>
+</div>
+<span class="material-symbols-outlined text-primary">check_circle</span>
+</div>
+</div>
+</div>
+<div class="w-full h-[1px] bg-white/5"></div>
+<!-- AI Renewal Strategy Briefs -->
+<div>
+<h4 class="font-label-caps text-label-caps text-primary uppercase tracking-widest mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary">auto_awesome</span>
+                            AI Renewal Strategy
+                        </h4>
+<div class="space-y-4">
+<!-- Brief Item -->
+<div class="relative pl-6">
+<div class="absolute left-[11px] top-6 bottom-[-24px] w-[2px] bg-white/10"></div>
+<div class="absolute left-2 top-1.5 w-2 h-2 rounded-full bg-primary ring-4 ring-background"></div>
+<h5 class="font-body-sm text-body-sm font-semibold text-on-surface mb-1">Value Summary</h5>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed bg-surface-container-high/30 p-3 rounded-lg border border-white/5">
+                                    Metro Charter has heavily relied on our AI workforce for parent communications, reducing support tickets by 40%. Emphasize reliability and cost-offset in renewal discussions.
+                                </p>
+</div>
+<!-- Brief Item -->
+<div class="relative pl-6">
+<div class="absolute left-[11px] top-6 bottom-[-24px] w-[2px] bg-white/10"></div>
+<div class="absolute left-2 top-1.5 w-2 h-2 rounded-full border-2 border-primary bg-background ring-4 ring-background"></div>
+<h5 class="font-body-sm text-body-sm font-semibold text-on-surface mb-1">ROI Argument</h5>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed bg-surface-container-high/30 p-3 rounded-lg border border-white/5 font-data-mono text-[12px]">
+                                    Current Spend: $85k<br/>
+                                    Estimated Labor Savings: $120k+<br/>
+                                    Net Positive ROI: ~1.4x
+                                </p>
+</div>
+<!-- Brief Item (Expansion) -->
+<div class="relative pl-6">
+<div class="absolute left-2 top-1.5 w-2 h-2 rounded-full border-2 border-primary bg-background ring-4 ring-background"></div>
+<h5 class="font-body-sm text-body-sm font-semibold text-primary mb-1 flex items-center gap-2">
+                                    Expansion Offer Suggested <span class="bg-primary/20 text-primary px-1.5 py-0.5 rounded text-[10px] uppercase font-bold">Upsell</span>
+</h5>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed bg-primary/5 p-3 rounded-lg border border-primary/20">
+                                    Pitch the 'Lead Intelligence' module. They are manually processing enrollment inquiries. Estimated upsell value: <strong>+$15,000 ARR</strong>.
+                                </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Marketing Attribution &amp; ROI Center - EduVault AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#171f33",
+                        "secondary-fixed": "#e9ddff",
+                        "inverse-surface": "#dbe2fd",
+                        "inverse-on-surface": "#283044",
+                        "surface-glass": "rgba(255, 255, 255, 0.04)",
+                        "on-primary-fixed-variant": "#2c4677",
+                        "surface-container-lowest": "#060d20",
+                        "primary-container": "#7890c6",
+                        "on-primary-fixed": "#001a42",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "outline": "#8c909f",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "secondary-container": "#503f79",
+                        "secondary": "#d0bcff",
+                        "primary": "#adc6ff",
+                        "terminal-timestamp": "#4edea3",
+                        "surface-dim": "#0b1326",
+                        "on-error-container": "#ffdad6",
+                        "background": "#0b1326",
+                        "on-primary-container": "#082858",
+                        "on-surface": "#dbe2fd",
+                        "surface-variant": "#2d3449",
+                        "on-tertiary": "#003824",
+                        "tertiary": "#4edea3",
+                        "error": "#ffb4ab",
+                        "primary-fixed": "#d8e2ff",
+                        "error-container": "#93000a",
+                        "on-secondary": "#37265e",
+                        "on-error": "#690005",
+                        "surface-tint": "#adc6ff",
+                        "surface-container-highest": "#2d3449",
+                        "on-background": "#dbe2fd",
+                        "border-glass": "rgba(255, 255, 255, 0.1)",
+                        "tertiary-container": "#00a572",
+                        "on-primary": "#122f5f",
+                        "on-surface-variant": "#c2c6d6",
+                        "outline-variant": "#424754",
+                        "primary-fixed-dim": "#adc6ff",
+                        "on-tertiary-container": "#00311f",
+                        "surface-main": "#0b1326",
+                        "on-secondary-fixed-variant": "#4d3d76",
+                        "surface": "#0b1326",
+                        "tertiary-fixed": "#6ffbbe",
+                        "surface-container-low": "#131b2e",
+                        "on-secondary-fixed": "#210f48",
+                        "surface-bright": "#31394e",
+                        "inverse-primary": "#455e90",
+                        "glow-tertiary": "rgba(78, 222, 163, 0.1)",
+                        "surface-container-high": "#222a3e",
+                        "glow-primary": "rgba(173, 198, 255, 0.1)",
+                        "on-secondary-container": "#c2aef0",
+                        "on-tertiary-fixed": "#002114",
+                        "secondary-fixed-dim": "#d0bcff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-page": "24px",
+                        "grid-compact": "8px",
+                        "unit": "4px",
+                        "grid-wide": "24px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "grid-cell": ["Inter"],
+                        "kpi-md": ["Inter"],
+                        "mono-label": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "grid-header": ["Inter"],
+                        "kpi-xl": ["Inter"]
+                    },
+                    "fontSize": {
+                        "grid-cell": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "kpi-md": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "mono-label": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "grid-header": ["11px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "kpi-xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-panel:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .status-active {
+            border-left: 4px solid var(--tw-colors-tertiary);
+        }
+        .status-processing {
+            border-left: 4px solid var(--tw-colors-primary);
+        }
+        
+        .progress-thumb {
+            box-shadow: 0 0 10px 2px rgba(173, 198, 255, 0.5);
+        }
+        
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 16px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-sm min-h-screen overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-grid-wide py-unit h-16 backdrop-blur-xl border-b border-border-glass bg-surface-glass shadow-xl">
+<div class="flex items-center gap-4">
+<span class="font-headline-sm text-headline-sm font-bold text-primary">EduVault AI</span>
+</div>
+<div class="flex-1 flex justify-center hidden md:flex">
+<div class="relative w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container rounded-full py-2 pl-10 pr-4 text-on-surface focus:outline-none focus:ring-1 focus:ring-primary border border-border-glass font-body-sm text-body-sm" placeholder="Search..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-gradient-to-r from-primary to-secondary text-on-primary px-4 py-2 rounded-full font-mono-label text-mono-label active:scale-95 transition-transform duration-200">
+                Ask Marketing AI...
+            </button>
+<div class="flex gap-2">
+<button class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-glass hover:backdrop-blur-2xl transition-all duration-300 rounded-full">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-glass hover:backdrop-blur-2xl transition-all duration-300 rounded-full">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">task_alt</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-glass hover:backdrop-blur-2xl transition-all duration-300 rounded-full">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">campaign</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-glass hover:backdrop-blur-2xl transition-all duration-300 rounded-full">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">account_balance_wallet</span>
+</button>
+</div>
+<img alt="User Profile" class="w-8 h-8 rounded-full border border-border-glass object-cover" data-alt="A small, circular avatar portrait of a futuristic marketing professional in a high-tech dark environment with subtle neon blue and teal rim lighting, conveying intelligence and authority. Clean, minimalist aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8Mq2Juuuqz4F04F3jfxTsrhE7CveMOY1SWc9YOk9dulbCDgs7tZ6HpV-HWR7QJMTtuLLXPbCrRZkjGLLGF1eiA6j4TPABu9E6yV_ozKwG3FvU3rIVagKTq7wHdOSUBOU1b8U3UJlu724mDcF1kXKnhRnumLOfCzJrCr1gxivs5h4UT4LqOLVbjn5toZMiReSizL9Azdq4GgPx21FP5qZKDe2Pm2P0_5DBCQT6nVd_bx-Uri8z0LJDUg"/>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-64 z-40 flex flex-col pt-20 pb-grid-wide px-gutter border-r border-border-glass bg-surface-container-lowest hidden md:flex">
+<div class="mb-8 px-2 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-glass flex items-center justify-center border border-border-glass overflow-hidden">
+<img alt="Marketing Engine" class="w-full h-full object-cover" data-alt="Abstract geometric logo mark featuring interconnected glowing nodes on a deep dark blue background. Cybernetic and highly advanced look, representing an AI marketing engine." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvPJq7v0GaVk1oHm99r-n7K8iUvlRdOORPyCtVSCJSvXdCfC-oMDEga3K5SC37gxeAJHBAZp959ssKuX98twv8JBfckRvFP3MT0XJGesKJL5SHlOFbKcvqapH_5p9ruB9yD5Pp6PGJ67V6l-lLezSh411BkUFDStYQ2RBIt1AGYlhyA85iJwyz3z3q1b_QO7NIQ9M_xwPPVkzWh2rjUqbpjvLTj8jMsWjJMj7yJKBfpV4WgKgfynBkgg"/>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm text-primary">Sales Hunter</div>
+<div class="font-mono-label text-mono-label text-on-surface-variant">Marketing &amp; Growth</div>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-glass hover:text-primary transition-all rounded-lg active:scale-98 duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-mono-label text-mono-label">Command Center</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-glass hover:text-primary transition-all rounded-lg active:scale-98 duration-200" href="#">
+<span class="material-symbols-outlined">psychology</span>
+<span class="font-mono-label text-mono-label">ICP Intelligence</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-glass hover:text-primary transition-all rounded-lg active:scale-98 duration-200" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-mono-label text-mono-label">Audience Builder</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-glass hover:text-primary transition-all rounded-lg active:scale-98 duration-200" href="#">
+<span class="material-symbols-outlined">precision_manufacturing</span>
+<span class="font-mono-label text-mono-label">Campaign Strategy</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-glass hover:text-primary transition-all rounded-lg active:scale-98 duration-200" href="#">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="font-mono-label text-mono-label">Content Studio</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-glass hover:text-primary transition-all rounded-lg active:scale-98 duration-200" href="#">
+<span class="material-symbols-outlined">web</span>
+<span class="font-mono-label text-mono-label">Landing Pages</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-glass hover:text-primary transition-all rounded-lg active:scale-98 duration-200" href="#">
+<span class="material-symbols-outlined">science</span>
+<span class="font-mono-label text-mono-label">Experiments</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-primary-container text-on-primary-container rounded-lg font-bold font-mono-label text-mono-label active:scale-98 duration-200" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span>Attribution</span>
+</a>
+</nav>
+<div class="mt-auto flex flex-col gap-4">
+<button class="w-full bg-gradient-to-r from-primary to-secondary text-on-primary py-2 rounded-lg font-mono-label text-mono-label active:scale-95 transition-all">
+                Launch Campaign
+            </button>
+<div class="flex flex-col gap-1 border-t border-border-glass pt-4">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-glass hover:text-primary transition-all rounded-lg active:scale-98 duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-mono-label text-mono-label">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-glass hover:text-primary transition-all rounded-lg active:scale-98 duration-200" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-mono-label text-mono-label">Support</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="md:ml-64 pt-20 p-margin-page min-h-screen">
+<div class="max-w-[1600px] mx-auto">
+<!-- Header -->
+<div class="mb-8">
+<h1 class="font-kpi-xl text-kpi-xl text-on-surface mb-2">AI Marketing Attribution &amp; ROI Center</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Know which marketing activities actually generate revenue.</p>
+</div>
+<!-- KPIs Bento -->
+<div class="bento-grid mb-6">
+<!-- KPI 1 -->
+<div class="col-span-12 md:col-span-3 glass-panel rounded-xl p-grid-wide transition-all duration-300 relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-surface-glass to-transparent opacity-50"></div>
+<div class="relative z-10 flex flex-col gap-2">
+<span class="font-grid-header text-grid-header text-on-surface-variant uppercase tracking-wider">Marketing Spend</span>
+<div class="font-kpi-md text-kpi-md text-on-surface">₹24.5L</div>
+<div class="flex items-center gap-1 text-tertiary font-mono-label text-mono-label bg-glow-tertiary w-fit px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span> 12% vs last month
+                        </div>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="col-span-12 md:col-span-3 glass-panel rounded-xl p-grid-wide transition-all duration-300 relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-surface-glass to-transparent opacity-50"></div>
+<div class="relative z-10 flex flex-col gap-2">
+<span class="font-grid-header text-grid-header text-on-surface-variant uppercase tracking-wider">Customers</span>
+<div class="font-kpi-md text-kpi-md text-on-surface">1,248</div>
+<div class="flex items-center gap-1 text-tertiary font-mono-label text-mono-label bg-glow-tertiary w-fit px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span> 8% vs last month
+                        </div>
+</div>
+</div>
+<!-- KPI 3 -->
+<div class="col-span-12 md:col-span-3 glass-panel rounded-xl p-grid-wide transition-all duration-300 relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-surface-glass to-transparent opacity-50"></div>
+<div class="relative z-10 flex flex-col gap-2">
+<span class="font-grid-header text-grid-header text-on-surface-variant uppercase tracking-wider">Revenue</span>
+<div class="font-kpi-md text-kpi-md text-on-surface">₹1.8Cr</div>
+<div class="flex items-center gap-1 text-tertiary font-mono-label text-mono-label bg-glow-tertiary w-fit px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span> 15% vs last month
+                        </div>
+</div>
+</div>
+<!-- KPI 4 -->
+<div class="col-span-12 md:col-span-3 glass-panel rounded-xl p-grid-wide transition-all duration-300 relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-surface-glass to-transparent opacity-50"></div>
+<div class="relative z-10 flex flex-col gap-2">
+<span class="font-grid-header text-grid-header text-on-surface-variant uppercase tracking-wider">Overall ROI</span>
+<div class="font-kpi-md text-kpi-md text-primary">7.3x</div>
+<div class="flex items-center gap-1 text-tertiary font-mono-label text-mono-label bg-glow-tertiary w-fit px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> Strong Performance
+                        </div>
+</div>
+</div>
+</div>
+<!-- Main Content Grid -->
+<div class="bento-grid">
+<!-- AI Attribution Path -->
+<div class="col-span-12 md:col-span-8 glass-panel rounded-xl p-grid-wide flex flex-col gap-6">
+<div class="flex justify-between items-center border-b border-border-glass pb-4">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">AI Interactive Attribution Path</h2>
+<span class="bg-primary-container/20 text-primary font-mono-label text-mono-label px-3 py-1 rounded-full border border-primary/30 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">auto_awesome</span> Multi-Touch Model
+                        </span>
+</div>
+<div class="relative flex-1 min-h-[300px] flex items-center justify-center">
+<!-- Path visualization -->
+<div class="flex items-center justify-between w-full px-8 relative">
+<!-- Connection Line -->
+<div class="absolute left-12 right-12 top-1/2 -translate-y-1/2 h-[2px] bg-surface-variant -z-10">
+<div class="h-full bg-primary w-2/3 shadow-[0_0_10px_rgba(173,198,255,0.5)] transition-all duration-1000"></div>
+</div>
+<!-- Nodes -->
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-12 h-12 rounded-full glass-panel border border-primary/50 flex items-center justify-center group-hover:bg-primary/20 transition-all shadow-[0_0_15px_rgba(173,198,255,0.2)]">
+<span class="material-symbols-outlined text-primary">search</span>
+</div>
+<span class="font-mono-label text-mono-label text-on-surface-variant">Discovery</span>
+</div>
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-12 h-12 rounded-full glass-panel border border-primary/50 flex items-center justify-center group-hover:bg-primary/20 transition-all shadow-[0_0_15px_rgba(173,198,255,0.2)]">
+<span class="material-symbols-outlined text-primary">mail</span>
+</div>
+<span class="font-mono-label text-mono-label text-on-surface-variant">Email</span>
+</div>
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-12 h-12 rounded-full glass-panel border border-tertiary flex items-center justify-center bg-tertiary/10 group-hover:bg-tertiary/20 transition-all shadow-[0_0_15px_rgba(78,222,163,0.3)]">
+<span class="material-symbols-outlined text-tertiary">chat</span>
+</div>
+<span class="font-mono-label text-mono-label text-tertiary">WhatsApp</span>
+</div>
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-12 h-12 rounded-full glass-panel border border-primary/50 flex items-center justify-center group-hover:bg-primary/20 transition-all shadow-[0_0_15px_rgba(173,198,255,0.2)]">
+<span class="material-symbols-outlined text-primary">co_present</span>
+</div>
+<span class="font-mono-label text-mono-label text-on-surface-variant">Demo</span>
+</div>
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-[0_0_20px_rgba(208,188,255,0.4)]">
+<span class="material-symbols-outlined text-on-primary">paid</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface">Sale</span>
+</div>
+</div>
+</div>
+</div>
+<!-- AI Optimizer Sidebar -->
+<div class="col-span-12 md:col-span-4 flex flex-col gap-4">
+<div class="glass-panel rounded-xl p-grid-wide status-active flex flex-col gap-4">
+<div class="flex items-center gap-2 text-tertiary border-b border-border-glass pb-3">
+<span class="material-symbols-outlined">model_training</span>
+<span class="font-grid-header text-grid-header uppercase">AI Budget Optimizer</span>
+</div>
+<div class="bg-surface-container-low rounded-lg p-4 border border-border-glass relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-tertiary/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"></div>
+<p class="font-body-sm text-body-sm text-on-surface relative z-10 mb-4">
+                                "Increase WhatsApp marketing budget by ₹1.5 Lakhs. Current conversion rate is outperforming email by 3.2x in the Discovery phase."
+                             </p>
+<div class="flex gap-2 relative z-10">
+<button class="flex-1 bg-tertiary text-on-tertiary py-2 rounded-md font-mono-label text-mono-label active:scale-95 transition-transform flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]">check</span> Apply Shift
+                                 </button>
+<button class="px-3 py-2 border border-border-glass rounded-md hover:bg-surface-glass text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[16px]">more_horiz</span>
+</button>
+</div>
+</div>
+</div>
+<!-- ROI by Geography -->
+<div class="glass-panel rounded-xl p-grid-wide flex-1 flex flex-col gap-4">
+<h3 class="font-headline-sm text-headline-sm text-on-surface border-b border-border-glass pb-3">ROI by Geography</h3>
+<div class="flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<span class="font-grid-cell text-grid-cell text-on-surface-variant">Jaipur</span>
+<span class="font-mono-label text-mono-label text-tertiary">9.2x</span>
+</div>
+<div class="w-full bg-surface-container-high rounded-full h-1.5 overflow-hidden">
+<div class="bg-tertiary h-full w-[92%] shadow-[0_0_8px_rgba(78,222,163,0.6)]"></div>
+</div>
+<div class="flex items-center justify-between mt-2">
+<span class="font-grid-cell text-grid-cell text-on-surface-variant">National Avg</span>
+<span class="font-mono-label text-mono-label text-primary">6.8x</span>
+</div>
+<div class="w-full bg-surface-container-high rounded-full h-1.5 overflow-hidden">
+<div class="bg-primary h-full w-[68%]"></div>
+</div>
+</div>
+<div class="mt-auto pt-4 border-t border-border-glass">
+<div class="text-[10px] text-terminal-timestamp font-mono flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">terminal</span>
+                                SYSLOG: Jaipur campaign [WP-092] over-indexing. Suggest reallocation.
+                            </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

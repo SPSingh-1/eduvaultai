@@ -1,0 +1,296 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   EDUVAULT AI — GLOBAL DESIGN SYSTEM
+   Extracted from Stitch design files
+   ============================================================ */
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html, body, #root {
+    @apply bg-background text-on-surface min-h-screen;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  * {
+    border-color: theme('colors.outline-variant');
+  }
+
+  ::selection {
+    background: rgba(37, 99, 235, 0.4);
+    color: #fff;
+  }
+}
+
+/* ============================================================
+   GLASSMORPHISM UTILITIES
+   ============================================================ */
+@layer components {
+
+  /* Primary glass panel — used on main cards, modals */
+  .glass-panel {
+    background: rgba(11, 19, 38, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 24px 64px -12px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Secondary glass card — used on list items, smaller cards */
+  .glass-card {
+    background: rgba(19, 27, 46, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .glass-card:hover {
+    background: rgba(19, 27, 46, 0.75);
+    border-color: rgba(180, 197, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Elevated glass — sidebar, nav */
+  .glass-elevated {
+    background: rgba(13, 21, 40, 0.8);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  /* Input fields */
+  .glass-input {
+    background: rgba(23, 31, 51, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #dae2fd;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    @apply rounded-xl h-12 px-4 text-body-sm outline-none;
+  }
+
+  .glass-input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    background: rgba(23, 31, 51, 0.8);
+  }
+
+  .glass-input::placeholder {
+    color: #8d90a0;
+  }
+
+  /* Primary button */
+  .btn-primary {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: #fff;
+    @apply rounded-xl px-6 py-3 font-sans font-medium text-body-sm;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.45);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  /* Secondary/Ghost button */
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #dae2fd;
+    @apply rounded-xl px-6 py-3 font-sans font-medium text-body-sm;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  /* AI action button */
+  .btn-ai {
+    background: linear-gradient(135deg, #2563eb 0%, #7d4ce7 100%);
+    color: #fff;
+    @apply rounded-xl px-6 py-3 font-sans font-semibold text-body-sm;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 20px rgba(125, 76, 231, 0.3);
+  }
+
+  .btn-ai:hover {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 8px 30px rgba(125, 76, 231, 0.5);
+  }
+
+  /* KPI Card */
+  .kpi-card {
+    @apply glass-panel rounded-2xl p-6 relative overflow-hidden;
+  }
+
+  .kpi-card .kpi-glow {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.12;
+    pointer-events: none;
+  }
+
+  /* Status badge */
+  .status-badge {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-label-md font-medium;
+  }
+
+  .status-badge.active   { @apply bg-secondary/10 text-secondary border border-secondary/20; }
+  .status-badge.pending  { @apply bg-warning/10 text-warning border border-warning/20; }
+  .status-badge.error    { @apply bg-error/10 text-error border border-error/20; }
+  .status-badge.primary  { @apply bg-primary-container/20 text-primary border border-primary/20; }
+  .status-badge.purple   { @apply bg-tertiary/10 text-tertiary border border-tertiary/20; }
+
+  /* AI status dot */
+  .ai-dot {
+    @apply w-2 h-2 rounded-full bg-secondary;
+    animation: pulse-emerald 2s infinite;
+  }
+
+  /* Section header */
+  .section-header {
+    @apply text-label-sm font-semibold tracking-widest uppercase text-on-surface-variant mb-4;
+  }
+
+  /* Grid header */
+  .grid-header {
+    @apply text-label-sm font-semibold tracking-wider uppercase text-on-surface-variant;
+  }
+
+  /* Mono data — for stats, numbers, IDs */
+  .mono-data {
+    font-family: 'JetBrains Mono', monospace;
+    @apply text-mono-data font-medium;
+  }
+
+  /* Page container */
+  .page-container {
+    @apply max-w-[1600px] mx-auto px-6 py-6;
+  }
+
+  /* Card with ambient glow */
+  .ambient-card-blue {
+    @apply glass-card rounded-2xl p-5 relative overflow-hidden;
+  }
+  .ambient-card-blue::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 120px;
+    height: 120px;
+    background: rgba(37, 99, 235, 0.08);
+    border-radius: 50%;
+    filter: blur(30px);
+    pointer-events: none;
+  }
+
+  .ambient-card-emerald::before {
+    background: rgba(78, 222, 163, 0.08) !important;
+  }
+
+  .ambient-card-purple::before {
+    background: rgba(208, 188, 255, 0.08) !important;
+  }
+
+  /* Material icon utility */
+  .icon {
+    font-family: 'Material Symbols Outlined';
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    font-style: normal;
+    line-height: 1;
+    user-select: none;
+  }
+
+  .icon-filled {
+    font-variation-settings: 'FILL' 1, 'wght' 400;
+  }
+
+  /* Divider */
+  .divider {
+    @apply border-t border-outline-variant;
+  }
+
+  /* Nav item */
+  .nav-item {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-xl text-label-lg text-on-surface-variant;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .nav-item:hover {
+    @apply bg-surface-container-high text-on-surface;
+  }
+
+  .nav-item.active {
+    @apply bg-primary-container/20 text-primary;
+    box-shadow: 0 0 20px rgba(37, 99, 235, 0.1);
+  }
+
+  /* Shimmer loading */
+  .shimmer {
+    background: linear-gradient(90deg,
+      rgba(255,255,255,0.03) 25%,
+      rgba(255,255,255,0.08) 50%,
+      rgba(255,255,255,0.03) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+}
+
+/* ============================================================
+   ANIMATION UTILITIES
+   ============================================================ */
+@layer utilities {
+  .animation-delay-100  { animation-delay: 100ms; }
+  .animation-delay-200  { animation-delay: 200ms; }
+  .animation-delay-300  { animation-delay: 300ms; }
+  .animation-delay-500  { animation-delay: 500ms; }
+  .animation-delay-700  { animation-delay: 700ms; }
+  .animation-delay-1000 { animation-delay: 1000ms; }
+
+  .opacity-0-start { opacity: 0; }
+}
