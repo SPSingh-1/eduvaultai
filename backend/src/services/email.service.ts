@@ -61,43 +61,16 @@ export class EmailService {
 
   /**
    * Dual Provider Email Dispatcher:
-   * 1. Attempts Brevo Transactional API.
-   * 2. If Brevo fails (e.g., Unrecognised IP Address / Whitelist restriction),
-   *    automatically falls back to Gmail SMTP (Nodemailer), which has ZERO IP restrictions
-   *    and works universally across any cloud server / dynamic IP.
+   * 1. Attempts Direct Gmail SMTP first:
+   *    Sends directly via Google's servers without marketing ESP headers or tracking pixels,
+   *    ensuring maximum deliverability straight into the recipient's PRIMARY Inbox.
+   * 2. If Gmail SMTP fails or is unconfigured, gracefully falls back to Brevo Transactional API.
+   * 3. Always BCCs admin (connectwitheduvault@gmail.com) for real-time verification copy.
    */
   static async sendOutreachEmail(toEmail: string, toName: string, subject: string, htmlContent: string) {
-    let brevoError = ''
+    let gmailError = ''
 
-    // 1. Try Brevo First
-    const brevoKey = process.env.BREVO_API_KEY
-    if (brevoKey) {
-      try {
-        const apiInstance = new Brevo.TransactionalEmailsApi()
-        apiInstance.setApiKey(Brevo.TransactionalEmailsApiApiKeys.apiKey, brevoKey)
-
-        const sendSmtpEmail = new Brevo.SendSmtpEmail()
-        sendSmtpEmail.subject = subject
-        sendSmtpEmail.htmlContent = htmlContent
-        sendSmtpEmail.sender = {
-          name: process.env.EMAIL_FROM_NAME || 'Shashi Pratap Singh | Eduvault ERP',
-          email: process.env.EMAIL_FROM || 'connectwitheduvault@gmail.com',
-        }
-        const bccEmail = process.env.EMAIL_FROM || 'connectwitheduvault@gmail.com'
-        if (bccEmail && bccEmail.toLowerCase() !== toEmail.toLowerCase()) {
-          sendSmtpEmail.bcc = [{ email: bccEmail, name: 'Admin Copy' }]
-        }
-
-        const data = await apiInstance.sendTransacEmail(sendSmtpEmail)
-        console.log(`[EmailService] Sent via Brevo to ${toEmail} (BCC to ${bccEmail}), ID:`, data.body?.messageId)
-        return { success: true, messageId: data.body?.messageId, provider: 'brevo' }
-      } catch (error: any) {
-        brevoError = error.response?.body?.message || error.message || 'Brevo error'
-        console.warn(`[EmailService] Brevo blocked IP or failed (${brevoError}). Switching to Gmail SMTP fallback...`)
-      }
-    }
-
-    // 2. Seamless Auto-Fallback: Gmail SMTP (No IP restrictions, cloud dynamic IP friendly)
+    // 1. Primary: Direct Gmail SMTP (Google-to-Google = Maximum Primary Inbox placement)
     const gmailUser = process.env.GMAIL_USER || 'connectwitheduvault@gmail.com'
     const gmailPass = process.env.GMAIL_APP_PASSWORD || 'loqmhoerjgvsjzpq'
 
@@ -111,7 +84,7 @@ export class EmailService {
           },
         })
 
-        const senderName = process.env.EMAIL_FROM_NAME || 'Shashi Pratap Singh | Eduvault ERP'
+        const senderName = process.env.EMAIL_FROM_NAME || 'Shashi Pratap Singh | Eduvault AI'
         const bccEmail = gmailUser || process.env.EMAIL_FROM || 'connectwitheduvault@gmail.com'
         const mailOptions: any = {
           from: `"${senderName}" <${gmailUser}>`,
@@ -124,15 +97,44 @@ export class EmailService {
         }
 
         const info = await transporter.sendMail(mailOptions)
-        console.log(`[EmailService] Sent via Gmail SMTP to ${toEmail} (BCC to ${bccEmail}), ID:`, info.messageId)
+        console.log(`[EmailService] Sent via Gmail SMTP (Primary Inbox Delivery) to ${toEmail} (BCC to ${bccEmail}), ID:`, info.messageId)
         return { success: true, messageId: info.messageId, provider: 'gmail_smtp' }
       } catch (smtpErr: any) {
-        console.error('[EmailService] Gmail SMTP Fallback Error:', smtpErr.message)
-        return { success: false, error: smtpErr.message || brevoError }
+        gmailError = smtpErr.message || 'Gmail SMTP error'
+        console.warn(`[EmailService] Gmail SMTP failed (${gmailError}). Switching to Brevo fallback...`)
       }
     }
 
-    return { success: false, error: brevoError || 'No email transport configured' }
+    // 2. Fallback: Brevo Transactional API
+    const brevoKey = process.env.BREVO_API_KEY
+    if (brevoKey) {
+      try {
+        const apiInstance = new Brevo.TransactionalEmailsApi()
+        apiInstance.setApiKey(Brevo.TransactionalEmailsApiApiKeys.apiKey, brevoKey)
+
+        const sendSmtpEmail = new Brevo.SendSmtpEmail()
+        sendSmtpEmail.subject = subject
+        sendSmtpEmail.htmlContent = htmlContent
+        sendSmtpEmail.sender = {
+          name: process.env.EMAIL_FROM_NAME || 'Shashi Pratap Singh | Eduvault AI',
+          email: process.env.EMAIL_FROM || 'connectwitheduvault@gmail.com',
+        }
+        const bccEmail = process.env.EMAIL_FROM || 'connectwitheduvault@gmail.com'
+        if (bccEmail && bccEmail.toLowerCase() !== toEmail.toLowerCase()) {
+          sendSmtpEmail.bcc = [{ email: bccEmail, name: 'Admin Copy' }]
+        }
+
+        const data = await apiInstance.sendTransacEmail(sendSmtpEmail)
+        console.log(`[EmailService] Sent via Brevo fallback to ${toEmail} (BCC to ${bccEmail}), ID:`, data.body?.messageId)
+        return { success: true, messageId: data.body?.messageId, provider: 'brevo' }
+      } catch (error: any) {
+        const brevoError = error.response?.body?.message || error.message || 'Brevo error'
+        console.error('[EmailService] Brevo Fallback Error:', brevoError)
+        return { success: false, error: brevoError || gmailError }
+      }
+    }
+
+    return { success: false, error: gmailError || 'No email transport configured' }
   }
 }
 

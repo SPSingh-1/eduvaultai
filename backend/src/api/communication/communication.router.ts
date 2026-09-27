@@ -244,31 +244,24 @@ router.get('/templates', (req, res) => {
   // Always supply the 3 Exact High-Converting Formats
   const exactTemplates = [
     {
-      id: 'tpl_format1_manual',
-      name: '📑 Format 1: Manual to Digital Transition (For Non-Digital / Register-Based Schools)',
+      id: 'tpl_format1_ai_planner',
+      name: '🤖 Format 1: AI Lesson Planner & Academic Automation',
       channel: 'email',
-      subject: 'Digitalizing {{schoolName}}: 2 Months Free Trial (No Bond) with Eduvault ERP',
+      subject: 'AI Lesson Planner & WhatsApp Parent Updates for {{schoolName}}',
       body: `Respected Principal {{principalName}},
 
-Greetings from ${cfg.companyName}!
+I hope this email finds you in good health.
 
-Managing a school manually—from paper registers to fee ledgers and report cards—takes up hours of your staff's valuable teaching time. At ${cfg.companyName}, we have built ${cfg.productName} (${cfg.tagline}) specifically to eliminate administrative chaos with zero learning curve.
+I am reaching out from ${cfg.companyName} to introduce ${cfg.productName} (${cfg.tagline})—specifically engineered to empower teachers and simplify school administration.
 
-🌟 100% Risk-Free Assurance for {{schoolName}}:
-• 2 Months Free Trial: "2 महीने चलाकर देखें — पसंद न आए तो ₹0 चार्ज, कोई बॉन्ड नहीं!"
-• Affordable Pricing: Just ₹5 to ₹8 per student/month (No hidden charges).
-• 100% Free Data Migration: Our engineering team transfers all your past student records and fee data within 48 hours at ₹0 cost.
-• One-time Setup Fee (₹5,000): 100% Waived for your institution.
+Key Capabilities for {{schoolName}}:
+1. AI Academic & Lesson Planner: Automatically generates weekly curriculum pacing, lesson notes, and customized worksheets for teachers in minutes, saving 15+ hours every month.
+2. Direct WhatsApp Parent Notifications: Instant automated attendance alerts, circulars, and fee reminders sent directly to parents' WhatsApp (98% read rate).
+3. Clutter-Free School Operations: Single clean dashboard for CBSE/ICSE report cards, student records, and fee management with zero learning curve.
 
-Why Schools Love Eduvault ERP:
-1. Instant WhatsApp Updates: Automatic fee payment receipts and attendance alerts sent straight to parents' WhatsApp.
-2. Clean & Simple UI: Teachers and staff can operate it on Day 1 without technical training.
-3. Multi-Mode Fee Management: Effortlessly record UPI, Cash, Cheque, and Bank transfers with instant auto-reconciliation.
-4. CBSE/ICSE Report Cards: Auto-calculated grading and 1-click marksheet generation.
+Would you be open for a brief 10–15 minute screen-sharing walkthrough this Wednesday or Thursday to see how this works in real-time?
 
-Would you be available for a brief 15-minute live screen walkthrough this Tuesday or Wednesday at your convenience?
-
-Best regards,
+Warm regards,
 
 ${cfg.senderName}
 ${cfg.senderTitle} | ${cfg.linkedinUrl}
@@ -276,34 +269,24 @@ ${cfg.senderTitle} | ${cfg.linkedinUrl}
       variables: ['schoolName', 'principalName'],
     },
     {
-      id: 'tpl_format2_upgrade',
-      name: '⚡ Format 2: Software Upgrade / Switch (For Schools Frustrated with Existing ERP)',
+      id: 'tpl_format2_whatsapp',
+      name: '⚡ Format 2: Automated WhatsApp Parent Communication & Fees',
       channel: 'email',
-      subject: "Upgrading {{schoolName}}'s Tech Stack: Switch to Eduvault ERP (2 Months Free Trial)",
+      subject: 'Automating Parent WhatsApp Updates & Fee Receipts for {{schoolName}}',
       body: `Respected Principal {{principalName}},
 
-I understand that {{schoolName}} is already using digital software for administration. However, many principals and school trustees share that existing tools are slow, clunky, and lack direct parent communication.
+I understand that ensuring timely communication with parents while managing fee follow-ups is one of the most time-consuming tasks for school management.
 
-I am reaching out from ${cfg.companyName} to introduce ${cfg.productName} (${cfg.tagline}) — engineered for speed, clean UX, and automated WhatsApp integration.
-
-🌟 Zero-Disruption Switch Guarantee:
-• 2 Months Free Trial: "2 महीने चलाकर देखें — पसंद न आए तो ₹0 चार्ज, कोई बॉन्ड नहीं!"
-• Complete Free Migration: Our team extracts and imports 100% of your current software data within 48 hours without disrupting daily classes.
-• Transparent Tiered Pricing:
-  - 100 - 200 Students: ₹8 / student / month
-  - 200 - 500 Students: ₹7 / student / month
-  - 500 - 1000 Students: ₹6 / student / month
-  - 1000+ Students: ₹5 / student / month
-• Implementation Fee (₹5,000): 100% Waived.
+At ${cfg.companyName}, we developed ${cfg.productName} to bridge this gap seamlessly:
 
 What Sets Eduvault Apart:
-• Automated WhatsApp Fee Receipts: Cut fee defaulters by 40% with instant automated reminders.
-• Lightning-Fast Dashboards: Dedicated role-based access for Admin, Teachers, and Parents.
-• Real-time Fee Reconciliation: Know exact collections and dues in 1 click.
+• Automated WhatsApp Fee Receipts: Parents receive instant UPI QR codes & digital receipts directly on WhatsApp, reducing fee follow-up effort by 40%.
+• Daily Attendance Notifications: 1-click teacher attendance with automated WhatsApp alerts sent to parents of absent students.
+• Smart Security & Records: Cloud-backed student records and marksheet generation accessible anywhere.
 
-Could we schedule a quick 15-minute comparison walkthrough this week to show you how Eduvault outperforms standard software?
+Could we schedule a quick 10–15 minute screen-sharing walkthrough this Wednesday or Thursday to show you how smoothly this functions?
 
-Best regards,
+Warm regards,
 
 ${cfg.senderName}
 ${cfg.senderTitle} | ${cfg.linkedinUrl}
@@ -311,31 +294,24 @@ ${cfg.senderTitle} | ${cfg.linkedinUrl}
       variables: ['schoolName', 'principalName'],
     },
     {
-      id: 'tpl_format3_general',
-      name: '🎯 Format 3: Universal Executive Approach (Modern ERP Proposal)',
+      id: 'tpl_format3_executive',
+      name: '🎯 Format 3: Universal Executive Overview (AI + Smart ERP)',
       channel: 'email',
-      subject: 'Enhancing Administration & Parent Trust at {{schoolName}} with Eduvault ERP',
+      subject: 'Enhancing Administration & Teacher Efficiency at {{schoolName}} with Eduvault AI',
       body: `Respected Principal {{principalName}},
 
-Managing daily operations, fee recovery, and parent trust at a growing school like {{schoolName}} requires a modern, reliable system.
+Managing daily operations, syllabus pacing, and parent trust at a growing institution like {{schoolName}} requires modern, automated tools.
 
-At ${cfg.companyName}, we developed ${cfg.productName} (${cfg.tagline}) to bring enterprise-grade school management at an affordable cost for Indian K-12 institutions.
+At ${cfg.companyName}, we built ${cfg.productName} to bring enterprise-grade school automation:
 
-🌟 Our Unconditional Guarantee for {{schoolName}}:
-• 2 Months Free Trial: "2 महीने चलाकर देखें — पसंद न आए तो ₹0 चार्ज, कोई बॉन्ड नहीं!"
-• Transparent Student Pricing: ₹5 to ₹8 per student per month based on student count.
-• Zero Migration Effort: Our dedicated engineers migrate all student and fee history within 48 hours for free.
-• ₹5,000 Setup Fee: 100% Waived.
+Core Advantages:
+1. AI Lesson Planning for Teachers: Save hours of lesson preparation with automated syllabus schedules and worksheets.
+2. Direct WhatsApp Parent Communication: Real-time attendance, fee receipts, and school circulars on WhatsApp.
+3. CBSE/ICSE Compliant Report Cards: 1-click marksheet generation without manual tallying errors.
 
-Core Capabilities:
-1. Automated Parent WhatsApp Alerts for fee receipts, homework, and attendance.
-2. Complete Digital Fee Collection across UPI, Netbanking, Cards & Cash.
-3. Exam, Attendance & CBSE/ICSE Compliant Report Card Generation in seconds.
-4. Dedicated Mobile & Web Portals for Teachers, Admin, and Parents.
+Would you have 10–15 minutes this Wednesday or Thursday for a quick live screen walkthrough? We would be delighted to demonstrate how effective this will be for your institution.
 
-Would you be open to a 15-minute screen walkthrough this week? We would be delighted to demonstrate how simple and effective this will be for your institution.
-
-Best regards,
+Warm regards,
 
 ${cfg.senderName}
 ${cfg.senderTitle} | ${cfg.linkedinUrl}

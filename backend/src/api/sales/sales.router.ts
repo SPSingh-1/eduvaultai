@@ -385,29 +385,20 @@ router.post('/deals/:id/send-cold-email', async (req, res) => {
     if (studentCount <= 200) slabRate = 8
     else if (studentCount <= 500) slabRate = 7
     else if (studentCount <= 1000) slabRate = 6
-    else slabRate = 5
-
-    const monthlyEst = studentCount * slabRate
     const recipientName = lead.school?.principalName || lead.contact?.firstName || lead.contactName || 'Principal'
 
-    const subject = `Eduvault ERP for ${schoolName}: 2 Months Free Trial (No Bond) + Automated WhatsApp Fee Alerts`
+    const subject = `AI Lesson Planner & WhatsApp Automation for ${schoolName}`
     const emailBody = `Respected Principal ${recipientName},<br/><br/>
-Greetings from Ruviq!<br/><br/>
-We are delighted to introduce <b>Eduvault ERP (Education with Security)</b> for ${schoolName}.<br/><br/>
-🌟 <b>100% Risk-Free Commercial Assurance for ${schoolName}:</b><br/>
-• <b>2 Months Free Trial:</b> "2 महीने चलाकर देखें — पसंद न आए तो ₹0 चार्ज, कोई बॉन्ड नहीं!"<br/>
-• <b>Transparent Low Pricing:</b> Just ₹${slabRate}/month per student (~₹${monthlyEst.toLocaleString('en-IN')}/month for ${studentCount} students).<br/>
-• <b>100% Free Data Migration:</b> Our engineering team migrates all your past Excel/register records within 48 hours at ₹0 cost.<br/>
-• <b>Zero Setup Fee:</b> ₹5,000 onboarding fee 100% Waived for onboarding this month.<br/><br/>
-<b>Key Advantages:</b><br/>
-1. <b>Automated WhatsApp Fee Receipts:</b> Parents receive instant UPI QR codes & payment receipts on WhatsApp.<br/>
-2. <b>Effortless Attendance:</b> 1-click teacher attendance with automated SMS/WhatsApp alerts for absentees.<br/>
-3. <b>CBSE/ICSE Compliant Report Cards:</b> Ready in 10 minutes without manual calculation.<br/><br/>
-Would you be open for a brief 15-minute live screen walkthrough this Wednesday or Thursday?<br/><br/>
+I hope this email finds you well.<br/><br/>
+I am reaching out from Eduvault AI (Ruviq). We have developed practical school automation specifically tailored for leading K-12 institutions, designed to save leadership and faculty valuable hours every week:<br/><br/>
+• <b>AI Academic & Lesson Planner:</b> Automatically generates weekly syllabus pacing, creative lesson notes, and custom practice worksheets for teachers in minutes.<br/>
+• <b>Automated WhatsApp Parent Communication:</b> Real-time daily attendance updates, automated fee alerts with instant UPI QR links, and official circulars sent straight to parents' WhatsApp (98% read rate).<br/>
+• <b>Smart Security & Clutter-Free ERP:</b> Single secure dashboard for student records, CBSE/ICSE report cards, and exams without any complex staff training required.<br/><br/>
+Would you be open for a brief 10–15 minute screen-sharing walkthrough this Wednesday or Thursday to see how this works in real-time for ${schoolName}?<br/><br/>
 Warm regards,<br/>
 <b>Shashi Pratap Singh</b><br/>
-Founder, Ruviq | Eduvault ERP<br/>
-${process.env.EMAIL_FROM || 'connectwitheduvault@gmail.com'}`
+Founder, Eduvault AI<br/>
+connectwitheduvault@gmail.com`
 
     const brevoRes = await EmailService.sendOutreachEmail(
       recipientEmail,
